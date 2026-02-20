@@ -1,0 +1,235 @@
+ * {
+     font-family: 'Inter', sans-serif;
+ }
+
+ /* Geometric Pattern Background */
+
+ /* Floating shapes */
+
+
+ #typing {
+     width: 31ch;
+     display: inline-block;
+     white-space: nowrap;
+     overflow: hidden;
+
+     animation: typing 10s steps(31) infinite;
+
+
+
+ }
+
+ @keyframes typing {
+     from {
+         width: 0;
+     }
+
+     to {
+         width: 31ch;
+     }
+ }
+
+ #typing1 {
+     width: 11ch;
+     display: inline-block;
+     white-space: nowrap;
+     overflow: hidden;
+     animation: typing1 8s steps(11) infinite;
+     background: linear-gradient(to right, #BD147CE5 0%, #BD158CE5 100%);
+     -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;
+ }
+
+ @keyframes typing1 {
+     from {
+         width: 0;
+         background-size: 0% 100%;
+     }
+
+     to {
+         width: 11ch;
+         background-size: 100% 100%;
+     }
+ }
+
+ #dig {
+     animation: scaleUpdown 10s infinite;
+
+ }
+
+ @keyframes scaleUpdown {
+     0% {
+         transform: scale(1);
+     }
+
+     50% {
+         transform: scale(1.1);
+     }
+
+     100% {
+         transform: scale(1);
+     }
+
+ }
+
+
+
+
+ .float-shape {
+     position: absolute;
+     animation: float 6s ease-in-out infinite;
+ }
+
+ @keyframes float {
+
+     0%,
+     100% {
+         transform: translateY(0px);
+     }
+
+     50% {
+         transform: translateY(-20px);
+     }
+ }
+
+ /* Gradient text */
+ .text-lime {
+     color: #00f0c8;
+ }
+
+ .text-blue {
+     color: rgba(189, 20, 124, 0.897);
+ }
+
+ .bg-lime {
+     background-color: #00f0c8;
+ }
+
+ .bg-blue {
+     background-color: rgba(189, 20, 124, 0.897)
+ }
+
+ /* Service card hover effects */
+ .service-card {
+     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+     background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+ }
+
+ .service-card:hover {
+     transform: translateY(-10px);
+     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+ }
+
+ .service-card:hover .icon-container {
+     transform: scale(1.1) rotateY(15deg);
+ }
+
+ .icon-container {
+     transition: all 0.4s ease;
+ }
+
+ /* Navigation link hover */
+ .nav-link {
+     position: relative;
+ }
+
+ .nav-link::after {
+     content: '';
+     position: absolute;
+     bottom: -4px;
+     left: 0;
+     width: 0;
+     height: 2px;
+     background: linear-gradient(90deg, #00f0c8, rgba(189, 20, 124, 0.897));
+     transition: width 0.3s ease;
+ }
+
+ .nav-link:hover::after {
+     width: 100%;
+ }
+
+ /* Button styles */
+ .btn-primary {
+     background: linear-gradient(135deg, #00f0c8 0%, #2f9181 100%);
+     transition: all 0.3s ease;
+ }
+
+ .btn-primary:hover {
+     transform: translateY(-2px);
+     box-shadow: 0 10px 25px -5px #00f0c8;
+ }
+
+ .btn-secondary {
+     background: transparent;
+     border: 2px solid rgba(189, 20, 124, 0.897);
+     color: rgba(189, 20, 124, 0.897);
+     transition: all 0.3s ease;
+ }
+
+ .btn-secondary:hover {
+     background: rgba(189, 20, 124, 0.897);
+     color: white;
+ }
+
+ /* Language switcher */
+ .lang-switch {
+     background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);
+     border: 1px solid #bbf7d0;
+     transition: all 0.3s ease;
+ }
+
+ .lang-switch:hover {
+     background: linear-gradient(135deg, #00f0c8, 0%, rgba(189, 20, 124, 0.897) 100%);
+     color: white;
+ }
+
+ /* Pulse animation for CTA */
+ @keyframes pulse-glow {
+
+     0%,
+     100% {
+         box-shadow: 0 0 20px rgba(132, 204, 22, 0.3);
+     }
+
+     50% {
+         box-shadow: 0 0 40px #00f0c8
+     }
+ }
+
+ .pulse-glow {
+     animation: pulse-glow 2s ease-in-out infinite;
+ }
+
+ /* Glassmorphism */
+ .glass {
+     background: rgba(255, 255, 255, 0.8);
+     backdrop-filter: blur(10px);
+     border: 1px solid rgba(255, 255, 255, 0.3);
+ }
+
+ /* Gradient border */
+ .gradient-border {
+     background: linear-gradient(white, white) padding-box,
+         linear-gradient(135deg, #00f0c8, rgba(189, 20, 124, 0.897)) border-box;
+     border: 2px solid transparent;
+ }
+
+ [dir="rtl"] {
+     direction: rtl;
+ }
+
+ .logo {
+     width: 70px;
+     /* حجم الصورة */
+     height: auto;
+     margin-right: 10px;
+ }
+
+ #text {
+     text-align: center;
+     text-transform: lowercase;
+ }
+
+ #show {
+     border: rgba(189, 20, 124, 0.897);
+ }

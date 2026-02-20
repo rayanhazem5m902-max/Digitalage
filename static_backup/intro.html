@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Age | Cinematic Intro</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;400;700;900&family=Outfit:wght@300;600;900&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --accent: #00f0c8;
+            --secondary: #bd147c;
+            --dim-bg: #1a1a1a;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: radial-gradient(circle at center, #2a2a2a 0%, #0a0a0a 100%);
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: white;
+        }
+
+        /* Cinematic Reveal Curtain */
+        #curtain {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 1.2s cubic-bezier(0.85, 0, 0.15, 1);
+        }
+
+        #curtain.open {
+            transform: translateY(-100%);
+        }
+
+        .loader-logo {
+            text-align: center;
+            animation: logoFade 2.5s ease forwards;
+        }
+
+        @keyframes logoFade {
+            0% {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(1.1);
+            }
+        }
+
+        /* Compact Theater Box */
+        .video-container {
+            position: relative;
+            width: 90vw;
+            max-width: 1000px;
+            max-height: 50vh;
+            aspect-ratio: 16 / 9;
+            z-index: 5;
+            background: #000;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        @media (min-width: 768px) {
+            .video-container {
+                width: 70vw;
+                max-height: 60vh;
+            }
+        }
+
+        .video-container.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #000;
+        }
+
+        /* Custom Video Controls */
+        .vid-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 10;
+        }
+
+        .video-container:hover .vid-controls {
+            opacity: 1;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .control-btn:hover {
+            background: var(--accent);
+            color: #000;
+            transform: scale(1.1);
+        }
+
+        .skip-site {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 20;
+            padding: 0.8rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 100, 100, 0.2);
+            border-radius: 12px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: bold;
+            transition: 0.3s;
+            opacity: 0;
+        }
+
+        .skip-site.visible {
+            opacity: 1;
+        }
+
+        .skip-site:hover {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            box-shadow: 0 0 20px rgba(189, 20, 124, 0.3);
+        }
+
+        #exit-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: black;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Curtain -->
+    <div id="curtain">
+        <div class="loader-logo">
+            <h2 class="text-3xl font-bold tracking-widest text-[#00f0c8] outfit">DIGITAL AGE</h2>
+        </div>
+    </div>
+
+    <!-- Video Theater Box Container -->
+    <div class="flex flex-col items-center justify-center gap-4 md:gap-8 z-10 p-4 w-full h-full">
+        <div class="text-center space-y-2 md:space-y-4 animate-fade-in w-full">
+            <h1
+                class="text-4xl sm:text-5xl md:text-7xl font-black bg-gradient-to-r from-[#00f0c8] to-[#bd147c] bg-clip-text text-transparent outfit tracking-tight leading-tight">
+                DIGITAL AGE</h1>
+            <p class="text-lg sm:text-xl md:text-2xl text-gray-300 font-light max-w-2xl mx-auto leading-relaxed px-2">
+                حلول رقمية مبتكرة للمشاريع <span class="text-[#00f0c8] font-bold">الصغيرة</span>، <span
+                    class="text-[#00f0c8] font-bold">المتوسطة</span>، و<span
+                    class="text-[#00f0c8] font-bold">الكبيرة</span>
+            </p>
+        </div>
+
+        <div class="video-container" id="videoBox">
+            <video playsinline id="introVid">
+                <source src="Images/j.mp4" type="video/mp4">
+            </video>
+
+            <!-- Interactive Controls -->
+            <div class="vid-controls">
+                <button class="control-btn" onclick="toggleMute()" id="muteBtn">
+                    <i data-lucide="volume-2" class="w-4 h-4 md:w-5 md:h-5"></i>
+                </button>
+                <button class="control-btn" onclick="togglePlay()" id="playBtn">
+                    <i data-lucide="play" class="w-5 h-5 md:w-6 md:h-6"></i>
+                </button>
+                <button class="control-btn" onclick="video.currentTime = 0; video.play();">
+                    <i data-lucide="rotate-ccw" class="w-4 h-4 md:w-5 md:h-5"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <a href="javascript:void(0)" onclick="enterSite()" class="skip-site" id="skipBtn">تخطى وشاهد الموقع</a>
+
+    <div id="exit-overlay"></div>
+
+    <script>
+        lucide.createIcons();
+        const video = document.getElementById('introVid');
+
+        function togglePlay() {
+            const btn = document.getElementById('playBtn');
+            if (video.paused) {
+                video.play();
+                btn.innerHTML = '<i data-lucide="pause" class="w-6 h-6"></i>';
+            } else {
+                video.pause();
+                btn.innerHTML = '<i data-lucide="play" class="w-6 h-6"></i>';
+            }
+            lucide.createIcons();
+        }
+
+        function toggleMute() {
+            const btn = document.getElementById('muteBtn');
+            video.muted = !video.muted;
+            btn.innerHTML = video.muted ? '<i data-lucide="volume-x" class="w-5 h-5"></i>' : '<i data-lucide="volume-2" class="w-5 h-5"></i>';
+            lucide.createIcons();
+        }
+
+        function enterSite() {
+            document.getElementById('exit-overlay').classList.add('opacity-100');
+            setTimeout(() => { window.location.href = 'index.html'; }, 1000);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.getElementById('curtain').classList.add('open');
+                const box = document.getElementById('videoBox');
+                const skip = document.getElementById('skipBtn');
+
+                box.classList.add('visible');
+                skip.classList.add('visible');
+
+                // Autoplay attempt
+                video.play().then(() => {
+                    // Update play button icon if autoplay works
+                    document.getElementById('playBtn').innerHTML = '<i data-lucide="pause" class="w-6 h-6"></i>';
+                    lucide.createIcons();
+                }).catch(e => console.log("Interaction required to play with sound"));
+
+                video.onended = enterSite;
+            }, 2500);
+        });
+    </script>
+</body>
+
+</html>

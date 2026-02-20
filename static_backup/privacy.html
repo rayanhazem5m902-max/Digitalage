@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Age-Privacy Policy</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="st5.css">
+</head>
+<body class="bg-white overflow-x-hidden">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center">
+                      <img src="Images/Untitled (1).png" alt="digitalagelogo" class="logo">
+                    <a href="#" class="flex items-center gap-0 text-3xl font-bold tracking-tight">
+                        <span class="text-lime">Digital</span>
+                        <span class="text-blue">Age</span>
+                    </a>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="index.html#home" class="nav-link text-gray-700 hover:text-lime font-medium" data-i18n="home">Home</a>
+                    <a href="index.html#services" class="nav-link text-gray-700 hover:text-blue font-medium" data-i18n="services">Services</a>
+                    <a href="index.html#about" class="nav-link text-gray-700 hover:text-lime font-medium" data-i18n="about">About</a>
+                    <a href="index.html#portfolio" class="nav-link text-gray-700 hover:text-blue font-medium" data-i18n="portfolio">Portfolio</a>
+                    <a href="index.html#contact" class="nav-link text-gray-700 hover:text-lime font-medium" data-i18n="contact">Contact</a>
+                </div>
+                
+                <!-- Right Side: CTA + Language Switcher -->
+                <div class="flex items-center gap-4">
+                    <button onclick="toggleLanguage()" class="lang-switch px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2">
+                        <span id="lang-flag">🇺🇸</span>
+                        <span id="lang-text">English</span>
+                    </button>
+                    
+                    <!-- Mobile menu button -->
+                    <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <div class="flex flex-col gap-3">
+                    <a href="index.html#home" class="nav-link text-gray-700 hover:text-lime font-medium py-2" data-i18n="home">Home</a>
+                    <a href="index.html#services" class="nav-link text-gray-700 hover:text-blue font-medium py-2" data-i18n="services">Services</a>
+                    <a href="index.html#about" class="nav-link text-gray-700 hover:text-lime font-medium py-2" data-i18n="about">About</a>
+                    <a href="index.html#portfolio" class="nav-link text-gray-700 hover:text-blue font-medium py-2" data-i18n="portfolio">Portfolio</a>
+                    <a href="index.html#contact" class="nav-link text-gray-700 hover:text-lime font-medium py-2" data-i18n="contact">Contact</a>
+                    <button class="btn-primary px-6 py-2.5 rounded-full text-white font-semibold w-full" data-i18n="getStarted">
+                        Get Started
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+  <!-- reuse same header if you want -->
+ 
+  <main class="pt-24 max-w-5xl mx-auto px-6">
+    <h1 class="text-3xl font-bold text-gray-900 flex items-center gap-3" data-i18n="privacyTitle">
+  <svg class="w-7 h-7 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2z"/>
+    <path stroke-linecap="round" stroke-linejoin="round" d="M6.2 6.2a9 9 0 1111.6 11.6A9 9 0 016.2 6.2z"/>
+  </svg>
+  Privacy Policy
+</h1>
+
+    <p  data-i18n="privacyIntro" class="text-gray-600 leading-relaxed text-[17px]">
+      Your privacy is important to us...
+    </p>
+  </main>
+  <!-- section -->
+<section class="privacy py-20">
+  <div class="max-w-5xl mx-auto px-6 space-y-14">
+
+    <!-- Intro -->
+    <div class="space-y-5">
+      <p  data-i18n="privacyIntroduc"class="text-gray-700 leading-relaxed text-[17px]">
+        This Privacy Notice for Digital Age ("we," "us," or "our") describes how and why we might access,
+        collect, store, use, and/or share ("process") your personal information when you use our services ("Services"), including:
+      </p>
+
+      <ul class="space-y-3 pl-5 list-disc text-gray-600">
+  <li data-i18n="service1">Application Development & Custom Software</li>
+  <li data-i18n="service2">Responsive Web Applications</li>
+  <li data-i18n="service3">Systems Programming & Optimization</li>
+  <li data-i18n="service4">Creative Graphic Design</li>
+  <li data-i18n="service5">Digital Marketing Strategies</li>
+  <li data-i18n="service6">Mobile App Solutions</li>
+</ul>
+
+    </div>
+    <h1 data-i18n="infoCollection" class="text-xl font-semibold text-gray-800 flex items-center gap-2" data-i18n="">
+  <svg class="w-5 h-5 text-lime-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3"/>
+  </svg>
+  Information Collection
+</h1>
+    <p data-i18n="infoCollectionDesc"class="text-gray-600 leading-relaxed text-[17px]">-We do not collect any personal data from our users</p>
+    <p  data-i18n="infocoll"class="text-gray-600 leading-relaxed text-[17px]">- When you visit, use, or navigate our Services, we may process personal information depending on how you interact with us and the Services, the choices you make, and the products and features you use.</p>
+        <h1  data-i18n="useInfo"class="text-xl font-semibold text-gray-800 flex items-center gap-2">
+  <svg class="w-5 h-5 text-lime-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3"/>
+  </svg>
+  Use of Information
+   </h1>
+
+    <p  data-i18n=" seInfoDesc"class="text-gray-600 leading-relaxed text-[17px]">-We process your information to provide, improve, and administer our services, communicate with you, for security and fraud prevention, and to comply with the law. We may also process your information for other purposes with your consent. We process your information only when we have a valid legal reason to do so.</p>
+<h1 data-i18n="dataSecurity" class="text-xl font-semibold text-gray-800 flex items-center gap-2">
+  <svg class="w-5 h-5 text-lime-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3"/>
+  </svg>
+ Data Security
+</h1>
+    <p  data-i18n="dataSecurityDesc" class="text-gray-600 leading-relaxed text-[17px]">-We have adequate organizational and technical processes and procedures in place to protect your personal information. However, no electronic transmission over the internet or information storage technology can be guaranteed to be 100% secure, so we cannot promise or guarantee that hackers, cybercriminals, or other unauthorized third parties will not be able to defeat our security and improperly collect, access, steal, or modify your information.
+</p>
+ <h1 data-i18n="thirdParty" class="text-xl font-semibold text-gray-800 flex items-center gap-2">
+  <svg class="w-5 h-5 text-lime-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3"/>
+  </svg>
+Third-Party Services
+ </h1>
+
+   <p data-i18n="thirdPartyDesc" class="text-gray-600 leading-relaxed text-[17px]">-We may use third-party analytics services to collect and analyze non-personally identifiable information about website visitors. These services help us understand website traffic, user behavior, and usage patterns. These third-party services have their own privacy policies governing the use of information they collect.</p>
+   
+
+ <h1 data-i18n="cookies" class="text-xl font-semibold text-gray-800 flex items-center gap-2">
+  <svg class="w-5 h-5 text-lime-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3"/>
+  </svg>
+ Cookies
+</h1>
+
+   <p data-i18n="cookiesDesc" class="text-gray-600 leading-relaxed text-[17px]">-We use cookies on our website to collect non-personally identifiable information. Cookies are small text files that are stored on your computer or device when you visit a website. These cookies help us track user interactions, gather demographic information, and analyze website performance. You have the option to disable cookies in your browser settings, although this may affect certain features and functionality of our website.</p>
+<h1 data-i18n="contactUs" class="text-xl font-semibold text-gray-800 flex items-center gap-2">
+  <svg class="w-5 h-5 text-lime-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3"/>
+  </svg>
+ Contact Us
+</h1>
+   <p data-i18n="contactDesc" class="text-gray-600 leading-relaxed text-[17px]"> If you have any questions, concerns, or requests please contact us</p>
+<h1  data-i18n="phone"class="text-xl font-semibold text-gray-800 flex items-center gap-2">
+  <svg class="w-5 h-5 text-lime-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3"/>
+  </svg>
+ phone: +201275018291
+</h1>
+<h1 data-i18n="email" class="text-xl font-semibold text-gray-800 flex items-center gap-2">
+  <svg class="w-5 h-5 text-lime-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3"/>
+  </svg>
+
+  Email:
+  <a href="mailto:digitalage@gmail.com"
+     class="text-blue-600 hover:text-lime-600 underline transition">
+     digitalage@gmail.com
+  </a>
+</h1>
+</section>
+ <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <!-- Brand -->
+                <div class="md:col-span-1">
+                    <a href="#" class="flex items-center gap-0 text-3xl font-bold tracking-tight mb-4">
+                         <img src="Images/Untitled (1).png" alt="digitalagelogo" class="logo">
+                        <span class="text-lime">Digital</span>
+                        <span class="text-blue">Age</span>
+                    </a>
+                    <p class="text-gray-400" data-i18n="footerDesc">Transforming businesses through innovative technology solutions.</p>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="quickLinks">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#home" class="text-gray-400 hover:text-lime transition" data-i18n="home">Home</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-blue transition" data-i18n="services">Services</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-lime transition" data-i18n="about">About Us</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-blue transition" data-i18n="contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Services -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="footerServices">Services</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#SoftwareDevelopment" class="text-gray-400 hover:text-lime transition" data-i18n="softwareDev">Software Development</a></li>
+                        <li><a href="#WebApplication" class="text-gray-400 hover:text-blue transition" data-i18n="webDev">Web Applications</a></li>
+                        <li><a href="#SystemsProgramming" class="text-gray-400 hover:text-lime transition" data-i18n="systemsProg">Systems Programming</a></li>
+                        <li><a href="#DigitalMarketing" class="text-gray-400 hover:text-blue transition" data-i18n="digitalMarketing">Digital Marketing</a></li>
+                       <li><a href="#mobileapp" class="text-gray-400 hover:text-blue transition" data-i18n="digitalMarketing">Mobile Application</a></li>
+
+                    </ul>
+                </div>
+                
+                <!-- Newsletter -->
+               <!-- <div>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="newsletter">Newsletter</h4>
+                    <p class="text-gray-400 mb-4" data-i18n="newsletterDesc">Stay updated with our latest news and offers.</p>
+                    <div class="flex gap-2">
+                        <input type="email" id="newsletter-email" class="flex-1 px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:border-lime outline-none text-white" placeholder="Your email">
+                        <button onclick="subscribeNewsletter()" class="btn-primary px-4 py-2 rounded-lg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                            </svg>
+                        </button>
+                    </div>-->
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p  data-i18n="copyright" class="text-gray-400 text-sm-center">© 2025 Digital Age. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="privacy.html" class="text-gray-400 hover:text-lime text-sm transition" data-i18n="privacy">Privacy Policy</a>
+                    <a href="teme.html" class="text-gray-400 hover:text-blue text-sm transition" data-i18n="terms">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+                
+<script>
+        // Translations
+        const translations = {
+            en: {
+                home: "Home",
+        mobileSolutionsDesc:"Smart apps and effective communication via phone to boost your busines.",
+                Highsecurity:"High security",
+                OurVision:"Our Vision",
+                Wedeliver:" We deliver integrated digital solutions.",
+                Integrated:" Integrated digital solutions.",
+                Tobealeader:" To be a leader in building intelligent digital solutions.",
+                forreaching:"for reaching the goal",
+                services: "Services",
+                Passion:"Passion",
+                Integrity:"Integrity",
+                about: "About",
+                portfolio: "Portfolio",
+                contact: "Contact",
+                getStarted: "Get Started",
+                innovatingFuture: "✦ Innovating the Future",
+                transformDigital: "Transform Your Digital",
+                visionReality: "Vision into Reality",
+                heroSubtitle: "We craft cutting-edge software solutions that drive business growth. From web applications to digital marketing, we power your success in the digital age.",
+                startProject: "Start Your Project",
+                startProjectBtn: "Start Your Project",
+                viewPortfolio: "View Portfolio",
+                viewPortfolioBtn: "View Portfolio",
+                projectsCompleted: "Projects Completed",
+                happyClients: "Happy Clients",
+                teamMembers: "Team Members",
+                yearsExperience: "Years Experience",
+                ourServices: "✦ Our Services",
+                servicesTitle: "Comprehensive Tech Solutions",
+                servicesSubtitle: "From concept to deployment, we deliver end-to-end technology solutions tailored to your business needs.",
+                softwareDev: "Software Development",
+                softwareDevDesc: "Custom software solutions built with modern frameworks and best practices.",
+                webDev: "Web Applications",
+                webDevDesc: "Responsive, fast, and scalable web applications for your business.",
+                systemsProg: "Systems Programming",
+                systemsProgDesc: "High-performance systems programming and optimization solutions.",
+                graphicDesign: "Graphic Design",
+                graphicDesignDesc: "Creative designs that elevate your brand identity and visual presence.",
+                digitalMarketing: "Digital Marketing",
+                digitalMarketingDesc: "Data-driven marketing strategies to grow your online presence.",
+                aboutUs: "✦ About Us",
+                aboutTitle: "Pioneering Digital Transformation",
+                aboutDesc: "Digital Age is a premier technology solutions provider dedicated to helping businesses thrive in the digital landscape. With over 15 years of experience, our team of expert developers, designers, and marketers deliver innovative solutions that drive real results.",
+                innovation: "Innovation",
+                innovationDesc: "Cutting-edge solutions",
+                teamwork: "Teamwork",
+                teamworkDesc: "Collaborative approach",
+                quality: "Quality",
+                qualityDesc: "Premium deliverables",
+                speed: "Speed",
+                speedDesc: "Fast turnaround",
+                aboutFeature1: "Expert team with diverse technical backgrounds",
+                aboutFeature2: "Agile development methodology",
+                aboutFeature3: "24/7 dedicated support",
+                mobileSolutions:"mobileSolutions",
+                learnMore: "Learn More",
+                learnMoreBtn: "Learn More",
+                contactUs: "✦ Contact Us",
+                contactTitle: "Let's Build Something Amazing",
+                contactSubtitle: "Ready to transform your digital presence? Get in touch with our team and let's discuss your project.",
+                formName: "Name",
+                OurServices:"Our Services",
+                OurMission:"Our Mission",
+                formEmail: "Email",
+                formSubject: "Subject",
+                formMessage: "Message",
+                sendMessage: "Send Message",
+                getInTouch: "Get in Touch",
+                emailUs: "Email Us",
+                callUs: "Call Us",
+                visitUs: "Visit Us",
+                footerDesc: "Transforming businesses through innovative technology solutions .",
+                quickLinks: "Quick Links",
+                footerServices: "Services",
+                newsletter: "Newsletter",
+                newsletterDesc: "Stay updated with our latest news and offers.",
+                copyright: "©2025 Digital Age. All rights reserved.",
+                privacy: "Privacy Policy",
+                  No1:"No1",
+                No2:"No2",
+              terms: "Terms of Service",
+               privacyTitle: "Privacy Policy",
+    privacyTitle: "Privacy Policy",
+    privacyIntro: "Your privacy is important to us...",
+    privacyIntroduc:
+      'This Privacy Notice for Digital Age ("we," "us," or "our") describes how and why we might access, collect, store, use, and/or share ("process") your personal information when you use our services ("Services"), including:',
+    
+    infoCollection: "Information Collection",
+    infoCollectionDesc: "We do not collect any personal data from our users.",
+    infocoll:
+      "When you visit, use, or navigate our Services, we may process personal information depending on how you interact with us and the Services, the choices you make, and the products and features you use.",
+
+    useInfo: "Use of Information",
+    seInfoDesc:
+      "We process your information to provide, improve, and administer our services, communicate with you, for security and fraud prevention, and to comply with the law. We may also process your information for other purposes with your consent. We process your information only when we have a valid legal reason to do so.",
+
+    dataSecurity: "Data Security",
+    dataSecurityDesc:
+      "We have adequate organizational and technical processes and procedures in place to protect your personal information. However, no electronic transmission over the internet or information storage technology can be guaranteed to be 100% secure.",
+
+    thirdParty: "Third-Party Services",
+    thirdPartyDesc:
+      "We may use third-party analytics services to collect and analyze non-personally identifiable information about website visitors.",
+
+    cookies: "Cookies",
+    cookiesDesc:
+      "We use cookies on our website to collect non-personally identifiable information. Cookies are small text files stored on your device.",
+
+    contactUs: "Contact Us",
+    contactDesc:
+      "If you have any questions, concerns, or requests, please contact us.",
+      phone:"phone: +201275018291",
+      email: "digitalage@gmail.com",
+      
+    service1: "تطوير التطبيقات والبرمجيات المخصصة",
+    service2: "تطبيقات ويب متجاوبة",
+    service3: "برمجة الأنظمة وتحسين الأداء",
+    service4: "تصميم جرافيك إبداعي",
+    service5: "استراتيجيات التسويق الرقمي",
+    service6: "حلول تطبيقات الموبايل",
+
+ 
+    },
+            ar: {
+                     Wedeliver:"نقدّم حلولًا رقمية متكاملة تساعد الشركات على النمو",
+                Integrity:"النزاهه",
+                 Highsecurity:" امان عالي",
+                 Integrated:"حلول رقمية متكاملة.",
+                 Passion:"الشغف",
+                  OurVision: "رؤيتنا",
+                  Tobealeader:"أن نكون روادًا في بناء الحلول الرقمية الذكية.",
+                  OurMission:"رسالتنا",
+                  forreaching:" للوصول للهدف",
+                 OurServices:"خدماتنا",
+                 OurMission:"رسالتنا",
+                home: "الرئيسية",
+                services: "الخدمات",
+                about: "من نحن",
+                portfolio: "أعمالنا",
+                contact: "اتصل بنا",
+                getStarted: "ابدأ الآن",
+                innovatingFuture: "✦ نصنع المستقبل",
+                transformDigital: "حوّل رؤيتك الرقمية",
+                visionReality: "إلى حقيقة ملموسة",
+                heroSubtitle: "نصنع حلولاً برمجية متطورة تدفع نمو الأعمال. من تطبيقات الويب إلى التسويق الرقمي، نحن قوة نجاحك في العصر الرقمي.",
+                startProject: "ابدأ مشروعك",
+                startProjectBtn: "ابدأ مشروعك",
+                viewPortfolio: "عرض الأعمال",
+                viewPortfolioBtn: "عرض الأعمال",
+                projectsCompleted: "مشروع مكتمل",
+                happyClients: "عميل سعيد",
+                teamMembers: "فريق العمل",
+                yearsExperience: "سنوات الخبرة",
+                ourServices: "✦ خدماتنا",
+                servicesTitle: "حلول تقنية شاملة",
+                servicesSubtitle: "من التصميم إلى الإطلاق، نقدم حلول تقنية متكاملة مصممة خصيصاً لاحتياجات عملك.",
+                softwareDev: "تطوير البرمجيات",
+                softwareDevDesc: "حلول برمجية مخصصة مبنية على أطر عمل حديثة وأفضل الممارسات.",
+                webDev: "تطبيقات الويب",
+                webDevDesc: "تطبيقات ويب سريعة وقابلة للتطوير تناسب عملك.",
+                systemsProg: "برمجة الأنظمة",
+                systemsProgDesc: "حلول برمجة وتحسين الأنظمة عالية الأداء.",
+                graphicDesign: "التصميم الجرافيكي",
+                graphicDesignDesc: "تصاميم إبداعية ترتقي بهوية علامتك التجارية.",
+                digitalMarketing: "التسويق الرقمي",
+                digitalMarketingDesc: "استراتيجيات تسويق مبنية على البيانات لتنمية حضورك الرقمي.",
+               mobileSolutions:" حلول الهاتف",
+                aboutUs: "✦ من نحن",
+                aboutTitle: "رائدة التحول الرقمي",
+                aboutDesc: "  عصر الرقمي هي مزود حلول تقنية متميز مكرس لمساعدة الشركات على الازدهار في المشهد الرقمي. مع أكثر من 7 عاماً من الخبرة، يقدم فريقنا من المطورين والمصممين والمسوقين المبتكرين حلولاً مبتكرة تحقق نتائج ملموسة.",
+                innovation: "الابتكار",
+                innovationDesc: "حلول متطورة",
+                teamwork: "العمل الجماعي",
+                teamworkDesc: "نهج تعاوني",
+                quality: "الجودة",
+                qualityDesc: "نتائج متميزة",
+                speed: "السرعة",
+                speedDesc: "تسليم سريع",
+                aboutFeature1: "فريق خبراء من خلفيات تقنية متنوعة",
+                aboutFeature2: "منهجية تطوير رشيقة",
+                aboutFeature3: "دعم على مدار الساعة",
+                learnMore: "اعرف المزيد",
+                learnMoreBtn: "اعرف المزيد",
+                contactUs: "✦ اتصل بنا",
+                contactTitle: "لنبني شيئاً مذهلاً معاً",
+                contactSubtitle: "مستعد لتحويل حضورك الرقمي؟ تواصل مع فريقنا لنتحدث عن مشروعك.",
+                formName: "الاسم",
+                formEmail: "البريد الإلكتروني",
+                formSubject: "الموضوع",
+                formMessage: "الرسالة",
+                sendMessage: "إرسال الرسالة",
+                getInTouch: "تواصل معنا",
+                emailUs: "راسلنا",
+                callUs: "اتصل بنا",
+                visitUs: "زرنا",
+                footerDesc: "نحوّل الشركات من خلال حلول تقنية مبتكرة  ",
+                quickLinks: "روابط سريعة",
+                footerServices: "الخدمات",
+                newsletter: "النشرة الإخبارية",
+                newsletterDesc: "تابع آخر أخبارنا وعروضنا.",
+                copyright: "Digital Age. جميع الحقوق محفوظة. ٢٠٢٥",
+mobileSolutionsDesc:"عمل تطبيقات ذكية وتواصل فعال عبر الهاتف لتعزيز أعمالك",
+                privacy: "سياسة الخصوصية",
+                terms: "شروط الخدمة",
+                OurVision:"رؤيتنا",
+                 No1:"رقم١",
+                No2:"رقم٢",
+              privacyTitle: "سياسة الخصوصية",
+    privacyTitle: "سياسة الخصوصية",
+    privacyIntro: "خصوصيتك تهمنا...",
+    privacyIntroduc:
+      'توضح سياسة الخصوصية الخاصة بـ Digital Age ("نحن" أو "لنا") كيف ولماذا قد نقوم بالوصول إلى معلوماتك الشخصية أو جمعها أو تخزينها أو استخدامها أو مشاركتها عند استخدامك لخدماتنا، بما في ذلك:',
+
+    infoCollection: "جمع المعلومات",
+    infoCollectionDesc: "نحن لا نقوم بجمع أي بيانات شخصية من المستخدمين.",
+    infocoll:
+      "عند زيارتك أو استخدامك أو تصفحك لخدماتنا، قد نقوم بمعالجة بعض المعلومات الشخصية اعتمادًا على طريقة تفاعلك معنا ومع الخدمات، والخيارات التي تتخذها، والمنتجات والميزات التي تستخدمها.",
+
+    useInfo: "استخدام المعلومات",
+    seInfoDesc:
+      "نقوم بمعالجة معلوماتك لتقديم خدماتنا وتحسينها وإدارتها، والتواصل معك، ولأغراض الأمان ومنع الاحتيال، والامتثال للقوانين. ولا نقوم بمعالجة معلوماتك إلا عند وجود سبب قانوني صالح.",
+
+    dataSecurity: "أمن البيانات",
+    dataSecurityDesc:
+      "نطبق إجراءات تنظيمية وتقنية مناسبة لحماية معلوماتك الشخصية، ومع ذلك لا يمكن ضمان أمان البيانات بنسبة 100٪ عبر الإنترنت.",
+
+    thirdParty: "خدمات الطرف الثالث",
+    thirdPartyDesc:
+      "قد نستخدم خدمات تحليل تابعة لجهات خارجية لجمع وتحليل معلومات غير شخصية عن زوار الموقع.",
+
+    cookies: "ملفات تعريف الارتباط (Cookies)",
+    cookiesDesc:
+      "نستخدم ملفات تعريف الارتباط لجمع معلومات غير شخصية. يمكنك تعطيلها من إعدادات المتصفح، وقد يؤثر ذلك على بعض وظائف الموقع.",
+
+    contactUs: "تواصل معنا",
+    contactDesc:
+      "إذا كانت لديك أي أسئلة أو استفسارات، يرجى التواصل معنا.",
+              phone: "رقم الهاتف:+٢٠١٢٧٥٠١٨٢٩١",
+      email: "إيميل:digitalage@gmail.com",
+      
+    service1: "تطوير التطبيقات والبرمجيات المخصصة",
+    service2: "تطبيقات ويب متجاوبة",
+    service3: "برمجة الأنظمة وتحسين الأداء",
+    service4: "تصميم جرافيك إبداعي",
+    service5: "استراتيجيات التسويق الرقمي",
+    service6: "حلول تطبيقات الموبايل",
+
+    }
+        };
+        let currentLang = 'en';
+
+        // Language Toggle
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+            
+            // Update direction
+            document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.lang = currentLang;
+            
+            // Update language switcher
+            document.getElementById('lang-text').textContent = currentLang === 'en' ? 'English' : 'العربية';
+            document.getElementById('lang-flag').textContent = currentLang === 'en' ? '🇺🇸' : '🇸🇦';
+            
+            // Update all translatable elements
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    // Handle placeholder for inputs
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = translations[currentLang][key];
+                    } else {
+                        element.textContent = translations[currentLang][key];
+                    }
+                }
+            });
+        }
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Newsletter Subscribe
+        function subscribeNewsletter() {
+            const email = document.getElementById('newsletter-email').value;
+            if (email) {
+                alert(currentLang === 'en' ? 'Thank you for subscribing!' : 'شكراً لاشتراكك!');
+                document.getElementById('newsletter-email').value = '';
+            }
+        }
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-lg');
+            } else {
+                header.classList.remove('shadow-lg');
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.classList.add('transition', 'duration-700', 'opacity-0', 'translate-y-10');
+            observer.observe(card);
+        });
+    
+function toggleWA() {
+    document.getElementById("waMenu").classList.toggle("hidden");
+}
+
+document.addEventListener("click", function(e) {
+    if (!e.target.closest(".relative")) {
+        document.getElementById("waMenu").classList.add("hidden");
+    }
+});
+
+    </script>
+</body>
+</html>
+
+     
