@@ -8,6 +8,7 @@ class Contact extends Model
 {
     protected $fillable = [
         'whatsapp',
+        'whatsapp2',
         'phone',
         'facebook',
         'tiktok',

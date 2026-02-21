@@ -8,6 +8,7 @@ use App\Models\Member;
 use App\Models\Contact;
 use App\Models\Impact;
 use App\Models\PortfolioProject;
+use App\Models\Career;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -40,8 +41,9 @@ class AdminController extends Controller
         $contact = Contact::first() ?? new Contact();
         $projects = PortfolioProject::with('service')->get();
         $impacts = Impact::all();
+        $careers = Career::with('service')->get();
 
-        return view('admin.dashboard', compact('services', 'members', 'contact', 'projects', 'impacts'));
+        return view('admin.dashboard', compact('services', 'members', 'contact', 'projects', 'impacts', 'careers'));
     }
 
     public function saveProject(Request $request)
@@ -151,7 +153,14 @@ class AdminController extends Controller
             'name' => 'required|string',
             'icon' => 'required|string',
             'text' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('Images/impacts'), $imageName);
+            $data['image'] = 'Images/impacts/' . $imageName;
+        }
 
         if ($request->id) {
             $impact = Impact::findOrFail($request->id);
@@ -166,6 +175,34 @@ class AdminController extends Controller
     public function deleteImpact($id)
     {
         Impact::findOrFail($id)->delete();
+        return response()->json(['success' => true]);
+    }
+
+    public function saveCareer(Request $request)
+    {
+        $data = $request->validate([
+            'id' => 'nullable|integer',
+            'title' => 'required|string',
+            'category' => 'required|string',
+            'duration' => 'required|string',
+            'deadline' => 'nullable|date',
+            'service_id' => 'nullable|exists:services,id',
+            'description' => 'nullable|string',
+        ]);
+
+        if ($request->id) {
+            $career = Career::findOrFail($request->id);
+            $career->update($data);
+        } else {
+            Career::create($data);
+        }
+
+        return response()->json(['success' => true]);
+    }
+
+    public function deleteCareer($id)
+    {
+        Career::findOrFail($id)->delete();
         return response()->json(['success' => true]);
     }
 }

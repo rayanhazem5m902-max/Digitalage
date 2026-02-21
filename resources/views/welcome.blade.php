@@ -466,22 +466,30 @@
     }
 
     .news-card {
-        flex: 0 0 100%;
+        flex: 0 0 calc(33.333% - 20px);
+        /* Show 3 cards on desktop */
         background: var(--card-bg);
-        border-radius: 40px;
-        padding: 16px 18px 14px;
-        box-shadow: 0 16px 40px rgba(0, 0, 0, .10);
-        min-height: 320px;
+        border-radius: 24px;
+        padding: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, .05);
+        min-height: auto;
         display: flex;
         flex-direction: column;
+        transition: transform 0.3s ease;
+    }
+
+    .news-card:hover {
+        transform: translateY(-5px);
     }
 
     .news-img {
         width: 100%;
-        height: 180px;
+        aspect-ratio: 4/3;
+        /* Changed from 1/1 to 4/3 for better shape */
         object-fit: cover;
-        border-radius: 28px;
+        border-radius: 16px;
         background: #ddd;
+        margin-bottom: 12px;
     }
 
     .news-title {
@@ -554,6 +562,13 @@
         box-shadow: none;
     }
 
+    /* Tablet/Small Laptop: 2 cards */
+    @media (max-width: 1024px) {
+        .news-card {
+            flex-basis: calc(50% - 10px);
+        }
+    }
+
     /* Mobile: 1 card */
     @media (max-width: 767.98px) {
         .news-slider {
@@ -562,11 +577,11 @@
 
         .news-card {
             flex-basis: 100%;
-            min-height: 330px;
         }
 
         .news-img {
-            height: 190px;
+            height: auto;
+            aspect-ratio: 16/9;
         }
     }
 
@@ -690,6 +705,8 @@
                         data-i18n="contact">Contact</a>
                     <a href="#impact" class="nav-link text-gray-700 hover:text-lime font-medium"
                         data-i18n="impact">Impact</a>
+                    <a href="{{ route('careers') }}" class="nav-link text-gray-700 hover:text-blue font-medium"
+                        data-i18n="jobs">Jobs</a>
                 </div>
 
                 <!-- Right Side: CTA + Language Switcher -->
@@ -723,6 +740,8 @@
                         data-i18n="portfolio">Portfolio</a>
                     <a href="#contact" class="nav-link text-gray-700 hover:text-lime font-medium py-2"
                         data-i18n="contact">Contact</a>
+                    <a href="{{ route('careers') }}" class="nav-link text-gray-700 hover:text-blue font-medium py-2"
+                        data-i18n="jobs">Jobs</a>
                     <button class="btn-primary px-6 py-2.5 rounded-full text-white font-semibold w-full"
                         data-i18n="getStarted" id="start">
                         Get Started
@@ -897,12 +916,16 @@
                             <div class="d-flex justify-content-center">
                                 <div
                                     class="testimonial-card text-center p-5 shadow-xl rounded-4 bg-white border border-gray-100">
-                                    <div class="relative w-28 h-28 mx-auto mb-6">
-                                        <div class="absolute inset-0 bg-lime/20 rounded-full animate-pulse"></div>
+                                    <div class="relative w-32 h-32 mx-auto mb-6">
+                                        <div class="absolute inset-0 bg-lime/20 rounded-2xl animate-pulse"></div>
                                         <div
-                                            class="relative w-full h-full bg-white rounded-full shadow-lg border-2 border-lime flex items-center justify-center">
-                                            <i data-lucide="{{ $impact->icon ?? 'user-round' }}"
-                                                class="w-14 h-14 text-lime"></i>
+                                            class="relative w-full h-full bg-white rounded-2xl shadow-lg border-2 border-lime flex items-center justify-center overflow-hidden">
+                                            @if($impact->image)
+                                                <img src="{{ asset($impact->image) }}" class="w-full h-full object-cover">
+                                            @else
+                                                <i data-lucide="{{ $impact->icon ?? 'user-round' }}"
+                                                    class="w-16 h-16 text-lime"></i>
+                                            @endif
                                         </div>
                                     </div>
                                     <h6 class="fw-bold mb-2 text-xl">{{ $impact->name }}</h6>
@@ -916,11 +939,11 @@
                             <div class="d-flex justify-content-center">
                                 <div
                                     class="testimonial-card text-center p-5 shadow-xl rounded-4 bg-white border border-gray-100">
-                                    <div class="relative w-28 h-28 mx-auto mb-6">
-                                        <div class="absolute inset-0 bg-lime/20 rounded-full animate-pulse"></div>
+                                    <div class="relative w-32 h-32 mx-auto mb-6">
+                                        <div class="absolute inset-0 bg-lime/20 rounded-2xl animate-pulse"></div>
                                         <div
-                                            class="relative w-full h-full bg-white rounded-full shadow-lg border-2 border-lime flex items-center justify-center">
-                                            <i data-lucide="user-round" class="w-14 h-14 text-lime"></i>
+                                            class="relative w-full h-full bg-white rounded-2xl shadow-lg border-2 border-lime flex items-center justify-center">
+                                            <i data-lucide="user-round" class="w-16 h-16 text-lime"></i>
                                         </div>
                                     </div>
                                     <h6 class="fw-bold mb-2 text-xl" data-i18n="testimonial1.name">Amira Hassan</h6>
@@ -1030,6 +1053,8 @@
             </button>
         </div>
     </section>
+
+
     </main>
 
     </section>
@@ -1650,6 +1675,11 @@
                 introHeading: "Digital Age for Small and Large Works",
                 back: "Back",
                 preparingIntro: "Preparing Digital Experience",
+                jobs: "Jobs",
+                careersTitle: "Career Opportunities",
+                careersDesc: "Join our team of experts and researchers to build the future of digital solutions.",
+                applyNow: "Apply Now",
+                noJobs: "No open positions at the moment. Keep checking!",
             },
             ar: {
                 home: "الرئيسية",
@@ -1763,6 +1793,11 @@
                 introHeading: "ديجيتال آيدج للأعمال الكبيرة والصغيرة",
                 back: "رجوع",
                 preparingIntro: "جاري تحضير التجربة الرقمية",
+                jobs: "الوظائف",
+                careersTitle: "فرص العمل المتاحة",
+                careersDesc: "انضم إلى فريق الخبراء والباحثين لدينا لبناء مستقبل الحلول الرقمية.",
+                applyNow: "قدم الآن",
+                noJobs: "لا توجد وظائف شاغرة حالياً. تابعنا للمزيد!",
             }
         };
         //button start

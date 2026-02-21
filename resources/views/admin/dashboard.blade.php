@@ -88,6 +88,11 @@
                 <i data-lucide="swatchbook"></i>
                 <span class="font-semibold">تأثيرنا (Testimonials)</span>
             </button>
+            <button onclick="switchTab('careers')" id="btn-careers"
+                class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 transition-all">
+                <i data-lucide="scroll-text"></i>
+                <span class="font-semibold">إدارة الوظائف</span>
+            </button>
             <div class="pt-4 mt-4 border-t border-gray-100">
                 <a href="{{ route('home') }}" target="_blank"
                     class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-blue-600 hover:bg-blue-50 transition-all">
@@ -179,15 +184,11 @@
                                         <span class="text-sm font-semibold">اسحب الصورة أو اضغط هنا</span>
                                     </div>
                                     <div id="image-preview-container"
-                                        class="hidden absolute inset-0 bg-white rounded-2xl flex items-center justify-between px-6 border border-[#00f0c8] shadow-inner">
-                                        <div class="flex items-center gap-4">
-                                            <img id="temp-img" src="" class="w-16 h-16 rounded-lg object-cover">
-                                            <span class="text-sm font-bold text-gray-700 truncate max-w-[120px]"
-                                                id="file-name">filename.jpg</span>
-                                        </div>
+                                        class="hidden absolute inset-0 bg-white rounded-2xl overflow-hidden border border-[#00f0c8] shadow-inner">
+                                        <img id="temp-img" src="" class="w-full h-full object-cover">
                                         <button onclick="removeImage()"
-                                            class="w-10 h-10 flex items-center justify-center bg-red-50 text-red-500 hover:bg-red-500 hover:text-white rounded-xl transition-all">
-                                            <i data-lucide="trash-2" size="20"></i>
+                                            class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-500 text-white rounded-lg shadow-lg hover:scale-110 transition-all">
+                                            <i data-lucide="x" size="16"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -280,23 +281,46 @@
                             <tbody id="projects-list" class="divide-y divide-gray-100">
                                 @foreach($projects as $project)
                                     <tr class="hover:bg-gray-50 transition-colors">
-                                        <td class="px-8 py-6 flex items-center gap-4">
-                                            <img src="{{ asset($project->image) }}"
-                                                class="w-12 h-12 rounded-lg object-cover">
-                                            <p class="font-bold">{{ $project->name }}</p>
-                                        </td>
-                                        <td class="px-8 py-6 text-sm text-gray-600 line-clamp-1">{{ $project->description }}
-                                        </td>
-                                        <td class="px-8 py-6"><span
-                                                class="px-3 py-1 bg-gray-100 rounded-lg text-xs font-bold">{{ $project->service->name }}</span>
+                                        <td class="px-8 py-6">
+                                            <div class="flex items-center gap-4">
+                                                <div
+                                                    class="relative w-14 h-14 rounded-xl overflow-hidden border-2 border-gray-100 shadow-sm flex-shrink-0">
+                                                    <img src="{{ asset($project->image) }}"
+                                                        class="w-full h-full object-cover">
+                                                </div>
+                                                <div>
+                                                    <p class="font-bold text-gray-900">{{ $project->name }}</p>
+                                                    <p
+                                                        class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">
+                                                        Project ID: #{{ $project->id }}</p>
+                                                </div>
+                                            </div>
                                         </td>
                                         <td class="px-8 py-6">
-                                            <button onclick="deleteProject({{ $project->id }})"
-                                                class="text-red-500 hover:text-red-700">
-                                                <i data-lucide="trash-2"></i>
-                                            </button>
+                                            <div class="flex flex-col gap-1 max-w-xs">
+                                                <p class="text-sm text-gray-600 leading-relaxed line-clamp-2">
+                                                    {{ $project->description }}
+                                                </p>
+                                            </div>
                                         </td>
-
+                                        <td class="px-8 py-6">
+                                            <span
+                                                class="px-3 py-1.5 bg-[#00f0c8]/10 text-[#2f9181] rounded-lg text-xs font-bold border border-[#00f0c8]/20">
+                                                {{ $project->service->name }}
+                                            </span>
+                                        </td>
+                                        <td class="px-8 py-6">
+                                            <div class="flex items-center gap-3">
+                                                <button onclick='editProject({!! json_encode($project) !!})'
+                                                    class="w-10 h-10 flex items-center justify-center rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all shadow-sm">
+                                                    <i data-lucide="edit-3" size="18"></i>
+                                                </button>
+                                                <button onclick="deleteProject({{ $project->id }})"
+                                                    class="w-10 h-10 flex items-center justify-center rounded-xl bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-all shadow-sm">
+                                                    <i data-lucide="trash-2" size="18"></i>
+                                                </button>
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -390,17 +414,30 @@
                             <tbody id="members-list" class="divide-y divide-gray-100">
                                 @foreach($members as $member)
                                     <tr class="hover:bg-gray-50 transition-colors">
-                                        <td class="px-8 py-6 flex items-center gap-4">
-                                            <img src="{{ asset($member->image) }}"
-                                                class="w-12 h-12 rounded-full object-cover">
-                                            <p class="font-bold">{{ $member->name }}</p>
-                                        </td>
-                                        <td class="px-8 py-6 text-sm">{{ $member->role }}</td>
-                                        <td class="px-8 py-6 text-sm text-gray-600 line-clamp-1">{{ $member->description }}
+                                        <td class="px-8 py-6">
+                                            <div class="flex items-center gap-4">
+                                                <img src="{{ asset($member->image) }}"
+                                                    class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm">
+                                                <p class="font-bold text-gray-900">{{ $member->name }}</p>
+                                            </div>
                                         </td>
                                         <td class="px-8 py-6">
-                                            <button class="text-red-500 hover:text-red-700"><i
-                                                    data-lucide="trash-2"></i></button>
+                                            <span
+                                                class="px-3 py-1 bg-blue-50 text-blue-600 rounded-lg text-xs font-bold">{{ $member->role }}</span>
+                                        </td>
+                                        <td class="px-8 py-6 text-sm text-gray-600 max-w-xs truncate">
+                                            {{ $member->description }}</td>
+                                        <td class="px-8 py-6">
+                                            <div class="flex items-center gap-2">
+                                                <button onclick='editMember({!! json_encode($member) !!})'
+                                                    class="w-9 h-9 flex items-center justify-center rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all">
+                                                    <i data-lucide="edit-3" size="16"></i>
+                                                </button>
+                                                <button onclick="deleteMember({{ $member->id }})"
+                                                    class="w-9 h-9 flex items-center justify-center rounded-lg bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-all">
+                                                    <i data-lucide="trash-2" size="16"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -428,21 +465,48 @@
                                 الاجتماعي</h4>
 
                             <div class="space-y-4">
-                                <div class="space-y-2">
-                                    <label class="text-sm font-bold text-gray-700 block">واتساب (WhatsApp)</label>
-                                    <input type="text" id="contact-whatsapp" placeholder="مثلاً: 201275018291"
-                                        class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="space-y-2">
+                                        <label class="text-sm font-bold text-gray-700 block">واتساب 1 (WhatsApp)</label>
+                                        <input type="text" id="contact-whatsapp" value="{{ $contact->whatsapp }}" placeholder="مثلاً: 256789383140"
+                                            class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="text-sm font-bold text-gray-700 block">واتساب 2 (WhatsApp)</label>
+                                        <input type="text" id="contact-whatsapp2" value="{{ $contact->whatsapp2 }}" placeholder="مثلاً: 01275018291"
+                                            class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="space-y-2">
+                                        <label class="text-sm font-bold text-gray-700 block">فيسبوك (Facebook)</label>
+                                        <input type="text" id="contact-facebook" value="{{ $contact->facebook }}" placeholder="رابط الصفحة الكامل"
+                                            class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="text-sm font-bold text-gray-700 block">إنستجرام (Instagram)</label>
+                                        <input type="text" id="contact-instagram" value="{{ $contact->instagram }}" placeholder="رابط الملف الشخصي"
+                                            class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="space-y-2">
+                                        <label class="text-sm font-bold text-gray-700 block">تيك توك (TikTok)</label>
+                                        <input type="text" id="contact-tiktok" value="{{ $contact->tiktok }}" placeholder="رابط التيك توك"
+                                            class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="text-sm font-bold text-gray-700 block">لينكد إن (LinkedIn)</label>
+                                        <input type="text" id="contact-linkedin" value="{{ $contact->linkedin }}" placeholder="رابط لينكد إن"
+                                            class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
+                                    </div>
                                 </div>
 
                                 <div class="space-y-2">
-                                    <label class="text-sm font-bold text-gray-700 block">فيسبوك (Facebook)</label>
-                                    <input type="text" id="contact-facebook" placeholder="رابط الصفحة الكامل"
-                                        class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
-                                </div>
-
-                                <div class="space-y-2">
-                                    <label class="text-sm font-bold text-gray-700 block">إنستجرام (Instagram)</label>
-                                    <input type="text" id="contact-instagram" placeholder="رابط الملف الشخصي"
+                                    <label class="text-sm font-bold text-gray-700 block">يوتيوب (YouTube)</label>
+                                    <input type="text" id="contact-youtube" value="{{ $contact->youtube }}" placeholder="رابط قناة اليوتيوب"
                                         class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
                                 </div>
                             </div>
@@ -456,20 +520,20 @@
                             <div class="space-y-4">
                                 <div class="space-y-2">
                                     <label class="text-sm font-bold text-gray-700 block">رقم الهاتف الأساسي</label>
-                                    <input type="text" id="contact-phone" placeholder="مثلاً: 256789383140+"
+                                    <input type="text" id="contact-phone" value="{{ $contact->phone }}" placeholder="مثلاً: +256789383140"
                                         class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
                                 </div>
 
                                 <div class="space-y-2">
                                     <label class="text-sm font-bold text-gray-700 block">البريد الإلكتروني</label>
-                                    <input type="email" id="contact-email" placeholder="info@digitalage.com"
+                                    <input type="email" id="contact-email" value="{{ $contact->email }}" placeholder="info@digitalage.com"
                                         class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
                                 </div>
 
                                 <div class="space-y-2">
                                     <label class="text-sm font-bold text-gray-700 block">الموقع / العنوان</label>
                                     <textarea id="contact-address" rows="3" placeholder="العنوان بالتفصيل..."
-                                        class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50"></textarea>
+                                        class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">{{ $contact->address }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -548,15 +612,28 @@
                             <tbody id="services-list" class="divide-y divide-gray-100">
                                 @foreach($services as $service)
                                     <tr class="hover:bg-gray-50 transition-colors">
-                                        <td class="px-8 py-6 flex items-center gap-4">
-                                            <i data-lucide="{{ $service->icon }}" class="text-lime-600"></i>
-                                            <p class="font-bold">{{ $service->name }}</p>
-                                        </td>
-                                        <td class="px-8 py-6 text-sm text-gray-600 line-clamp-1">{{ $service->description }}
-                                        </td>
                                         <td class="px-8 py-6">
-                                            <button class="text-red-500 hover:text-red-700"><i
-                                                    data-lucide="trash-2"></i></button>
+                                            <div class="flex items-center gap-4">
+                                                <div
+                                                    class="w-10 h-10 bg-lime-50 rounded-lg flex items-center justify-center text-lime-600">
+                                                    <i data-lucide="{{ $service->icon }}" size="20"></i>
+                                                </div>
+                                                <p class="font-bold text-gray-900">{{ $service->name }}</p>
+                                            </div>
+                                        </td>
+                                        <td class="px-8 py-6 text-sm text-gray-600 max-w-md truncate">
+                                            {{ $service->description }}</td>
+                                        <td class="px-8 py-6">
+                                            <div class="flex items-center gap-2">
+                                                <button onclick='editService({!! json_encode($service) !!})'
+                                                    class="w-9 h-9 flex items-center justify-center rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all">
+                                                    <i data-lucide="edit-3" size="16"></i>
+                                                </button>
+                                                <button onclick="deleteService({{ $service->id }})"
+                                                    class="w-9 h-9 flex items-center justify-center rounded-lg bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-all">
+                                                    <i data-lucide="trash-2" size="16"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -566,7 +643,7 @@
                 </div>
             </section>
 
-        <!-- IMPACTS/TESTIMONIALS MANAGEMENT -->
+            <!-- IMPACTS/TESTIMONIALS MANAGEMENT -->
             <section id="impacts-tab" class="tab-content hidden space-y-8">
                 <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-8">
                     <h3 class="text-xl font-bold mb-8 flex items-center gap-3">
@@ -586,7 +663,8 @@
                             </div>
                             <div class="space-y-2">
                                 <label class="text-sm font-bold text-gray-700 mr-2">الأيقونة (Lucide)</label>
-                                <input type="text" id="impact-icon" value="user-round" placeholder="مثلاً: user, star, leaf"
+                                <input type="text" id="impact-icon" value="user-round"
+                                    placeholder="مثلاً: user, star, leaf"
                                     class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all bg-gray-50/50">
                             </div>
                         </div>
@@ -596,6 +674,28 @@
                                 <label class="text-sm font-bold text-gray-700 mr-2">التفاصيل / النص</label>
                                 <textarea id="impact-text" rows="5" placeholder="اكتب رأي الجمهور أو العميل هنا..."
                                     class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all bg-gray-50/50"></textarea>
+                            </div>
+                            <!-- Image Upload for Impact -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-bold text-gray-700 mr-2">صورة الشخص (اختياري)</label>
+                                <div class="relative group h-32">
+                                    <input type="file" id="impact-image-input"
+                                        class="absolute inset-0 opacity-0 cursor-pointer z-10"
+                                        onchange="handleImpactImage(event)">
+                                    <div id="impact-image-placeholder"
+                                        class="w-full h-full border-2 border-dashed border-gray-200 rounded-2xl flex flex-col items-center justify-center gap-2 text-gray-400 group-hover:border-orange-500 group-hover:text-orange-500 transition-all bg-gray-50/50">
+                                        <i data-lucide="image-plus" size="24"></i>
+                                        <span class="text-xs font-semibold">اضغط لرفع صورة</span>
+                                    </div>
+                                    <div id="impact-image-preview-container"
+                                        class="hidden absolute inset-0 bg-white rounded-2xl overflow-hidden border border-orange-500 shadow-inner">
+                                        <img id="impact-temp-img" src="" class="w-full h-full object-cover">
+                                        <button onclick="removeImpactImage()"
+                                            class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-500 text-white rounded-lg shadow-lg hover:scale-110 transition-all">
+                                            <i data-lucide="x" size="16"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -629,20 +729,174 @@
                             <tbody id="impacts-list" class="divide-y divide-gray-100">
                                 @foreach($impacts as $impact)
                                     <tr class="hover:bg-gray-50 transition-colors">
-                                        <td class="px-8 py-6 flex items-center gap-4">
-                                            <div class="w-10 h-10 bg-orange-50 rounded-lg flex items-center justify-center">
-                                                <i data-lucide="{{ $impact->icon }}" class="text-orange-500"></i>
+                                        <td class="px-8 py-6">
+                                            <div class="flex items-center gap-4">
+                                                <div
+                                                    class="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center text-orange-500 shadow-sm border border-orange-100">
+                                                    @if($impact->image)
+                                                        <img src="{{ asset($impact->image) }}"
+                                                            class="w-full h-full object-cover rounded-xl">
+                                                    @else
+                                                        <i data-lucide="{{ $impact->icon }}" size="20"></i>
+                                                    @endif
+                                                </div>
+                                                <p class="font-bold text-gray-900">{{ $impact->name }}</p>
                                             </div>
-                                            <p class="font-bold">{{ $impact->name }}</p>
                                         </td>
-                                        <td class="px-8 py-6 text-sm text-gray-600 max-w-md truncate">{{ $impact->text }}</td>
-                                        <td class="px-8 py-6 flex gap-2">
-                                            <button onclick='editImpact({!! json_encode($impact) !!})' class="text-blue-500 hover:text-blue-700">
-                                                <i data-lucide="edit-3"></i>
-                                            </button>
-                                            <button onclick="deleteImpact({{ $impact->id }})" class="text-red-500 hover:text-red-700">
-                                                <i data-lucide="trash-2"></i>
-                                            </button>
+                                        <td class="px-8 py-6 text-sm text-gray-600 max-w-md">
+                                            <p class="truncate">{{ $impact->text }}</p>
+                                        </td>
+                                        <td class="px-8 py-6">
+                                            <div class="flex items-center gap-2">
+                                                <button onclick='editImpact({!! json_encode($impact) !!})'
+                                                    class="w-9 h-9 flex items-center justify-center rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all">
+                                                    <i data-lucide="edit-3" size="16"></i>
+                                                </button>
+                                                <button onclick="deleteImpact({{ $impact->id }})"
+                                                    class="w-9 h-9 flex items-center justify-center rounded-lg bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-all">
+                                                    <i data-lucide="trash-2" size="16"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CAREERS MANAGEMENT -->
+            <section id="careers-tab" class="tab-content hidden space-y-8">
+                <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-8">
+                    <h3 class="text-xl font-bold mb-8 flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg">
+                            <i data-lucide="scroll-text" size="24"></i>
+                        </div>
+                        <span id="career-form-title">إضافة وظيفة جديدة</span>
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-6">
+                            <div class="space-y-2">
+                                <label class="text-sm font-bold text-gray-700 mr-2">مسمى الوظيفة</label>
+                                <input type="text" id="career-title" placeholder="مثلاً: UI/UX Designer"
+                                    class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-bold text-gray-700 mr-2">القسم / التصنيف</label>
+                                <select id="career-category"
+                                    class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
+                                    <option value="Marketing">Marketing</option>
+                                    <option value="Design">Design</option>
+                                    <option value="Web Application">Web Application</option>
+                                    <option value="Flutter">Flutter</option>
+                                    <option value="Mobile Application">Mobile Application</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="space-y-6">
+                            <div class="space-y-2">
+                                <label class="text-sm font-bold text-gray-700 mr-2">المدة الزمنية (مثلاً:
+                                    Full-time)</label>
+                                <input type="text" id="career-duration" placeholder="مثلاً: وقت كامل"
+                                    class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-bold text-gray-700 mr-2">تاريخ انتهاء التقديم
+                                    (Deadline)</label>
+                                <input type="date" id="career-deadline"
+                                    class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-bold text-gray-700 mr-2">الخدمة المرتبطة</label>
+                                <select id="career-service-id"
+                                    class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
+                                    <option value="">-- اختر الخدمة --</option>
+                                    @foreach($services as $service)
+                                        <option value="{{ $service->id }}">{{ $service->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-bold text-gray-700 mr-2">وصف الوظيفة والمتطلبات</label>
+                                <textarea id="career-desc" rows="3" placeholder="اكتب متطلبات الوظيفة هنا..."
+                                    class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="editing-career-id" value="">
+                    <div class="mt-8 flex justify-end gap-3">
+                        <button id="cancel-career-edit" onclick="resetCareerForm()"
+                            class="hidden px-8 py-4 bg-gray-100 text-gray-600 font-bold rounded-2xl hover:bg-gray-200 transition-all">إلغاء</button>
+                        <button onclick="saveCareer()"
+                            class="px-12 py-4 bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-black text-lg rounded-2xl shadow-xl hover:shadow-purple-500/40 hover:-translate-y-1 transition-all flex items-center gap-3">
+                            <span id="save-career-btn-text">حفظ الوظيفة</span>
+                            <i data-lucide="check-circle" size="24"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="p-8 border-b border-gray-50">
+                        <h3 class="text-xl font-bold text-gray-800">قائمة الوظائف المتاحة</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-right">
+                            <thead class="bg-gray-50 text-gray-500 text-[11px] font-bold uppercase tracking-widest">
+                                <tr>
+                                    <th class="px-8 py-5">الوظيفة والمدة</th>
+                                    <th class="px-8 py-5">القسم</th>
+                                    <th class="px-8 py-5">الخدمة</th>
+                                    <th class="px-8 py-5">التاريخ</th>
+                                    <th class="px-8 py-5">الوصف</th>
+                                    <th class="px-8 py-5">العمليات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="careers-list" class="divide-y divide-gray-100">
+                                @foreach($careers as $career)
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="px-8 py-6">
+                                            <div>
+                                                <p class="font-bold text-gray-900">{{ $career->title }}</p>
+                                                <p class="text-[10px] text-purple-500 font-bold uppercase tracking-wider">
+                                                    {{ $career->duration }}</p>
+                                            </div>
+                                        </td>
+                                        <td class="px-8 py-6">
+                                            <span
+                                                class="px-3 py-1.5 bg-purple-50 text-purple-600 rounded-lg text-xs font-black border border-purple-100 uppercase">
+                                                {{ $career->category }}
+                                            </span>
+                                        </td>
+                                        <td class="px-8 py-6 text-sm font-semibold text-gray-600">
+                                            @if($career->service)
+                                                {{ $career->service->name }}
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+                                        <td class="px-8 py-6">
+                                            <p class="text-sm font-semibold text-gray-700">
+                                                {{ $career->created_at->format('Y-m-d') }}</p>
+                                            @if($career->deadline)
+                                                <p class="text-[10px] text-red-500 font-bold">ينتهي: {{ $career->deadline }}</p>
+                                            @endif
+                                        </td>
+                                        <td class="px-8 py-6 text-sm text-gray-500 max-w-xs">
+                                            <p class="truncate">{{ $career->description }}</p>
+                                        </td>
+                                        <td class="px-8 py-6">
+                                            <div class="flex items-center gap-2">
+                                                <button onclick='editCareer({!! json_encode($career) !!})'
+                                                    class="w-10 h-10 flex items-center justify-center rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all shadow-sm">
+                                                    <i data-lucide="edit-3" size="18"></i>
+                                                </button>
+                                                <button onclick="deleteCareer({{ $career->id }})"
+                                                    class="w-10 h-10 flex items-center justify-center rounded-xl bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-all shadow-sm">
+                                                    <i data-lucide="trash-2" size="18"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -679,7 +933,8 @@
                 'members': 'إدارة أعضاء الفريق',
                 'services': 'إدارة الخدمات',
                 'contacts': 'بيانات التواصل',
-                'impacts': 'إدارة تأثيرنا (Testimonials)'
+                'impacts': 'إدارة تأثيرنا (Testimonials)',
+                'careers': 'إدارة الوظائف والمهن'
             };
             document.getElementById('page-title').innerText = titles[tab];
         }
@@ -787,14 +1042,60 @@
             }
         }
 
+        function editProject(project) {
+            document.getElementById('editing-project-id').value = project.id;
+            document.getElementById('proj-name').value = project.name;
+            document.getElementById('proj-category').value = project.service_id;
+            document.getElementById('proj-desc').value = project.description;
+            document.getElementById('proj-html').value = project.html_content || '';
+
+            if (project.image) {
+                document.getElementById('temp-img').src = '/' + project.image;
+                document.getElementById('image-placeholder').classList.add('hidden');
+                document.getElementById('image-preview-container').classList.remove('hidden');
+            } else {
+                removeImage();
+            }
+
+            document.getElementById('project-form-header').innerText = 'تعديل العمل: ' + project.name;
+            document.getElementById('save-project-btn-text').innerText = 'تحديث العمل في البورتفوليو';
+            document.getElementById('cancel-project-edit').classList.remove('hidden');
+
+            updateFormPreview();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         function resetProjectForm() {
             document.getElementById('editing-project-id').value = '';
             document.getElementById('proj-name').value = '';
             document.getElementById('proj-desc').value = '';
             document.getElementById('proj-html').value = '';
             removeImage();
+            document.getElementById('project-form-header').innerText = 'إضافة عمل جديد للبورتفوليو';
             document.getElementById('save-project-btn-text').innerText = 'حفظ العمل في البورتفوليو';
             document.getElementById('cancel-project-edit').classList.add('hidden');
+            updateFormPreview();
+        }
+
+        function resetMemberForm() {
+            document.getElementById('editing-member-id').value = '';
+            document.getElementById('member-name').value = '';
+            document.getElementById('member-role').value = '';
+            document.getElementById('member-desc').value = '';
+            removeMemberImage();
+            document.getElementById('member-form-title').innerText = 'إضافة عضو فريق جديد';
+            document.getElementById('save-member-btn-text').innerText = 'حفظ العضو';
+            document.getElementById('cancel-member-edit').classList.add('hidden');
+        }
+
+        function resetServiceForm() {
+            document.getElementById('editing-service-id').value = '';
+            document.getElementById('service-name').value = '';
+            document.getElementById('service-icon').value = '';
+            document.getElementById('service-desc').value = '';
+            document.getElementById('service-form-title').innerText = 'إضافة خدمة جديدة';
+            document.getElementById('save-service-btn-text').innerText = 'حفظ الخدمة';
+            document.getElementById('cancel-service-edit').classList.add('hidden');
         }
 
         // --- Member Logic ---
@@ -848,6 +1149,27 @@
             }
         }
 
+        function editMember(member) {
+            document.getElementById('editing-member-id').value = member.id;
+            document.getElementById('member-name').value = member.name;
+            document.getElementById('member-role').value = member.role;
+            document.getElementById('member-desc').value = member.description;
+
+            if (member.image) {
+                document.getElementById('member-temp-img').src = '/' + member.image;
+                document.getElementById('member-image-placeholder').classList.add('hidden');
+                document.getElementById('member-image-preview-container').classList.remove('hidden');
+            } else {
+                removeMemberImage();
+            }
+
+            document.getElementById('member-form-title').innerText = 'تعديل العضو: ' + member.name;
+            document.getElementById('save-member-btn-text').innerText = 'تحديث العضو';
+            document.getElementById('cancel-member-edit').classList.remove('hidden');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         // --- Service Logic ---
         async function saveService() {
             const data = {
@@ -894,12 +1216,29 @@
             }
         }
 
+        function editService(service) {
+            document.getElementById('editing-service-id').value = service.id;
+            document.getElementById('service-name').value = service.name;
+            document.getElementById('service-icon').value = service.icon;
+            document.getElementById('service-desc').value = service.description;
+
+            document.getElementById('service-form-title').innerText = 'تعديل الخدمة: ' + service.name;
+            document.getElementById('save-service-btn-text').innerText = 'تحديث الخدمة';
+            document.getElementById('cancel-service-edit').classList.remove('hidden');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         // --- Contact Logic ---
         async function saveContacts() {
             const data = {
                 whatsapp: document.getElementById('contact-whatsapp').value,
+                whatsapp2: document.getElementById('contact-whatsapp2').value,
                 facebook: document.getElementById('contact-facebook').value,
                 instagram: document.getElementById('contact-instagram').value,
+                tiktok: document.getElementById('contact-tiktok').value,
+                linkedin: document.getElementById('contact-linkedin').value,
+                youtube: document.getElementById('contact-youtube').value,
                 phone: document.getElementById('contact-phone').value,
                 email: document.getElementById('contact-email').value,
                 address: document.getElementById('contact-address').value
@@ -924,15 +1263,38 @@
         }
 
         // --- Impact Logic ---
-        async function saveImpact() {
-            const data = {
-                id: document.getElementById('editing-impact-id').value,
-                name: document.getElementById('impact-name').value,
-                icon: document.getElementById('impact-icon').value,
-                text: document.getElementById('impact-text').value
-            };
+        function handleImpactImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('impact-temp-img').src = e.target.result;
+                    document.getElementById('impact-image-placeholder').classList.add('hidden');
+                    document.getElementById('impact-image-preview-container').classList.remove('hidden');
+                }
+                reader.readAsDataURL(file);
+            }
+        }
 
-            if (!data.name || !data.text) {
+        function removeImpactImage() {
+            document.getElementById('impact-image-input').value = '';
+            document.getElementById('impact-image-placeholder').classList.remove('hidden');
+            document.getElementById('impact-image-preview-container').classList.add('hidden');
+        }
+
+        async function saveImpact() {
+            const formData = new FormData();
+            formData.append('id', document.getElementById('editing-impact-id').value);
+            formData.append('name', document.getElementById('impact-name').value);
+            formData.append('icon', document.getElementById('impact-icon').value);
+            formData.append('text', document.getElementById('impact-text').value);
+
+            const imageFile = document.getElementById('impact-image-input').files[0];
+            if (imageFile) {
+                formData.append('image', imageFile);
+            }
+
+            if (!document.getElementById('impact-name').value || !document.getElementById('impact-text').value) {
                 alert('يرجى ملء الاسم والنص');
                 return;
             }
@@ -941,10 +1303,9 @@
                 const response = await fetch('{{ route("admin.impact.save") }}', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': csrfToken
                     },
-                    body: JSON.stringify(data)
+                    body: formData
                 });
                 const result = await response.json();
                 if (result.success) {
@@ -979,12 +1340,20 @@
             document.getElementById('impact-name').value = impact.name;
             document.getElementById('impact-icon').value = impact.icon;
             document.getElementById('impact-text').value = impact.text;
-            
+
+            if (impact.image) {
+                document.getElementById('impact-temp-img').src = '/' + impact.image;
+                document.getElementById('impact-image-placeholder').classList.add('hidden');
+                document.getElementById('impact-image-preview-container').classList.remove('hidden');
+            } else {
+                removeImpactImage();
+            }
+
             document.getElementById('impact-form-title').innerText = 'تعديل الرأي: ' + impact.name;
             document.getElementById('save-impact-btn-text').innerText = 'تحديث التأثير';
             document.getElementById('cancel-impact-edit').classList.remove('hidden');
-            
-            window.scrollTo({top: 0, behavior: 'smooth'});
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function resetImpactForm() {
@@ -992,10 +1361,92 @@
             document.getElementById('impact-name').value = '';
             document.getElementById('impact-icon').value = 'user-round';
             document.getElementById('impact-text').value = '';
-            
+            removeImpactImage();
+
             document.getElementById('impact-form-title').innerText = 'إضافة رأي جديد (Impact)';
             document.getElementById('save-impact-btn-text').innerText = 'حفظ التأثير';
             document.getElementById('cancel-impact-edit').classList.add('hidden');
+        }
+
+        async function saveCareer() {
+            const data = {
+                id: document.getElementById('editing-career-id').value,
+                title: document.getElementById('career-title').value,
+                category: document.getElementById('career-category').value,
+                duration: document.getElementById('career-duration').value,
+                deadline: document.getElementById('career-deadline').value,
+                service_id: document.getElementById('career-service-id').value,
+                description: document.getElementById('career-desc').value
+            };
+
+            if (!data.title || !data.duration) {
+                alert('يرجى إدخال المسمى والمدة على الأقل');
+                return;
+            }
+
+            try {
+                const response = await fetch('{{ route("admin.careers.save") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                if (result.success) {
+                    alert('تم حفظ الوظيفة بنجاح');
+                    location.reload();
+                }
+            } catch (error) {
+                console.error('Error saving career:', error);
+            }
+        }
+
+        async function deleteCareer(id) {
+            if (!confirm('هل أنت متأكد من حذف هذه الوظيفة؟')) return;
+            try {
+                const response = await fetch(`/admin/careers/delete/${id}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    }
+                });
+                const result = await response.json();
+                if (result.success) {
+                    location.reload();
+                }
+            } catch (error) {
+                console.error('Error deleting career:', error);
+            }
+        }
+
+        function editCareer(career) {
+            document.getElementById('editing-career-id').value = career.id;
+            document.getElementById('career-title').value = career.title;
+            document.getElementById('career-category').value = career.category;
+            document.getElementById('career-duration').value = career.duration;
+            document.getElementById('career-deadline').value = career.deadline || '';
+            document.getElementById('career-service-id').value = career.service_id || '';
+            document.getElementById('career-desc').value = career.description;
+
+            document.getElementById('career-form-title').innerText = 'تعديل الوظيفة: ' + career.title;
+            document.getElementById('save-career-btn-text').innerText = 'تحديث الوظيفة';
+            document.getElementById('cancel-career-edit').classList.remove('hidden');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function resetCareerForm() {
+            document.getElementById('editing-career-id').value = '';
+            document.getElementById('career-title').value = '';
+            document.getElementById('career-duration').value = '';
+            document.getElementById('career-deadline').value = '';
+            document.getElementById('career-service-id').value = '';
+            document.getElementById('career-desc').value = '';
+            document.getElementById('career-form-title').innerText = 'إضافة وظيفة جديدة';
+            document.getElementById('save-career-btn-text').innerText = 'حفظ الوظيفة';
+            document.getElementById('cancel-career-edit').classList.add('hidden');
         }
 
         // Initial preview

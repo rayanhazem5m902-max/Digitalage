@@ -15,11 +15,11 @@ class InitialDataSeeder extends Seeder
 {
     public function run(): void
     {
-        Service::truncate();
-        Member::truncate();
-        Contact::truncate();
-        PortfolioProject::truncate();
-        Impact::truncate();
+        Service::query()->delete();
+        Member::query()->delete();
+        Contact::query()->delete();
+        PortfolioProject::query()->delete();
+        Impact::query()->delete();
 
         // 1. Services
         $s1 = Service::create(['name' => 'Software Development', 'slug' => 'software-development', 'icon' => 'code', 'description' => 'Custom software solutions built with modern frameworks.']);
@@ -82,6 +82,33 @@ class InitialDataSeeder extends Seeder
             'name' => 'Dr. Fatima Ali',
             'icon' => 'user-round',
             'text' => '"Working with Digital Age has been an honor. The team on the ground is dedicated and truly cares about the people they serve."'
+        ]);
+
+        // 6. Careers
+        \App\Models\Career::query()->delete();
+        \App\Models\Career::create([
+            'title' => 'Software Engineer',
+            'category' => 'Engineering',
+            'service_id' => $s1->id,
+            'duration' => 'Permanent',
+            'deadline' => now()->addMonths(2)->format('Y-m-d'),
+            'description' => 'We are looking for a skilled software engineer to join our dynamic team and build innovative solutions.'
+        ]);
+        \App\Models\Career::create([
+            'title' => 'Graphic Designer',
+            'category' => 'Design',
+            'service_id' => $s4->id,
+            'duration' => 'Contract - 6 Months',
+            'deadline' => now()->addMonth()->format('Y-m-d'),
+            'description' => 'Creative graphic designer needed to elevate our brand identity and create stunning visual content.'
+        ]);
+        \App\Models\Career::create([
+            'title' => 'Digital Marketer',
+            'category' => 'Marketing',
+            'service_id' => $s5->id,
+            'duration' => 'Permanent',
+            'deadline' => now()->addDays(15)->format('Y-m-d'),
+            'description' => 'Join our marketing team to develop data-driven strategies and grow our online presence.'
         ]);
     }
 }

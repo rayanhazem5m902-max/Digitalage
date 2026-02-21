@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/project/{id}', [HomeController::class, 'showProject'])->name('project.show');
+Route::get('/careers', [HomeController::class, 'careers'])->name('careers');
 
 // Admin Routes
 Route::prefix('admin')->group(function () {
@@ -31,4 +32,8 @@ Route::prefix('admin')->group(function () {
     // Impacts
     Route::post('/impact/save', [AdminController::class, 'saveImpact'])->name('admin.impact.save');
     Route::post('/impact/delete/{id}', [AdminController::class, 'deleteImpact'])->name('admin.impact.delete');
+
+    // Careers
+    Route::post('/careers/save', [AdminController::class, 'saveCareer'])->name('admin.careers.save');
+    Route::post('/careers/delete/{id}', [AdminController::class, 'deleteCareer'])->name('admin.careers.delete');
 });
