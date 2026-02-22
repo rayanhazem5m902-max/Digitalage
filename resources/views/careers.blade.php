@@ -128,7 +128,11 @@
                         data-i18n="portfolio">Portfolio</a>
                     <a href="{{ route('home') }}#contact" class="nav-link text-gray-700 font-medium"
                         data-i18n="contact">Contact</a>
+                    <a href="{{ route('home') }}#impact" class="nav-link text-gray-700 font-medium"
+                        data-i18n="impact">Impact</a>
                     <a href="{{ route('careers') }}" class="nav-link text-blue font-bold" data-i18n="jobs">Jobs</a>
+                    <a href="{{ route('home') }}#members" class="nav-link text-gray-700 font-medium"
+                        data-i18n="Members">Members</a>
                 </div>
 
                 <!-- Right Side -->
@@ -161,7 +165,11 @@
                         data-i18n="portfolio">Portfolio</a>
                     <a href="{{ route('home') }}#contact" class="nav-link text-gray-700 font-medium py-2"
                         data-i18n="contact">Contact</a>
+                    <a href="{{ route('home') }}#impact" class="nav-link text-gray-700 font-medium py-2"
+                        data-i18n="impact">Impact</a>
                     <a href="{{ route('careers') }}" class="nav-link text-blue font-bold py-2" data-i18n="jobs">Jobs</a>
+                    <a href="{{ route('home') }}#members" class="nav-link text-gray-700 font-medium py-2"
+                        data-i18n="Members">Members</a>
                 </div>
             </div>
         </nav>
@@ -205,7 +213,8 @@
                     @foreach($careers as $job)
                         <div class="career-card" data-aos="fade-up">
                             <div class="flex justify-between items-start mb-6">
-                                <span class="badge-category">{{ $job->category }}</span>
+                                <span
+                                    class="px-3 py-1.5 bg-purple-50 text-purple-600 rounded-lg text-xs font-black border border-purple-100 uppercase">{{ $job->category }}</span>
                                 <span class="badge-duration">
                                     <i data-lucide="clock" class="w-4 h-4 inline-block mr-1"></i>
                                     {{ $job->duration }}
@@ -213,16 +222,32 @@
                             </div>
                             <h3 class="text-2xl font-bold text-slate-900 mb-2">{{ $job->title }}</h3>
 
-                            @if($job->deadline)
-                                <div class="flex items-center gap-2 text-red-500 text-sm font-semibold mb-4">
-                                    <i data-lucide="calendar" class="w-4 h-4"></i>
-                                    <span>Deadline: {{ \Carbon\Carbon::parse($job->deadline)->format('M d, Y') }}</span>
+                            @if($job->service)
+                                <div class="flex items-center gap-2 text-gray-600 text-sm font-bold mb-4">
+                                    <i data-lucide="briefcase" class="w-4 h-4 text-purple-500"></i>
+                                    <span class="text-gray-500" data-i18n="service">Service</span>:
+                                    <span class="text-purple-600">{{ $job->service->name  }}</span>
                                 </div>
                             @endif
-                            <p class="text-gray-600 mb-8 line-clamp-3">
-                                {{ $job->description ?? 'No description provided.' }}
-                            </p>
-                            <a href="#"
+
+                            <div class="flex flex-wrap gap-4 mb-6">
+                                <div class="flex items-center gap-2 text-gray-400 text-xs font-bold">
+                                    <i data-lucide="calendar" class="w-4 h-4"></i>
+                                    <span data-i18n="posted">Posted</span>: {{ $job->created_at->format('M d, Y') }}
+                                </div>
+                                @if($job->deadline)
+                                    <div class="flex items-center gap-2 text-red-500 text-xs font-bold">
+                                        <i data-lucide="calendar-x" class="w-4 h-4"></i>
+                                        <span data-i18n="deadline">Deadline</span>:
+                                        {{ \Carbon\Carbon::parse($job->deadline)->format('M d, Y') }}
+                                    </div>
+                                @endif
+                            </div>
+
+                            <div class="text-gray-600 mb-8 whitespace-pre-line">
+                                {!! nl2br(e($job->description ?? 'No description provided.')) !!}
+                            </div>
+                            <a href="{{ route('career.show', $job->id) }}"
                                 class="btn-primary px-8 py-3 rounded-xl text-white font-semibold text-center block text-decoration-none"
                                 data-i18n="applyNow">Apply Now</a>
                         </div>
@@ -258,11 +283,16 @@
                 about: "About",
                 portfolio: "Portfolio",
                 contact: "Contact",
+                impact: "Impact",
                 jobs: "Jobs",
+                Members: "Members",
                 careersTitle: "Career Opportunities",
                 careersDesc: "Join our team of experts and researchers to build the future of digital solutions.",
                 applyNow: "Apply Now",
                 noJobs: "No open positions at the moment. Keep checking!",
+                service: "Service",
+                posted: "Posted",
+                deadline: "Deadline",
                 footerDesc: "Transforming businesses through innovative technology solutions.",
                 copyright: "© 2025 Digital Age. All rights reserved.",
             },
@@ -272,11 +302,16 @@
                 about: "من نحن",
                 portfolio: "أعمالنا",
                 contact: "اتصل بنا",
+                impact: "تأثيرنا",
                 jobs: "الوظائف",
+                Members: "فريقنا",
                 careersTitle: "فرص العمل المتاحة",
                 careersDesc: "انضم إلى فريق الخبراء والباحثين لدينا لبناء مستقبل الحلول الرقمية.",
                 applyNow: "قدم الآن",
                 noJobs: "لا توجد وظائف شاغرة حالياً. تابعنا للمزيد!",
+                service: "الخدمة",
+                posted: "نُشر في",
+                deadline: "الموعد النهائي",
                 footerDesc: "نحوّل الشركات من خلال حلول تقنية مبتكرة.",
                 copyright: "© ٢٠٢٥ Digital Age. جميع الحقوق محفوظة.",
             }

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/project/{id}', [HomeController::class, 'showProject'])->name('project.show');
 Route::get('/careers', [HomeController::class, 'careers'])->name('careers');
+Route::get('/career/{id}', [HomeController::class, 'showCareer'])->name('career.show');
 
 // Admin Routes
 Route::prefix('admin')->group(function () {

@@ -707,6 +707,8 @@
                         data-i18n="impact">Impact</a>
                     <a href="{{ route('careers') }}" class="nav-link text-gray-700 hover:text-blue font-medium"
                         data-i18n="jobs">Jobs</a>
+                    <a href="#members" class="nav-link text-gray-700 hover:text-blue font-medium"
+                        data-i18n="Members">Members</a>
                 </div>
 
                 <!-- Right Side: CTA + Language Switcher -->
@@ -738,14 +740,15 @@
                         data-i18n="about">About</a>
                     <a href="#Portfolio" class="nav-link text-gray-700 hover:text-blue font-medium py-2"
                         data-i18n="portfolio">Portfolio</a>
+
+
                     <a href="#contact" class="nav-link text-gray-700 hover:text-lime font-medium py-2"
                         data-i18n="contact">Contact</a>
                     <a href="{{ route('careers') }}" class="nav-link text-gray-700 hover:text-blue font-medium py-2"
                         data-i18n="jobs">Jobs</a>
-                    <button class="btn-primary px-6 py-2.5 rounded-full text-white font-semibold w-full"
-                        data-i18n="getStarted" id="start">
-                        Get Started
-                    </button>
+                    <a href="#members" class="nav-link text-gray-700 hover:text-blue font-medium"
+                        data-i18n="Members">Members</a>
+
                 </div>
             </div>
         </nav>
@@ -853,8 +856,9 @@
         <div class="container py-5">
             <div class="row mb-5 text-center">
                 <div class="col-lg-8 mx-auto">
-                    <h2 class="fw-bold mb-3" data-i18n="testimonials.title"> Our Team Members</h2>
-                    <p class="text-muted" data-i18n="testimonials.desc">Dedicated organizers and team members of Digital
+                    <h2 class="fw-bold mb-3" data-i18n="membersSection.title"> Our Team Members</h2>
+                    <p class="text-muted" data-i18n="membersSection.desc">Dedicated organizers and team members of
+                        Digital
                         Age,
                     </p>
                 </div>
@@ -1518,34 +1522,48 @@
                         videoOverlay.id = 'video-overlay';
                         videoOverlay.className = 'fixed inset-0 z-[200] bg-black/95 flex items-center justify-center p-4 backdrop-blur-md transition-all duration-500 opacity-0 overflow-y-auto';
                         videoOverlay.innerHTML = `
-                            <div class="relative w-full max-w-4xl bg-[#0f172a] rounded-3xl overflow-hidden shadow-2xl ring-1 ring-white/10 flex flex-col my-auto" dir="${currentLang === 'ar' ? 'rtl' : 'ltr'}">
+                            <div class="relative w-full max-w-5xl bg-white rounded-[2rem] overflow-hidden shadow-2xl border border-gray-200 flex flex-col my-auto">
                                 <!-- Modal Header -->
-                                <div class="flex items-center justify-between p-6 bg-white/5 border-b border-white/10">
+                                <div class="flex items-center justify-between p-6 sm:px-10 sm:py-6 bg-gradient-to-r from-gray-50 to-white border-b border-gray-100">
                                     <button onclick="const vo = document.getElementById('video-overlay'); vo.classList.add('opacity-0'); setTimeout(() => vo.remove(), 500);" 
-                                        class="flex items-center gap-2 text-white hover:text-lime transition-all group">
-                                        <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-lime/20 transition-all">
-                                            <svg class="w-6 h-6 ${currentLang === 'ar' ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        class="flex items-center gap-3 text-gray-600 hover:text-[#bd147c] transition-all group z-10 w-1/3">
+                                        <div class="w-12 h-12 rounded-full bg-white shadow-sm border border-gray-100 flex items-center justify-center group-hover:scale-110 group-hover:border-[#bd147c]/30 group-hover:shadow-md transition-all">
+                                            <svg id="back-arrow-svg" class="w-6 h-6 ${currentLang === 'ar' ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                                             </svg>
                                         </div>
-                                        <span class="font-bold text-lg">${translations[currentLang].back}</span>
+                                        <span class="font-bold text-lg pointer-events-none" data-i18n="back">${translations[currentLang].back}</span>
                                     </button>
-                                    <div class="${currentLang === 'ar' ? 'text-left' : 'text-right'}">
-                                        <h2 class="text-white text-xl sm:text-2xl font-black tracking-tight mb-1">
+
+                                    <!-- Language Toggle Button -->
+                                    <div class="flex justify-center w-1/3">
+                                       <button onclick="toggleLanguage(); document.getElementById('video-lang-text').innerText = currentLang === 'en' ? 'العربية' : 'English'; const svg = document.getElementById('back-arrow-svg'); if(svg) { currentLang === 'ar' ? svg.classList.add('rotate-180') : svg.classList.remove('rotate-180'); }" class="px-5 py-2.5 bg-white hover:bg-gray-50 text-gray-700 shadow-sm rounded-full font-bold text-sm transition-all flex items-center gap-2 border border-gray-200 hover:border-[#00f0c8]">
+                                           <svg class="w-4 h-4 text-[#bd147c]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path></svg>
+                                           <span id="video-lang-text">${currentLang === 'en' ? 'العربية' : 'English'}</span>
+                                       </button>
+                                    </div>
+
+                                    <div class="text-[end] z-10 w-1/3">
+                                        <h2 data-i18n="introHeading" class="text-xl sm:text-2xl font-black tracking-tight mb-1 bg-clip-text text-transparent bg-gradient-to-r from-[#00f0c8] to-[#bd147c]">
                                             ${translations[currentLang].introHeading}
                                         </h2>
+                                        <p class="text-sm font-bold text-gray-400 uppercase tracking-widest">Digital Age</p>
                                     </div>
                                 </div>
 
-                                <div class="p-6 sm:p-12 flex flex-col items-center justify-center space-y-8">
-                                    <!-- Smaller Centered Video -->
-                                    <div class="relative w-full max-w-2xl aspect-video rounded-3xl overflow-hidden bg-black shadow-2xl ring-1 ring-white/20">
-                                        <video controls autoplay class="w-full h-full object-contain">
+                                <div class="p-6 sm:p-10 flex flex-col items-center justify-center bg-gray-50/50 relative">
+                                    <!-- Decorative Elements -->
+                                    <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#00f0c8]/10 to-transparent rounded-bl-full pointer-events-none"></div>
+                                    <div class="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-[#bd147c]/10 to-transparent rounded-tr-full pointer-events-none"></div>
+
+                                    <!-- Video Container with brand styling -->
+                                    <div class="relative w-full max-w-4xl aspect-video rounded-3xl overflow-hidden bg-black shadow-[0_20px_50px_rgba(0,0,0,0.1)] border-4 border-white z-10">
+                                        <video controls autoplay class="w-full h-full object-cover">
                                             <source src="${videoUrl}" type="video/mp4">
                                             Your browser does not support the video tag.
                                         </video>
-                                        <div class="absolute top-4 left-4 pointer-events-none">
-                                            <span class="px-3 py-1.5 rounded-full bg-lime/90 text-black text-[10px] font-bold uppercase tracking-tighter">Intro</span>
+                                        <div class="absolute top-6 left-6 pointer-events-none">
+                                            <span class="px-4 py-2 rounded-xl bg-gradient-to-r from-[#bd147c] to-[#00f0c8] text-white text-xs font-black uppercase tracking-widest shadow-lg">Intro</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1660,6 +1678,8 @@
                 copyright: "©2025 Digital Age. All rights reserved.",
                 privacy: "Privacy Policy",
                 impact: "Impact",
+                "membersSection.title": "Our Team Members",
+                "membersSection.desc": '"Digital Age boasts a well-integrated team, efficiently handling all roles and responsibilities to deliver outstanding results"',
                 "testimonials.title": "Voices from our audience",
                 "testimonials.desc": '"Voices from our audience serve as a vital bridge, connecting program creators with authentic insights that redefine their impact."',
                 "testimonial1.name": "Amira Hassan",
@@ -1676,6 +1696,7 @@
                 back: "Back",
                 preparingIntro: "Preparing Digital Experience",
                 jobs: "Jobs",
+                Members: "Members",
                 careersTitle: "Career Opportunities",
                 careersDesc: "Join our team of experts and researchers to build the future of digital solutions.",
                 applyNow: "Apply Now",
@@ -1778,6 +1799,8 @@
                 mobileSolutionsDesc: "عمل تطبيقات ذكية وتواصل فعال عبر الهاتف لتعزيز أعمالك",
                 privacy: "سياسة الخصوصية",
                 impact: "تأثيرنا",
+                "membersSection.title": "فريق العمل",
+                "membersSection.desc": '"تفتخر ديجيتال آيدج بفريق عمل متكامل، يدير كافة الأدوار والمسؤوليات بكفاءة عالية لتقديم نتائج متميزة"',
                 "testimonials.title": "أصوات من جمهورنا",
                 "testimonials.desc": '"أصوات جمهورنا تعمل كجسر حيوي، يربط مبتكري البرامج برؤى أصيلة تعيد تعريف تأثيرهم."',
                 "testimonial1.name": "أميرة حسن",
@@ -1794,6 +1817,7 @@
                 back: "رجوع",
                 preparingIntro: "جاري تحضير التجربة الرقمية",
                 jobs: "الوظائف",
+                Members: "فريقنا",
                 careersTitle: "فرص العمل المتاحة",
                 careersDesc: "انضم إلى فريق الخبراء والباحثين لدينا لبناء مستقبل الحلول الرقمية.",
                 applyNow: "قدم الآن",

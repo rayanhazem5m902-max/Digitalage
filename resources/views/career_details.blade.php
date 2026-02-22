@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $project->name }} | Digital Age</title>
+    <title>{{ $career->title }} | Digital Age</title>
     <style>
         body,
         html {
@@ -36,7 +36,7 @@
             transform: translateY(-2px);
         }
 
-        .project-content {
+        .career-content {
             padding: 60px 20px;
             max-width: 1200px;
             margin: 0 auto;
@@ -45,21 +45,21 @@
 </head>
 
 <body>
-    <a href="{{ route('home') }}# Portfolio" class="back-btn">رجوع للموقع</a>
-    
+    <a href="{{ route('careers') }}"
+        class="back-btn">{{ app()->getLocale() == 'ar' ? 'رجوع للوظائف' : 'Back to Careers' }}</a>
 
-    @if($project->html_content)
-        {!! $project->html_content !!}
+    @if($career->html_content)
+        {!! $career->html_content !!}
     @else
-        <div class="project-content">
-            <h1>{{ $project->name }}</h1>
-            <p><strong>Category:</strong> {{ $project->service->name }}</p>
-            @if($project->image)
-                <img src="{{ asset($project->image) }}" alt="{{ $project->name }}"
-                    style="max-width: 100%; border-radius: 10px;">
+        <div class="career-content">
+            <h1>{{ $career->title }}</h1>
+            <p><strong>Category:</strong> {{ $career->category }}</p>
+            <p><strong>Duration:</strong> {{ $career->duration }}</p>
+            @if($career->service)
+                <p><strong>Associated Service:</strong> {{ $career->service->name }}</p>
             @endif
-            <div style="margin-top: 20px;">
-                {{ $project->description }}
+            <div style="margin-top: 20px; white-space: pre-line;">
+                {{ $career->description }}
             </div>
         </div>
     @endif

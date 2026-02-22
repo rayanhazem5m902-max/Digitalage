@@ -120,11 +120,25 @@ class AdminController extends Controller
             'description' => 'nullable|string',
         ]);
 
+        if (empty($request->id)) {
+            $slug = \Illuminate\Support\Str::slug($data['name']);
+            if (empty($slug)) {
+                $slug = 'service-' . time() . '-' . rand(100, 999);
+            }
+            $originalSlug = $slug;
+            $counter = 1;
+            while (\App\Models\Service::where('slug', $slug)->exists()) {
+                $slug = $originalSlug . '-' . $counter;
+                $counter++;
+            }
+            $data['slug'] = $slug;
+        }
+
         if ($request->id) {
-            $service = Service::findOrFail($request->id);
+            $service = \App\Models\Service::findOrFail($request->id);
             $service->update($data);
         } else {
-            Service::create($data);
+            \App\Models\Service::create($data);
         }
 
         return response()->json(['success' => true]);
@@ -153,14 +167,7 @@ class AdminController extends Controller
             'name' => 'required|string',
             'icon' => 'required|string',
             'text' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
-        if ($request->hasFile('image')) {
-            $imageName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('Images/impacts'), $imageName);
-            $data['image'] = 'Images/impacts/' . $imageName;
-        }
 
         if ($request->id) {
             $impact = Impact::findOrFail($request->id);
@@ -188,6 +195,7 @@ class AdminController extends Controller
             'deadline' => 'nullable|date',
             'service_id' => 'nullable|exists:services,id',
             'description' => 'nullable|string',
+            'html_content' => 'nullable|string',
         ]);
 
         if ($request->id) {

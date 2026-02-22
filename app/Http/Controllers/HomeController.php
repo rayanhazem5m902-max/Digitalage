@@ -20,7 +20,7 @@ class HomeController extends Controller
         $contact = Contact::first() ?? new Contact();
         $projects = PortfolioProject::with('service')->get();
         $impacts = Impact::all();
-        $careers = Career::all();
+        $careers = Career::latest()->get();
 
         return view('welcome', compact('services', 'members', 'contact', 'projects', 'impacts', 'careers'));
     }
@@ -33,13 +33,16 @@ class HomeController extends Controller
 
     public function careers()
     {
-        $careers = Career::where(function ($query) {
-            $query->whereNull('deadline')
-                ->orWhere('deadline', '>=', now()->format('Y-m-d'));
-        })->get();
+        $careers = Career::with('service')->latest()->get();
 
         $contact = Contact::first() ?? new Contact();
         $services = Service::all();
         return view('careers', compact('careers', 'contact', 'services'));
+    }
+
+    public function showCareer($id)
+    {
+        $career = Career::with('service')->findOrFail($id);
+        return view('career_details', compact('career'));
     }
 }

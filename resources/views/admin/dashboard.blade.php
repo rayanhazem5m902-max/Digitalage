@@ -50,10 +50,10 @@
     </style>
 </head>
 
-<body class="flex h-screen overflow-hidden">
+<body class="bg-[#f1f5f9] min-h-screen">
 
     <!-- Sidebar -->
-    <aside class="w-64 bg-white border-l border-gray-200 flex flex-col z-20 shadow-xl">
+    <aside class="fixed top-0 right-0 w-64 h-full bg-white border-l border-gray-200 flex flex-col z-20 shadow-xl">
         <div class="p-6 flex items-center gap-3 border-b border-gray-100">
             <div
                 class="w-10 h-10 bg-gradient-to-br from-[#00f0c8] to-[#bd147c] rounded-lg flex items-center justify-center text-white font-bold shadow-lg">
@@ -62,7 +62,7 @@
                 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-800 to-gray-600">المدير</span>
         </div>
 
-        <nav class="flex-1 p-4 space-y-2 mt-4">
+        <nav class="flex-1 p-4 space-y-2 mt-4 overflow-y-auto">
             <button onclick="switchTab('projects')" id="btn-projects"
                 class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 transition-all sidebar-active">
                 <i data-lucide="layout-grid"></i>
@@ -78,21 +78,25 @@
                 <i data-lucide="briefcase"></i>
                 <span class="font-semibold">إدارة الخدمات</span>
             </button>
+
             <button onclick="switchTab('contacts')" id="btn-contacts"
                 class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 transition-all">
                 <i data-lucide="contact"></i>
                 <span class="font-semibold">بيانات التواصل</span>
             </button>
-            <button onclick="switchTab('impacts')" id="btn-impacts"
-                class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 transition-all">
-                <i data-lucide="swatchbook"></i>
-                <span class="font-semibold">تأثيرنا (Testimonials)</span>
-            </button>
+
             <button onclick="switchTab('careers')" id="btn-careers"
                 class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 transition-all">
                 <i data-lucide="scroll-text"></i>
                 <span class="font-semibold">إدارة الوظائف</span>
             </button>
+
+            <button onclick="switchTab('impacts')" id="btn-impacts"
+                class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 transition-all">
+                <i data-lucide="swatchbook"></i>
+                <span class="font-semibold">تأثيرنا (Testimonials)</span>
+            </button>
+
             <div class="pt-4 mt-4 border-t border-gray-100">
                 <a href="{{ route('home') }}" target="_blank"
                     class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-blue-600 hover:bg-blue-50 transition-all">
@@ -114,7 +118,7 @@
     </aside>
 
     <!-- Main Content -->
-    <main class="flex-1 flex flex-col overflow-hidden bg-[#f1f5f9]">
+    <main class="mr-64 min-h-screen flex flex-col bg-[#f1f5f9]">
 
         <!-- Header -->
         <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8 shadow-sm z-10">
@@ -130,8 +134,8 @@
             </div>
         </header>
 
-        <!-- Scrollable Content -->
-        <div class="flex-1 overflow-y-auto p-8">
+        <!-- Content Area -->
+        <div class="p-8 pb-12">
 
             <!-- UNIFIED PROJECT MANAGER -->
             <section id="projects-tab" class="tab-content active space-y-8">
@@ -174,7 +178,7 @@
 
                             <div class="space-y-2">
                                 <label class="text-sm font-bold text-gray-700 mr-2">صورة العمل</label>
-                                <div class="relative group">
+                                <div class="relative group h-32">
                                     <input type="file" id="proj-image"
                                         class="absolute inset-0 opacity-0 cursor-pointer z-10"
                                         onchange="handleImage(event)">
@@ -184,10 +188,10 @@
                                         <span class="text-sm font-semibold">اسحب الصورة أو اضغط هنا</span>
                                     </div>
                                     <div id="image-preview-container"
-                                        class="hidden absolute inset-0 bg-white rounded-2xl overflow-hidden border border-[#00f0c8] shadow-inner">
+                                        class="hidden absolute inset-0 bg-white rounded-2xl overflow-hidden border border-[#00f0c8] shadow-inner z-20">
                                         <img id="temp-img" src="" class="w-full h-full object-cover">
-                                        <button onclick="removeImage()"
-                                            class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-500 text-white rounded-lg shadow-lg hover:scale-110 transition-all">
+                                        <button type="button" onclick="removeImage()"
+                                            class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-500 text-white rounded-lg shadow-lg hover:scale-110 transition-all z-30">
                                             <i data-lucide="x" size="16"></i>
                                         </button>
                                     </div>
@@ -268,7 +272,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="overflow-x-auto">
+                    <div class="overflow-x-auto overflow-y-auto max-h-[400px]">
                         <table class="w-full text-right">
                             <thead class="bg-gray-50 text-gray-500 text-[11px] font-bold uppercase tracking-widest">
                                 <tr>
@@ -372,10 +376,10 @@
                                         <span class="text-sm font-semibold">اضغط لرفع صورة العضو</span>
                                     </div>
                                     <div id="member-image-preview-container"
-                                        class="hidden absolute inset-0 bg-white rounded-2xl overflow-hidden border border-blue-500 shadow-inner">
+                                        class="hidden absolute inset-0 bg-white rounded-2xl overflow-hidden border border-blue-500 shadow-inner z-20">
                                         <img id="member-temp-img" src="" class="w-full h-full object-cover">
-                                        <button onclick="removeMemberImage()"
-                                            class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center bg-red-500 text-white rounded-xl shadow-lg hover:scale-110 transition-all">
+                                        <button type="button" onclick="removeMemberImage()"
+                                            class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center bg-red-500 text-white rounded-xl shadow-lg hover:scale-110 transition-all z-30">
                                             <i data-lucide="trash-2" size="20"></i>
                                         </button>
                                     </div>
@@ -401,7 +405,7 @@
                     <div class="p-8 border-b border-gray-50 flex items-center justify-between">
                         <h3 class="text-xl font-bold text-gray-800">قائمة أعضاء الفريق</h3>
                     </div>
-                    <div class="overflow-x-auto">
+                    <div class="overflow-x-auto overflow-y-auto max-h-[400px]">
                         <table class="w-full text-right">
                             <thead class="bg-gray-50 text-gray-500 text-[11px] font-bold uppercase tracking-widest">
                                 <tr>
@@ -426,7 +430,8 @@
                                                 class="px-3 py-1 bg-blue-50 text-blue-600 rounded-lg text-xs font-bold">{{ $member->role }}</span>
                                         </td>
                                         <td class="px-8 py-6 text-sm text-gray-600 max-w-xs truncate">
-                                            {{ $member->description }}</td>
+                                            {{ $member->description }}
+                                        </td>
                                         <td class="px-8 py-6">
                                             <div class="flex items-center gap-2">
                                                 <button onclick='editMember({!! json_encode($member) !!})'
@@ -446,6 +451,8 @@
                     </div>
                 </div>
             </section>
+
+
 
             <!-- CONTACT INFO MANAGEMENT -->
             <section id="contacts-tab" class="tab-content hidden space-y-8">
@@ -468,12 +475,14 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="space-y-2">
                                         <label class="text-sm font-bold text-gray-700 block">واتساب 1 (WhatsApp)</label>
-                                        <input type="text" id="contact-whatsapp" value="{{ $contact->whatsapp }}" placeholder="مثلاً: 256789383140"
+                                        <input type="text" id="contact-whatsapp" value="{{ $contact->whatsapp }}"
+                                            placeholder="مثلاً: 256789383140"
                                             class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
                                     </div>
                                     <div class="space-y-2">
                                         <label class="text-sm font-bold text-gray-700 block">واتساب 2 (WhatsApp)</label>
-                                        <input type="text" id="contact-whatsapp2" value="{{ $contact->whatsapp2 }}" placeholder="مثلاً: 01275018291"
+                                        <input type="text" id="contact-whatsapp2" value="{{ $contact->whatsapp2 }}"
+                                            placeholder="مثلاً: 01275018291"
                                             class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
                                     </div>
                                 </div>
@@ -481,12 +490,15 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="space-y-2">
                                         <label class="text-sm font-bold text-gray-700 block">فيسبوك (Facebook)</label>
-                                        <input type="text" id="contact-facebook" value="{{ $contact->facebook }}" placeholder="رابط الصفحة الكامل"
+                                        <input type="text" id="contact-facebook" value="{{ $contact->facebook }}"
+                                            placeholder="رابط الصفحة الكامل"
                                             class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
                                     </div>
                                     <div class="space-y-2">
-                                        <label class="text-sm font-bold text-gray-700 block">إنستجرام (Instagram)</label>
-                                        <input type="text" id="contact-instagram" value="{{ $contact->instagram }}" placeholder="رابط الملف الشخصي"
+                                        <label class="text-sm font-bold text-gray-700 block">إنستجرام
+                                            (Instagram)</label>
+                                        <input type="text" id="contact-instagram" value="{{ $contact->instagram }}"
+                                            placeholder="رابط الملف الشخصي"
                                             class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
                                     </div>
                                 </div>
@@ -494,19 +506,22 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="space-y-2">
                                         <label class="text-sm font-bold text-gray-700 block">تيك توك (TikTok)</label>
-                                        <input type="text" id="contact-tiktok" value="{{ $contact->tiktok }}" placeholder="رابط التيك توك"
+                                        <input type="text" id="contact-tiktok" value="{{ $contact->tiktok }}"
+                                            placeholder="رابط التيك توك"
                                             class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
                                     </div>
                                     <div class="space-y-2">
                                         <label class="text-sm font-bold text-gray-700 block">لينكد إن (LinkedIn)</label>
-                                        <input type="text" id="contact-linkedin" value="{{ $contact->linkedin }}" placeholder="رابط لينكد إن"
+                                        <input type="text" id="contact-linkedin" value="{{ $contact->linkedin }}"
+                                            placeholder="رابط لينكد إن"
                                             class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
                                     </div>
                                 </div>
 
                                 <div class="space-y-2">
                                     <label class="text-sm font-bold text-gray-700 block">يوتيوب (YouTube)</label>
-                                    <input type="text" id="contact-youtube" value="{{ $contact->youtube }}" placeholder="رابط قناة اليوتيوب"
+                                    <input type="text" id="contact-youtube" value="{{ $contact->youtube }}"
+                                        placeholder="رابط قناة اليوتيوب"
                                         class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
                                 </div>
                             </div>
@@ -520,13 +535,15 @@
                             <div class="space-y-4">
                                 <div class="space-y-2">
                                     <label class="text-sm font-bold text-gray-700 block">رقم الهاتف الأساسي</label>
-                                    <input type="text" id="contact-phone" value="{{ $contact->phone }}" placeholder="مثلاً: +256789383140"
+                                    <input type="text" id="contact-phone" value="{{ $contact->phone }}"
+                                        placeholder="مثلاً: +256789383140"
                                         class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
                                 </div>
 
                                 <div class="space-y-2">
                                     <label class="text-sm font-bold text-gray-700 block">البريد الإلكتروني</label>
-                                    <input type="email" id="contact-email" value="{{ $contact->email }}" placeholder="info@digitalage.com"
+                                    <input type="email" id="contact-email" value="{{ $contact->email }}"
+                                        placeholder="info@digitalage.com"
                                         class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
                                 </div>
 
@@ -600,7 +617,7 @@
                     <div class="p-8 border-b border-gray-50">
                         <h3 class="text-xl font-bold text-gray-800">قائمة الخدمات</h3>
                     </div>
-                    <div class="overflow-x-auto">
+                    <div class="overflow-x-auto overflow-y-auto max-h-[400px]">
                         <table class="w-full text-right">
                             <thead class="bg-gray-50 text-gray-500 text-[11px] font-bold uppercase tracking-widest">
                                 <tr>
@@ -622,7 +639,8 @@
                                             </div>
                                         </td>
                                         <td class="px-8 py-6 text-sm text-gray-600 max-w-md truncate">
-                                            {{ $service->description }}</td>
+                                            {{ $service->description }}
+                                        </td>
                                         <td class="px-8 py-6">
                                             <div class="flex items-center gap-2">
                                                 <button onclick='editService({!! json_encode($service) !!})'
@@ -675,28 +693,6 @@
                                 <textarea id="impact-text" rows="5" placeholder="اكتب رأي الجمهور أو العميل هنا..."
                                     class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all bg-gray-50/50"></textarea>
                             </div>
-                            <!-- Image Upload for Impact -->
-                            <div class="space-y-2">
-                                <label class="text-sm font-bold text-gray-700 mr-2">صورة الشخص (اختياري)</label>
-                                <div class="relative group h-32">
-                                    <input type="file" id="impact-image-input"
-                                        class="absolute inset-0 opacity-0 cursor-pointer z-10"
-                                        onchange="handleImpactImage(event)">
-                                    <div id="impact-image-placeholder"
-                                        class="w-full h-full border-2 border-dashed border-gray-200 rounded-2xl flex flex-col items-center justify-center gap-2 text-gray-400 group-hover:border-orange-500 group-hover:text-orange-500 transition-all bg-gray-50/50">
-                                        <i data-lucide="image-plus" size="24"></i>
-                                        <span class="text-xs font-semibold">اضغط لرفع صورة</span>
-                                    </div>
-                                    <div id="impact-image-preview-container"
-                                        class="hidden absolute inset-0 bg-white rounded-2xl overflow-hidden border border-orange-500 shadow-inner">
-                                        <img id="impact-temp-img" src="" class="w-full h-full object-cover">
-                                        <button onclick="removeImpactImage()"
-                                            class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-500 text-white rounded-lg shadow-lg hover:scale-110 transition-all">
-                                            <i data-lucide="x" size="16"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -717,7 +713,7 @@
                     <div class="p-8 border-b border-gray-50">
                         <h3 class="text-xl font-bold text-gray-800">قائمة الآراء (Impacts)</h3>
                     </div>
-                    <div class="overflow-x-auto">
+                    <div class="overflow-x-auto overflow-y-auto max-h-[400px]">
                         <table class="w-full text-right">
                             <thead class="bg-gray-50 text-gray-500 text-[11px] font-bold uppercase tracking-widest">
                                 <tr>
@@ -733,12 +729,7 @@
                                             <div class="flex items-center gap-4">
                                                 <div
                                                     class="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center text-orange-500 shadow-sm border border-orange-100">
-                                                    @if($impact->image)
-                                                        <img src="{{ asset($impact->image) }}"
-                                                            class="w-full h-full object-cover rounded-xl">
-                                                    @else
-                                                        <i data-lucide="{{ $impact->icon }}" size="20"></i>
-                                                    @endif
+                                                    <i data-lucide="{{ $impact->icon }}" size="20"></i>
                                                 </div>
                                                 <p class="font-bold text-gray-900">{{ $impact->name }}</p>
                                             </div>
@@ -776,79 +767,85 @@
                         </div>
                         <span id="career-form-title">إضافة وظيفة جديدة</span>
                     </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="space-y-6">
-                            <div class="space-y-2">
-                                <label class="text-sm font-bold text-gray-700 mr-2">مسمى الوظيفة</label>
-                                <input type="text" id="career-title" placeholder="مثلاً: UI/UX Designer"
-                                    class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-sm font-bold text-gray-700 mr-2">القسم / التصنيف</label>
-                                <select id="career-category"
-                                    class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
-                                    <option value="Marketing">Marketing</option>
-                                    <option value="Design">Design</option>
-                                    <option value="Web Application">Web Application</option>
-                                    <option value="Flutter">Flutter</option>
-                                    <option value="Mobile Application">Mobile Application</option>
-                                </select>
-                            </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-bold text-gray-700 mr-2">مسمى الوظيفة</label>
+                        <input type="text" id="career-title" placeholder="مثلاً: UI/UX Designer"
+                            class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-gray-700 mr-2">القسم / التصنيف</label>
+                            <select id="career-category"
+                                class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
+                                <option value="">-- اختر القسم --</option>
+                                @foreach($services as $service)
+                                    <option value="{{ $service->id }}">{{ $service->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="space-y-6">
-                            <div class="space-y-2">
-                                <label class="text-sm font-bold text-gray-700 mr-2">المدة الزمنية (مثلاً:
-                                    Full-time)</label>
-                                <input type="text" id="career-duration" placeholder="مثلاً: وقت كامل"
-                                    class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-gray-700 mr-2">المدة الزمنية (مثلاً: Full-time)</label>
+                            <input type="text" id="career-duration" placeholder="مثلاً: وقت كامل"
+                                class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-gray-700 mr-2">الموعد النهائي</label>
+                            <input type="date" id="career-deadline"
+                                class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-bold text-gray-700 mr-2">وصف مختصر</label>
+                        <textarea id="career-desc" rows="3" placeholder="اكتب متطلبات الوظيفة هنا..."
+                            class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50"></textarea>
+                    </div>
+                </div>
+
+                <!-- HTML Editor for Careers -->
+                <div class="flex flex-col space-y-2 h-full">
+                    <label class="text-sm font-bold text-gray-700 mr-2 flex items-center gap-2">
+                        <i data-lucide="code-2" size="18" class="text-purple-600"></i>
+                        برمجة صفحة الوظيفة (HTML Custom Page)
+                    </label>
+                    <div
+                        class="flex-1 min-h-[400px] bg-[#1e293b] rounded-3xl overflow-hidden shadow-2xl border border-gray-700 flex flex-col">
+                        <div class="flex-1 flex flex-col xl:flex-row overflow-hidden h-full">
+                            <div
+                                class="flex-1 relative border-b xl:border-b-0 xl:border-l border-gray-700 h-1/2 xl:h-full">
+                                <textarea id="career-html" dir="ltr" spellcheck="false"
+                                    class="w-full h-full bg-transparent text-[#e879f9] p-6 font-mono text-[13px] resize-none outline-none leading-relaxed"
+                                    placeholder="<h1>تفاصيل الوظيفة...</h1>" oninput="updateCareerPreview()"></textarea>
                             </div>
-                            <div class="space-y-2">
-                                <label class="text-sm font-bold text-gray-700 mr-2">تاريخ انتهاء التقديم
-                                    (Deadline)</label>
-                                <input type="date" id="career-deadline"
-                                    class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-sm font-bold text-gray-700 mr-2">الخدمة المرتبطة</label>
-                                <select id="career-service-id"
-                                    class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
-                                    <option value="">-- اختر الخدمة --</option>
-                                    @foreach($services as $service)
-                                        <option value="{{ $service->id }}">{{ $service->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-sm font-bold text-gray-700 mr-2">وصف الوظيفة والمتطلبات</label>
-                                <textarea id="career-desc" rows="3" placeholder="اكتب متطلبات الوظيفة هنا..."
-                                    class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50"></textarea>
+                            <div class="flex-1 bg-white h-1/2 xl:h-full relative overflow-hidden">
+                                <iframe id="career-live-preview" class="w-full h-full border-none"></iframe>
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" id="editing-career-id" value="">
-                    <div class="mt-8 flex justify-end gap-3">
-                        <button id="cancel-career-edit" onclick="resetCareerForm()"
-                            class="hidden px-8 py-4 bg-gray-100 text-gray-600 font-bold rounded-2xl hover:bg-gray-200 transition-all">إلغاء</button>
-                        <button onclick="saveCareer()"
-                            class="px-12 py-4 bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-black text-lg rounded-2xl shadow-xl hover:shadow-purple-500/40 hover:-translate-y-1 transition-all flex items-center gap-3">
-                            <span id="save-career-btn-text">حفظ الوظيفة</span>
-                            <i data-lucide="check-circle" size="24"></i>
-                        </button>
-                    </div>
+                </div>
+                <input type="hidden" id="editing-career-id" value="">
+                <div class="mt-8 flex justify-end gap-3">
+                    <button id="cancel-career-edit" onclick="resetCareerForm()"
+                        class="hidden px-8 py-4 bg-gray-100 text-gray-600 font-bold rounded-2xl hover:bg-gray-200 transition-all">إلغاء</button>
+                    <button onclick="saveCareer()"
+                        class="px-12 py-4 bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-black text-lg rounded-2xl shadow-xl hover:shadow-purple-500/40 hover:-translate-y-1 transition-all flex items-center gap-3">
+                        <span id="save-career-btn-text">حفظ الوظيفة</span>
+                        <i data-lucide="check-circle" size="24"></i>
+                    </button>
                 </div>
 
                 <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
                     <div class="p-8 border-b border-gray-50">
                         <h3 class="text-xl font-bold text-gray-800">قائمة الوظائف المتاحة</h3>
                     </div>
-                    <div class="overflow-x-auto">
+                    <div class="overflow-x-auto overflow-y-auto max-h-[400px]">
                         <table class="w-full text-right">
                             <thead class="bg-gray-50 text-gray-500 text-[11px] font-bold uppercase tracking-widest">
                                 <tr>
                                     <th class="px-8 py-5">الوظيفة والمدة</th>
-                                    <th class="px-8 py-5">القسم</th>
-                                    <th class="px-8 py-5">الخدمة</th>
-                                    <th class="px-8 py-5">التاريخ</th>
+                                    <th class="px-8 py-5">القسم / التصنيف</th>
+                                    <th class="px-8 py-5">التاريخ / الموعد</th>
                                     <th class="px-8 py-5">الوصف</th>
                                     <th class="px-8 py-5">العمليات</th>
                                 </tr>
@@ -860,7 +857,8 @@
                                             <div>
                                                 <p class="font-bold text-gray-900">{{ $career->title }}</p>
                                                 <p class="text-[10px] text-purple-500 font-bold uppercase tracking-wider">
-                                                    {{ $career->duration }}</p>
+                                                    {{ $career->duration }}
+                                                </p>
                                             </div>
                                         </td>
                                         <td class="px-8 py-6">
@@ -869,22 +867,17 @@
                                                 {{ $career->category }}
                                             </span>
                                         </td>
-                                        <td class="px-8 py-6 text-sm font-semibold text-gray-600">
-                                            @if($career->service)
-                                                {{ $career->service->name }}
-                                            @else
-                                                -
-                                            @endif
-                                        </td>
+
                                         <td class="px-8 py-6">
                                             <p class="text-sm font-semibold text-gray-700">
-                                                {{ $career->created_at->format('Y-m-d') }}</p>
+                                                {{ $career->created_at->format('Y-m-d') }}
+                                            </p>
                                             @if($career->deadline)
                                                 <p class="text-[10px] text-red-500 font-bold">ينتهي: {{ $career->deadline }}</p>
                                             @endif
                                         </td>
-                                        <td class="px-8 py-6 text-sm text-gray-500 max-w-xs">
-                                            <p class="truncate">{{ $career->description }}</p>
+                                        <td class="px-8 py-6 text-sm text-gray-600 max-w-xs truncate">
+                                            {{ $career->description }}
                                         </td>
                                         <td class="px-8 py-6">
                                             <div class="flex items-center gap-2">
@@ -932,7 +925,7 @@
                 'projects': 'إدارة البورتفوليو',
                 'members': 'إدارة أعضاء الفريق',
                 'services': 'إدارة الخدمات',
-                'contacts': 'بيانات التواصل',
+                'contacts': 'بيانات التواصل والإحصائيات',
                 'impacts': 'إدارة تأثيرنا (Testimonials)',
                 'careers': 'إدارة الوظائف والمهن'
             };
@@ -947,7 +940,6 @@
                 const reader = new FileReader();
                 reader.onload = function (e) {
                     document.getElementById('temp-img').src = e.target.result;
-                    document.getElementById('file-name').innerText = file.name;
                     document.getElementById('image-placeholder').classList.add('hidden');
                     document.getElementById('image-preview-container').classList.remove('hidden');
                 }
@@ -1179,6 +1171,11 @@
                 description: document.getElementById('service-desc').value
             };
 
+            if (!data.name || !data.icon) {
+                alert('يرجى إدخال اسم الخدمة والأيقونة على الأقل');
+                return;
+            }
+
             try {
                 const response = await fetch('{{ route("admin.services.save") }}', {
                     method: 'POST',
@@ -1188,6 +1185,14 @@
                     },
                     body: JSON.stringify(data)
                 });
+
+                if (!response.ok) {
+                    const errorInfo = await response.json();
+                    console.error('Server error:', errorInfo);
+                    alert('حدث خطأ في الخادم أثناء حفظ الخدمة. يرجى التأكد من البيانات.');
+                    return;
+                }
+
                 const result = await response.json();
                 if (result.success) {
                     alert('تم حفظ الخدمة بنجاح');
@@ -1195,6 +1200,7 @@
                 }
             } catch (error) {
                 console.error('Error saving service:', error);
+                alert('حدث خطأ أثناء الاتصال بالخادم.');
             }
         }
 
@@ -1263,24 +1269,7 @@
         }
 
         // --- Impact Logic ---
-        function handleImpactImage(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    document.getElementById('impact-temp-img').src = e.target.result;
-                    document.getElementById('impact-image-placeholder').classList.add('hidden');
-                    document.getElementById('impact-image-preview-container').classList.remove('hidden');
-                }
-                reader.readAsDataURL(file);
-            }
-        }
 
-        function removeImpactImage() {
-            document.getElementById('impact-image-input').value = '';
-            document.getElementById('impact-image-placeholder').classList.remove('hidden');
-            document.getElementById('impact-image-preview-container').classList.add('hidden');
-        }
 
         async function saveImpact() {
             const formData = new FormData();
@@ -1289,10 +1278,7 @@
             formData.append('icon', document.getElementById('impact-icon').value);
             formData.append('text', document.getElementById('impact-text').value);
 
-            const imageFile = document.getElementById('impact-image-input').files[0];
-            if (imageFile) {
-                formData.append('image', imageFile);
-            }
+
 
             if (!document.getElementById('impact-name').value || !document.getElementById('impact-text').value) {
                 alert('يرجى ملء الاسم والنص');
@@ -1341,13 +1327,7 @@
             document.getElementById('impact-icon').value = impact.icon;
             document.getElementById('impact-text').value = impact.text;
 
-            if (impact.image) {
-                document.getElementById('impact-temp-img').src = '/' + impact.image;
-                document.getElementById('impact-image-placeholder').classList.add('hidden');
-                document.getElementById('impact-image-preview-container').classList.remove('hidden');
-            } else {
-                removeImpactImage();
-            }
+
 
             document.getElementById('impact-form-title').innerText = 'تعديل الرأي: ' + impact.name;
             document.getElementById('save-impact-btn-text').innerText = 'تحديث التأثير';
@@ -1361,7 +1341,6 @@
             document.getElementById('impact-name').value = '';
             document.getElementById('impact-icon').value = 'user-round';
             document.getElementById('impact-text').value = '';
-            removeImpactImage();
 
             document.getElementById('impact-form-title').innerText = 'إضافة رأي جديد (Impact)';
             document.getElementById('save-impact-btn-text').innerText = 'حفظ التأثير';
@@ -1369,14 +1348,16 @@
         }
 
         async function saveCareer() {
+            const catSelect = document.getElementById('career-category');
             const data = {
                 id: document.getElementById('editing-career-id').value,
                 title: document.getElementById('career-title').value,
-                category: document.getElementById('career-category').value,
+                category: catSelect.value ? catSelect.options[catSelect.selectedIndex].text : '',
                 duration: document.getElementById('career-duration').value,
                 deadline: document.getElementById('career-deadline').value,
-                service_id: document.getElementById('career-service-id').value,
-                description: document.getElementById('career-desc').value
+                service_id: catSelect.value,
+                description: document.getElementById('career-desc').value,
+                html_content: document.getElementById('career-html').value
             };
 
             if (!data.title || !data.duration) {
@@ -1424,16 +1405,17 @@
         function editCareer(career) {
             document.getElementById('editing-career-id').value = career.id;
             document.getElementById('career-title').value = career.title;
-            document.getElementById('career-category').value = career.category;
+            document.getElementById('career-category').value = career.service_id || '';
             document.getElementById('career-duration').value = career.duration;
             document.getElementById('career-deadline').value = career.deadline || '';
-            document.getElementById('career-service-id').value = career.service_id || '';
             document.getElementById('career-desc').value = career.description;
+            document.getElementById('career-html').value = career.html_content || '';
 
             document.getElementById('career-form-title').innerText = 'تعديل الوظيفة: ' + career.title;
             document.getElementById('save-career-btn-text').innerText = 'تحديث الوظيفة';
             document.getElementById('cancel-career-edit').classList.remove('hidden');
 
+            updateCareerPreview();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -1442,15 +1424,27 @@
             document.getElementById('career-title').value = '';
             document.getElementById('career-duration').value = '';
             document.getElementById('career-deadline').value = '';
-            document.getElementById('career-service-id').value = '';
+            document.getElementById('career-category').value = '';
             document.getElementById('career-desc').value = '';
+            document.getElementById('career-html').value = '';
             document.getElementById('career-form-title').innerText = 'إضافة وظيفة جديدة';
             document.getElementById('save-career-btn-text').innerText = 'حفظ الوظيفة';
             document.getElementById('cancel-career-edit').classList.add('hidden');
+            updateCareerPreview();
         }
 
-        // Initial preview
+        function updateCareerPreview() {
+            const html = document.getElementById('career-html').value;
+            const iframe = document.getElementById('career-live-preview');
+            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            iframeDoc.open();
+            iframeDoc.write(html || '<div style="padding:20px; color:#999; font-family:sans-serif;">لا يوجد محتوى للعرض...</div>');
+            iframeDoc.close();
+        }
+
+        // Initial previews
         updateFormPreview();
+        updateCareerPreview();
     </script>
 
 </body>
