@@ -65,8 +65,10 @@
                     data-en="{{ $career->category }}"
                     data-ar="{{ $career->category_ar ?? $career->category }}">{{ $career->category }}</span>
                 <span class="px-4 py-2 bg-blue-50 text-blue-600 rounded-full text-sm font-black dynamic-text"
-                    data-en="{{ $career->duration }}"
-                    data-ar="{{ $career->duration_ar ?? $career->duration }}">{{ $career->duration }}</span>
+                    data-en="{{ $career->duration }}{{ $career->working_hours ? ' (' . $career->working_hours . ')' : '' }}"
+                    data-ar="{{ $career->duration_ar ?? $career->duration }}{{ $career->working_hours_ar ? ' (' . $career->working_hours_ar . ')' : '' }}">
+                    {{ $career->duration }}{{ $career->working_hours ? ' (' . $career->working_hours . ')' : '' }}
+                </span>
             </div>
 
             <h1 class="text-4xl md:text-5xl font-black text-slate-900 mb-8 dynamic-text" data-en="{{ $career->title }}"
@@ -81,7 +83,9 @@
                     <div>
                         <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1" data-i18n="posted">
                             Posted On</p>
-                        <p class="font-bold text-slate-700">{{ $career->created_at->format('M d, Y') }}</p>
+                        <p class="font-bold text-slate-700">
+                            {{ $career->published_at ? \Carbon\Carbon::parse($career->published_at)->format('M d, Y') : $career->created_at->format('M d, Y') }}
+                        </p>
                     </div>
                 </div>
 
@@ -94,33 +98,26 @@
                             <p class="text-xs font-bold text-red-400 uppercase tracking-widest mb-1" data-i18n="deadline">
                                 Deadline</p>
                             <p class="font-bold text-slate-700">
-                                {{ \Carbon\Carbon::parse($career->deadline)->format('M d, Y') }}</p>
+                                {{ \Carbon\Carbon::parse($career->deadline)->format('M d, Y') }}
+                            </p>
                         </div>
                     </div>
                 @endif
             </div>
 
-            @if($career->html_content)
-                <div class="prose max-w-none dynamic-text" data-en-html="true"
-                    data-en='{!! addslashes($career->html_content) !!}'
-                    data-ar='{!! addslashes($career->html_content_ar ?? $career->html_content) !!}'>
-                    {!! $career->html_content !!}
-                </div>
-            @else
-                <div class="prose max-w-none text-slate-600 leading-relaxed text-lg dynamic-text"
-                    data-en="{{ $career->description }}" data-ar="{{ $career->description_ar ?? $career->description }}">
-                    {!! nl2br(e($career->description)) !!}
-                </div>
-            @endif
+            <div class="prose max-w-none text-slate-600 leading-relaxed text-lg dynamic-text"
+                data-en="{{ $career->description }}" data-ar="{{ $career->description_ar ?? $career->description }}">
+                {!! nl2br(e($career->description)) !!}
+            </div>
 
             <hr class="my-12 border-slate-100">
 
             <div class="text-center">
-                <button
-                    class="bg-slate-900 text-white px-12 py-4 rounded-2xl font-black text-lg hover:bg-lime hover:text-slate-900 transition-all transform hover:-translate-y-1 shadow-xl shadow-slate-200"
+                <a href="{{ $career->apply_link ?? 'javascript:void(0)' }}" {{ $career->apply_link ? 'target="_blank"' : '' }}
+                    class="bg-slate-900 text-white px-12 py-4 rounded-2xl font-black text-lg hover:bg-lime hover:text-slate-900 transition-all transform hover:-translate-y-1 shadow-xl shadow-slate-200 inline-block"
                     data-i18n="applyNow">
                     Apply For This Position
-                </button>
+                </a>
             </div>
         </div>
     </div>

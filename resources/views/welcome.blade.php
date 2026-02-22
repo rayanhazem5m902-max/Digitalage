@@ -684,9 +684,9 @@
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <!-- Logo -->
-                <div class="flex items-center">
-                    <img id="dig" src="Images/Untitled (1).png" alt="digitalagelogo" class="logo">
-                    <a href="#" class="flex items-center gap-0 text-3xl font-bold tracking-tight">
+                <div class="flex items-center gap-2">
+                    <img id="dig" src="Images/Untitled (1).png" alt="digitalagelogo" class="logo mb-0">
+                    <a href="#" class="flex items-center gap-2 text-3xl font-bold tracking-tight">
                         <span class="text-lime" data-i18n="brandDigital">Digital</span>
                         <span class="text-blue" data-i18n="brandAge">Age</span>
                     </a>
@@ -705,7 +705,7 @@
                         data-i18n="contact">Contact</a>
                     <a href="#impact" class="nav-link text-gray-700 hover:text-lime font-medium"
                         data-i18n="impact">Impact</a>
-                    <a href="{{ route('careers') }}" class="nav-link text-gray-700 hover:text-blue font-medium"
+                    <a href="#careers" class="nav-link text-gray-700 hover:text-blue font-medium"
                         data-i18n="jobs">Jobs</a>
                     <a href="#members" class="nav-link text-gray-700 hover:text-blue font-medium"
                         data-i18n="Members">Members</a>
@@ -744,7 +744,7 @@
 
                     <a href="#contact" class="nav-link text-gray-700 hover:text-lime font-medium py-2"
                         data-i18n="contact">Contact</a>
-                    <a href="{{ route('careers') }}" class="nav-link text-gray-700 hover:text-blue font-medium py-2"
+                    <a href="#careers" class="nav-link text-gray-700 hover:text-blue font-medium py-2"
                         data-i18n="jobs">Jobs</a>
                     <a href="#members" class="nav-link text-gray-700 hover:text-blue font-medium"
                         data-i18n="Members">Members</a>
@@ -1240,6 +1240,92 @@
 
     </section>
 
+    <!-- Careers Section -->
+    <section id="careers" class="py-24 bg-gray-50/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span
+                    class="inline-block px-4 py-2 rounded-full bg-purple-100 text-purple-600 font-semibold text-sm mb-4"
+                    data-i18n="jobs">Jobs</span>
+                <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-6" data-i18n="careersTitle">Career
+                    Opportunities</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto" data-i18n="careersDesc">
+                    Join our team of experts and researchers to build the future of digital solutions.
+                </p>
+            </div>
+
+            @if($careers->isEmpty())
+                <div class="text-center py-12 bg-white rounded-3xl border border-dashed border-gray-300">
+                    <p class="text-gray-500" data-i18n="noJobs">No open positions at the moment.</p>
+                </div>
+            @else
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    @foreach($careers->take(6) as $job)
+                        <div
+                            class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 group">
+                            <div class="flex justify-between items-start mb-6">
+                                <span class="px-3 py-1 bg-purple-50 text-purple-600 rounded-lg text-xs font-bold dynamic-text"
+                                    data-en="{{ $job->category }}" data-ar="{{ $job->category_ar ?? $job->category }}">
+                                    {{ $job->category }}
+                                </span>
+                                <span class="text-gray-400 text-xs flex items-center gap-1 font-bold dynamic-text"
+                                    data-en="{{ $job->duration }}{{ $job->working_hours ? ' (' . $job->working_hours . ')' : '' }}"
+                                    data-ar="{{ $job->duration_ar ?? $job->duration }}{{ $job->working_hours_ar ? ' (' . $job->working_hours_ar . ')' : '' }}">
+                                    <i data-lucide="clock" class="w-3 h-3"></i>
+                                    {{ $job->duration }}{{ $job->working_hours ? ' (' . $job->working_hours . ')' : '' }}
+                                </span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-4 dynamic-text" data-en="{{ $job->title }}"
+                                data-ar="{{ $job->title_ar ?? $job->title }}">
+                                {{ $job->title }}
+                            </h3>
+                            <p class="text-gray-600 text-sm mb-6 line-clamp-3 dynamic-text" data-en="{{ $job->description }}"
+                                data-ar="{{ $job->description_ar ?? $job->description }}">
+                                {{ $job->description }}
+                            </p>
+                            <div class="flex flex-col gap-2 mb-6">
+                                <div class="flex items-center gap-2 text-gray-400 text-xs font-bold">
+                                    <i data-lucide="calendar" class="w-3 h-3"></i>
+                                    <span data-i18n="posted">Posted</span>:
+                                    <span class="dynamic-date"
+                                        data-date="{{ $job->published_at ? \Carbon\Carbon::parse($job->published_at)->toIso8601String() : $job->created_at->toIso8601String() }}">
+                                        {{ $job->published_at ? \Carbon\Carbon::parse($job->published_at)->format('M d, Y') : $job->created_at->format('M d, Y') }}
+                                    </span>
+                                </div>
+                                @if($job->deadline)
+                                    <div class="flex items-center gap-2 text-red-500 text-xs font-bold">
+                                        <i data-lucide="calendar-x" class="w-3 h-3"></i>
+                                        <span data-i18n="deadline">Deadline</span>:
+                                        <span class="dynamic-date"
+                                            data-date="{{ $job->deadline }}">{{ \Carbon\Carbon::parse($job->deadline)->format('M d, Y') }}</span>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="flex items-center justify-end mt-auto">
+                                <a href="{{ $job->apply_link ?? route('career.show', $job->id) }}" {{ $job->apply_link ? 'target="_blank"' : '' }}
+                                    class="inline-flex items-center gap-2 text-purple-600 font-bold hover:gap-3 transition-all">
+                                    <span data-i18n="applyNow">Apply Now</span>
+                                    <i data-lucide="{{ $job->apply_link ? 'external-link' : 'arrow-right' }}"
+                                        class="w-4 h-4"></i>
+                                </a>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                @if($careers->count() > 6)
+                    <div class="text-center mt-12">
+                        <a href="{{ route('careers') }}"
+                            class="btn-secondary px-8 py-4 rounded-full font-semibold inline-flex items-center gap-2">
+                            <span data-i18n="viewAll">View All Positions</span>
+                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                @endif
+            @endif
+        </div>
+    </section>
+
     <section id="contact" class="py-24 bg-gradient-to-b from-gray-50 to-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" id="color1">
             <div class="text-center mb-16">
@@ -1277,20 +1363,21 @@
                             </div>
 
                             <!-- Phone -->
-                            <div class="flex gap-2 items-center">
-                                <label class="block text-sm font-medium text-gray-700 mb-2"
+                            <div class="flex flex-col gap-2">
+                                <label class="text-sm font-medium text-gray-700 mb-1"
                                     data-i18n="formPhone">Phone</label>
-
-                                <select name="country_code" class="w-25 px-3 py-3 rounded-lg border">
-                                    <option value="+20">🇪🇬 +20</option>
-                                    <option value="+966">🇸🇦 +966</option>
-                                    <option value="+971">🇦🇪 +971</option>
-                                    <option value="+965">🇰🇼 +965</option>
-                                    <option value="+1">🇺🇸 +1</option>
-                                </select>
-
-                                <input type="tel" name="user_phone" placeholder="01478529763"
-                                    class="w-32 px-2 py-3 rounded-lg border">
+                                <div class="flex gap-2 items-center">
+                                    <select name="country_code"
+                                        class="w-52 px-3 py-3 rounded-lg border bg-white focus:ring-2 focus:ring-lime/20 outline-none transition-all">
+                                        <option value="+966">🇸🇦 Kingdom of Saudi Arabia (+966)</option>
+                                        <option value="+20">🇪🇬 Egypt (+20)</option>
+                                        <option value="+971">🇦🇪 UAE (+971)</option>
+                                        <option value="+965">🇰🇼 Kuwait (+965)</option>
+                                        <option value="+1">🇺🇸 USA (+1)</option>
+                                    </select>
+                                    <input type="tel" name="user_phone" placeholder="05XXXXXXXX" required
+                                        class="flex-1 px-4 py-3 rounded-lg border bg-white focus:ring-2 focus:ring-lime/20 outline-none transition-all">
+                                </div>
                             </div>
 
                         </div>
@@ -1483,10 +1570,12 @@
             <div class="grid md:grid-cols-4 gap-12 mb-12">
                 <!-- Brand -->
                 <div class="md:col-span-1">
-                    <a href="#" class="flex items-center gap-0 text-3xl font-bold tracking-tight mb-4">
-                        <img src="Images/Untitled (1).png" alt="digitalagelogo" class="logo">
-                        <span class="text-lime" data-i18n="brandDigital">Digital</span>
-                        <span class="text-blue" data-i18n="brandAge">Age</span>
+                    <a href="#" class="flex items-center gap-2 text-3xl font-bold tracking-tight mb-4">
+                        <img src="Images/Untitled (1).png" alt="digitalagelogo" class="logo mb-0">
+                        <div class="flex items-center gap-3">
+                            <span class="text-lime" data-i18n="brandDigital">Digital</span>
+                            <span class="text-blue" data-i18n="brandAge">Age</span>
+                        </div>
                     </a>
                     <p class="text-gray-400" data-i18n="footerDesc">Transforming businesses through innovative
                         technology solutions.</p>
@@ -1573,46 +1662,54 @@
                         videoOverlay.innerHTML = `
                             <div class="relative w-full max-w-5xl bg-white rounded-[2rem] overflow-hidden shadow-2xl border border-gray-200 flex flex-col my-auto">
                                 <!-- Modal Header -->
-                                <div class="flex items-center justify-between p-6 sm:px-10 sm:py-6 bg-gradient-to-r from-gray-50 to-white border-b border-gray-100">
+                                <!-- Modal Header (Now just Back & Lang) -->
+                                <div class="flex items-center justify-between p-6 sm:px-10 bg-white border-b border-gray-100 z-20">
                                     <button onclick="const vo = document.getElementById('video-overlay'); vo.classList.add('opacity-0'); setTimeout(() => vo.remove(), 500);" 
-                                        class="flex items-center gap-3 text-gray-600 hover:text-[#bd147c] transition-all group z-10 w-1/3">
-                                        <div class="w-12 h-12 rounded-full bg-white shadow-sm border border-gray-100 flex items-center justify-center group-hover:scale-110 group-hover:border-[#bd147c]/30 group-hover:shadow-md transition-all">
-                                            <svg id="back-arrow-svg" class="w-6 h-6 ${currentLang === 'ar' ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        class="flex items-center gap-3 text-gray-600 hover:text-[#bd147c] transition-all group">
+                                        <div class="w-10 h-10 rounded-full bg-white shadow-sm border border-gray-100 flex items-center justify-center group-hover:scale-110 group-hover:border-[#bd147c]/30 group-hover:shadow-md transition-all">
+                                            <svg id="back-arrow-svg" class="w-5 h-5 ${currentLang === 'ar' ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                                             </svg>
                                         </div>
-                                        <span class="font-bold text-lg pointer-events-none" data-i18n="back">${translations[currentLang].back}</span>
+                                        <span class="font-bold text-base" data-i18n="back">${translations[currentLang].back}</span>
                                     </button>
 
-                                    <!-- Language Toggle Button -->
-                                    <div class="flex justify-center w-1/3">
-                                       <button onclick="toggleLanguage(); document.getElementById('video-lang-text').innerText = currentLang === 'en' ? 'العربية' : 'English'; const svg = document.getElementById('back-arrow-svg'); if(svg) { currentLang === 'ar' ? svg.classList.add('rotate-180') : svg.classList.remove('rotate-180'); }" class="px-5 py-2.5 bg-white hover:bg-gray-50 text-gray-700 shadow-sm rounded-full font-bold text-sm transition-all flex items-center gap-2 border border-gray-200 hover:border-[#00f0c8]">
-                                           <svg class="w-4 h-4 text-[#bd147c]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path></svg>
-                                           <span id="video-lang-text">${currentLang === 'en' ? 'العربية' : 'English'}</span>
-                                       </button>
-                                    </div>
-
-                                    <div class="text-[end] z-10 w-1/3">
-                                        <h2 data-i18n="introHeading" class="text-sm sm:text-base font-black tracking-tight mb-1 text-[#bd147c]">
-                                            ${translations[currentLang].introHeading}
-                                        </h2>
-                                        <p class="text-sm font-bold text-gray-400 uppercase tracking-widest">Digital Age</p>
-                                    </div>
+                                    <!-- Language Toggle -->
+                                    <button onclick="toggleLanguage(); document.getElementById('video-lang-text').innerText = currentLang === 'en' ? 'العربية' : 'English'; const svg = document.getElementById('back-arrow-svg'); if(svg) { currentLang === 'ar' ? svg.classList.add('rotate-180') : svg.classList.remove('rotate-180'); }" class="px-5 py-2.5 bg-gray-50 hover:bg-white text-gray-700 shadow-sm rounded-full font-bold text-xs transition-all flex items-center gap-2 border border-gray-100 hover:border-[#00f0c8]">
+                                        <svg class="w-4 h-4 text-[#bd147c]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path></svg>
+                                        <span id="video-lang-text">${currentLang === 'en' ? 'العربية' : 'English'}</span>
+                                    </button>
                                 </div>
 
-                                <div class="p-6 sm:p-10 flex flex-col items-center justify-center bg-gray-50/50 relative">
-                                    <!-- Decorative Elements -->
-                                    <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#00f0c8]/10 to-transparent rounded-bl-full pointer-events-none"></div>
-                                    <div class="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-[#bd147c]/10 to-transparent rounded-tr-full pointer-events-none"></div>
+                                <div class="p-8 sm:p-16 flex flex-col lg:flex-row items-center gap-10 lg:gap-16 bg-white relative overflow-hidden">
+                                    <!-- Decorative background elements -->
+                                    <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-[#bd147c]/5 to-transparent rounded-full -mr-48 -mt-48 pointer-events-none"></div>
+                                    <div class="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-[#00f0c8]/5 to-transparent rounded-full -ml-48 -mb-48 pointer-events-none"></div>
 
-                                    <!-- Video Container with brand styling -->
-                                    <div class="relative w-full max-w-4xl aspect-video rounded-3xl overflow-hidden bg-black shadow-[0_20px_50px_rgba(0,0,0,0.1)] border-4 border-white z-10">
-                                        <video controls autoplay class="w-full h-full object-cover">
-                                            <source src="${videoUrl}" type="video/mp4">
-                                            Your browser does not support the video tag.
-                                        </video>
-                                        <div class="absolute top-6 left-6 pointer-events-none">
-                                            <span class="px-4 py-2 rounded-xl bg-gradient-to-r from-[#bd147c] to-[#00f0c8] text-white text-xs font-black uppercase tracking-widest shadow-lg">Intro</span>
+                                    <!-- Text Column -->
+                                    <div class="lg:w-2/5 flex flex-col gap-6 z-10 text-center lg:text-start">
+                                        <div class="space-y-2">
+                                            <p class="text-[#bd147c] font-black tracking-[0.2em] uppercase text-sm mb-4">Digital Age</p>
+                                            <h2 data-i18n="introHeading" class="text-3xl sm:text-5xl font-black text-gray-900 leading-[1.15]mb-2" style="font-family: 'Playfair Display', serif;">
+                                                ${translations[currentLang].introHeading}
+                                            </h2>
+                                        </div>
+                                        <div class="h-1.5 w-24 bg-gradient-to-r from-[#bd147c] to-[#00f0c8] rounded-full mx-auto lg:mx-0"></div>
+                                        <p data-i18n="introSubtitle" class="text-gray-500 font-medium text-lg leading-relaxed mt-4">
+                                            ${translations[currentLang].introSubtitle}
+                                        </p>
+                                    </div>
+
+                                    <!-- Video Column -->
+                                    <div class="lg:w-3/5 w-full z-10">
+                                        <div class="relative aspect-video rounded-3xl overflow-hidden bg-black shadow-2xl border-8 border-gray-50 group">
+                                            <video controls autoplay class="w-full h-full object-cover">
+                                                <source src="${videoUrl}" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                            <div class="absolute top-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <span class="px-3 py-1.5 rounded-lg bg-black/50 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-widest">Digital Age Intro</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1741,7 +1838,8 @@
                 No2: "📱+256 789 383140",
                 terms: "Terms of Service",
                 portfolioHeader: "Our Best Projects",
-                introHeading: "Digital Age for Small and Large Works",
+                introHeading: "Digital Age for Small and Large Projects, Large and Small Works, Companies and Institutions",
+                introSubtitle: "Pioneering technology solutions for groups and businesses.",
                 back: "Back",
                 preparingIntro: "Preparing Digital Experience",
                 jobs: "Jobs",
@@ -1749,9 +1847,12 @@
                 careersTitle: "Career Opportunities",
                 careersDesc: "Join our team of experts and researchers to build the future of digital solutions.",
                 applyNow: "Apply Now",
+                posted: "Posted",
+                deadline: "Deadline",
                 noJobs: "No open positions at the moment. Keep checking!",
                 brandDigital: "Digital",
                 brandAge: "Age",
+                viewAll: "View All Positions",
                 formName: "Name",
                 formNamePlaceholder: "Enter Your Name",
                 formEmail: "Email",
@@ -1875,7 +1976,8 @@
                 No2: "📱+256 789 383140",
                 terms: "شروط الخدمة",
                 portfolioHeader: "أفضل مشاريعنا",
-                introHeading: "ديجيتال آيدج للأعمال الكبيرة والصغيرة",
+                introHeading: "ديجيتال أيج للمشاريع الصغيرة والكبيرة، والأعمال الكبيرة والصغيرة، والشركات والمؤسسات",
+                introSubtitle: "حلول تقنية رائدة للمجموعات والشركات والمؤسسات.",
                 back: "رجوع",
                 preparingIntro: "جاري تحضير التجربة الرقمية",
                 jobs: "الوظائف",
@@ -1883,9 +1985,12 @@
                 careersTitle: "فرص العمل المتاحة",
                 careersDesc: "انضم إلى فريق الخبراء والباحثين لدينا لبناء مستقبل الحلول الرقمية.",
                 applyNow: "قدم الآن",
+                posted: "نُشر في",
+                deadline: "الموعد النهائي",
                 noJobs: "لا توجد وظائف شاغرة حالياً. تابعنا للمزيد!",
                 brandDigital: "العصر",
                 brandAge: "الرقمي",
+                viewAll: "عرض كل الوظائف",
                 formName: "الاسم",
                 formNamePlaceholder: "أدخل اسمك",
                 formEmail: "البريد الإلكتروني",

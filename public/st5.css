@@ -37,6 +37,7 @@
      animation: typing1 8s steps(11) infinite;
      background: linear-gradient(to right, #BD147CE5 0%, #BD158CE5 100%);
      -webkit-background-clip: text;
+     background-clip: text;
      -webkit-text-fill-color: transparent;
  }
 
@@ -222,11 +223,9 @@
      width: 70px;
      /* حجم الصورة */
      height: auto;
-     margin-right: 10px;
  }
 
  #text {
      text-align: center;
      text-transform: lowercase;
  }
-

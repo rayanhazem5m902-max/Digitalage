@@ -857,6 +857,7 @@
                         </div>
                         <span id="career-form-title">إضافة وظيفة جديدة</span>
                     </h3>
+                    <input type="hidden" id="editing-career-id">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="space-y-2">
                             <label class="text-sm font-bold text-gray-700 mr-2">مسمى الوظيفة (English)</label>
@@ -881,20 +882,40 @@
                             </select>
                         </div>
                         <div class="space-y-2">
-                            <label class="text-sm font-bold text-gray-700 mr-2">المدة (English)</label>
+                            <label class="text-sm font-bold text-gray-700 mr-2">نوع الدوام (English)</label>
                             <input type="text" id="career-duration" placeholder="e.g. Full-time"
                                 class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
                         </div>
                         <div class="space-y-2">
-                            <label class="text-sm font-bold text-gray-700 mr-2">المدة (العربية)</label>
+                            <label class="text-sm font-bold text-gray-700 mr-2">نوع الدوام (العربية)</label>
                             <input type="text" id="career-duration-ar" dir="rtl" placeholder="مثلاً: دوام كامل"
                                 class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
                         </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-gray-700 mr-2">ساعات العمل (English)</label>
+                            <input type="text" id="career-working-hours" placeholder="e.g. 12 hours"
+                                class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-gray-700 mr-2">ساعات العمل (العربية)</label>
+                            <input type="text" id="career-working-hours-ar" dir="rtl" placeholder="مثلاً: 12 ساعة"
+                                class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
+                        </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-gray-700 mr-2">تاريخ النشر</label>
+                            <input type="date" id="career-published-at"
+                                class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
+                        </div>
                         <div class="space-y-2">
                             <label class="text-sm font-bold text-gray-700 mr-2">الموعد النهائي</label>
                             <input type="date" id="career-deadline"
+                                class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-gray-700 mr-2">رابط التقديم</label>
+                            <input type="text" id="career-apply-link" placeholder="رابط خارجي للتقديم"
                                 class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
                         </div>
                     </div>
@@ -913,32 +934,12 @@
 
                 </div>
 
-                <!-- HTML Editor for Careers -->
-                <div class="flex flex-col space-y-2 h-full">
-                    <label class="text-sm font-bold text-gray-700 mr-2 flex items-center gap-2">
-                        <i data-lucide="code-2" size="18" class="text-purple-600"></i>
-                        برمجة صفحة الوظيفة (HTML Custom Page)
-                    </label>
-                    <div
-                        class="flex-1 min-h-[400px] bg-[#1e293b] rounded-3xl overflow-hidden shadow-2xl border border-gray-700 flex flex-col">
-                        <div class="flex-1 flex flex-col xl:flex-row overflow-hidden h-full">
-                            <div
-                                class="flex-1 relative border-b xl:border-b-0 xl:border-l border-gray-700 h-1/2 xl:h-full">
-                                <textarea id="career-html" dir="ltr" spellcheck="false"
-                                    class="w-full h-full bg-transparent text-[#e879f9] p-6 font-mono text-[13px] resize-none outline-none leading-relaxed"
-                                    placeholder="<h1>تفاصيل الوظيفة...</h1>" oninput="updateCareerPreview()"></textarea>
-                            </div>
-                            <div class="flex-1 bg-white h-1/2 xl:h-full relative overflow-hidden">
-                                <iframe id="career-live-preview" class="w-full h-full border-none"></iframe>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
                 <input type="hidden" id="editing-career-id" value="">
                 <div class="mt-8 flex justify-end gap-3">
                     <button id="cancel-career-edit" onclick="resetCareerForm()"
                         class="hidden px-8 py-4 bg-gray-100 text-gray-600 font-bold rounded-2xl hover:bg-gray-200 transition-all">إلغاء</button>
-                    <button onclick="saveCareer()"
+                    <button id="save-career-btn" onclick="saveCareer()"
                         class="px-12 py-4 bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-black text-lg rounded-2xl shadow-xl hover:shadow-purple-500/40 hover:-translate-y-1 transition-all flex items-center gap-3">
                         <span id="save-career-btn-text">حفظ الوظيفة</span>
                         <i data-lucide="check-circle" size="24"></i>
@@ -949,7 +950,7 @@
                     <div class="p-8 border-b border-gray-50">
                         <h3 class="text-xl font-bold text-gray-800">قائمة الوظائف المتاحة</h3>
                     </div>
-                    <div class="overflow-x-auto overflow-y-auto max-h-[400px]">
+                    <div class="overflow-x-auto overflow-y-auto max-h-[600px]">
                         <table class="w-full text-right">
                             <thead class="bg-gray-50 text-gray-500 text-[11px] font-bold uppercase tracking-widest">
                                 <tr>
@@ -980,7 +981,7 @@
 
                                         <td class="px-8 py-6">
                                             <p class="text-sm font-semibold text-gray-700">
-                                                {{ $career->created_at->format('Y-m-d') }}
+                                                نُشر: {{ $career->published_at ?: $career->created_at->format('Y-m-d') }}
                                             </p>
                                             @if($career->deadline)
                                                 <p class="text-[10px] text-red-500 font-bold">ينتهي: {{ $career->deadline }}</p>
@@ -1519,6 +1520,9 @@
         }
 
         async function saveCareer() {
+            const btn = document.getElementById('save-career-btn');
+            const btnText = document.getElementById('save-career-btn-text');
+
             const catSelect = document.getElementById('career-category');
             const data = {
                 id: document.getElementById('editing-career-id').value,
@@ -1527,17 +1531,25 @@
                 category: catSelect.value ? catSelect.options[catSelect.selectedIndex].text : '',
                 duration: document.getElementById('career-duration').value,
                 duration_ar: document.getElementById('career-duration-ar').value,
+                working_hours: document.getElementById('career-working-hours').value,
+                working_hours_ar: document.getElementById('career-working-hours-ar').value,
                 deadline: document.getElementById('career-deadline').value,
+                published_at: document.getElementById('career-published-at').value,
                 service_id: catSelect.value,
                 description: document.getElementById('career-desc').value,
                 description_ar: document.getElementById('career-desc-ar').value,
-                html_content: document.getElementById('career-html').value
+                apply_link: document.getElementById('career-apply-link').value
             };
 
             if (!data.title || !data.duration) {
                 alert('يرجى إدخال المسمى والمدة على الأقل');
                 return;
             }
+
+            // Disable button to prevent duplicates
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            btnText.innerText = 'جاري الحفظ...';
 
             try {
                 const response = await fetch('{{ route("admin.careers.save") }}', {
@@ -1552,9 +1564,18 @@
                 if (result.success) {
                     alert('تم حفظ الوظيفة بنجاح');
                     location.reload();
+                } else {
+                    alert('حدث خطأ أثناء الحفظ: ' + (result.error || 'خطأ غير معروف'));
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    btnText.innerText = 'حفظ الوظيفة';
                 }
             } catch (error) {
                 console.error('Error saving career:', error);
+                alert('حدث خطأ في الاتصال بالسيرفر: ' + error.message);
+                btn.disabled = false;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                btnText.innerText = 'حفظ الوظيفة';
             }
         }
 
@@ -1584,16 +1605,18 @@
             document.getElementById('career-category').value = career.service_id || '';
             document.getElementById('career-duration').value = career.duration;
             document.getElementById('career-duration-ar').value = career.duration_ar || '';
+            document.getElementById('career-working-hours').value = career.working_hours || '';
+            document.getElementById('career-working-hours-ar').value = career.working_hours_ar || '';
             document.getElementById('career-deadline').value = career.deadline || '';
+            document.getElementById('career-published-at').value = career.published_at || '';
             document.getElementById('career-desc').value = career.description;
             document.getElementById('career-desc-ar').value = career.description_ar || '';
-            document.getElementById('career-html').value = career.html_content || '';
+            document.getElementById('career-apply-link').value = career.apply_link || '';
 
             document.getElementById('career-form-title').innerText = 'تعديل الوظيفة: ' + career.title;
             document.getElementById('save-career-btn-text').innerText = 'تحديث الوظيفة';
             document.getElementById('cancel-career-edit').classList.remove('hidden');
 
-            updateCareerPreview();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -1603,15 +1626,17 @@
             document.getElementById('career-title-ar').value = '';
             document.getElementById('career-duration').value = '';
             document.getElementById('career-duration-ar').value = '';
+            document.getElementById('career-working-hours').value = '';
+            document.getElementById('career-working-hours-ar').value = '';
             document.getElementById('career-deadline').value = '';
+            document.getElementById('career-published-at').value = '';
             document.getElementById('career-category').value = '';
             document.getElementById('career-desc').value = '';
             document.getElementById('career-desc-ar').value = '';
-            document.getElementById('career-html').value = '';
+            document.getElementById('career-apply-link').value = '';
             document.getElementById('career-form-title').innerText = 'إضافة وظيفة جديدة';
             document.getElementById('save-career-btn-text').innerText = 'حفظ الوظيفة';
             document.getElementById('cancel-career-edit').classList.add('hidden');
-            updateCareerPreview();
         }
 
         async function translateText(text) {
@@ -1635,18 +1660,8 @@
 
 
 
-        function updateCareerPreview() {
-            const html = document.getElementById('career-html').value;
-            const iframe = document.getElementById('career-live-preview');
-            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-            iframeDoc.open();
-            iframeDoc.write(html || '<div style="padding:20px; color:#999; font-family:sans-serif;">لا يوجد محتوى للعرض...</div>');
-            iframeDoc.close();
-        }
-
         // Initial previews
         updateFormPreview();
-        updateCareerPreview();
     </script>
 
 </body>

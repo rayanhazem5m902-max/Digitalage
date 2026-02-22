@@ -232,48 +232,74 @@ class AdminController extends Controller
 
     public function saveCareer(Request $request)
     {
-        $data = $request->validate([
-            'id' => 'nullable|integer',
-            'title' => 'required|string',
-            'category' => 'required|string',
-            'duration' => 'required|string',
-            'deadline' => 'nullable|date',
-            'service_id' => 'nullable|exists:services,id',
-            'description' => 'nullable|string',
-            'html_content' => 'nullable|string',
-            'title_ar' => 'nullable|string',
-            'category_ar' => 'nullable|string',
-            'duration_ar' => 'nullable|string',
-            'description_ar' => 'nullable|string',
-            'html_content_ar' => 'nullable|string',
-        ]);
+        try {
+            $data = $request->validate([
+                'id' => 'nullable|integer',
+                'title' => 'required|string',
+                'category' => 'nullable|string',
+                'duration' => 'required|string',
+                'deadline' => 'nullable|date',
+                'published_at' => 'nullable|date',
+                'service_id' => 'nullable|exists:services,id',
+                'description' => 'nullable|string',
+                'html_content' => 'nullable|string',
+                'title_ar' => 'nullable|string',
+                'category_ar' => 'nullable|string',
+                'duration_ar' => 'nullable|string',
+                'description_ar' => 'nullable|string',
+                'html_content_ar' => 'nullable|string',
+                'apply_link' => 'nullable|string',
+                'working_hours' => 'nullable|string',
+                'working_hours_ar' => 'nullable|string',
+            ]);
 
-        $tr = new \Stichoza\GoogleTranslate\GoogleTranslate('ar');
-        $tr->setSource('en');
+            if (empty($data['category'])) {
+                $data['category'] = 'General';
+            }
 
-        $data['title_ar'] = $request->input('title_ar') ?: $tr->translate($data['title']);
-        $data['category_ar'] = $request->input('category_ar') ?: $tr->translate($data['category']);
-        $data['duration_ar'] = $request->input('duration_ar') ?: $tr->translate($data['duration']);
+            $tr = new \Stichoza\GoogleTranslate\GoogleTranslate('ar');
+            $tr->setSource('en');
 
-        if (!empty($data['description'])) {
-            $data['description_ar'] = $request->input('description_ar') ?: $tr->translate($data['description']);
+            try {
+                $data['title_ar'] = $request->input('title_ar') ?: $tr->translate($data['title']);
+                $data['category_ar'] = $request->input('category_ar') ?: $tr->translate($data['category']);
+                $data['duration_ar'] = $request->input('duration_ar') ?: $tr->translate($data['duration']);
+
+                if (!empty($data['working_hours'])) {
+                    $data['working_hours_ar'] = $request->input('working_hours_ar') ?: $tr->translate($data['working_hours']);
+                }
+
+                if (!empty($data['description'])) {
+                    $data['description_ar'] = $request->input('description_ar') ?: $tr->translate($data['description']);
+                }
+            } catch (\Exception $e) {
+                // Ignore translation errors if they happen, but keep the data
+                \Log::warning('Translation failed: ' . $e->getMessage());
+            }
+
+            if (empty($data['deadline'])) {
+                $data['deadline'] = null;
+            }
+            if (empty($data['published_at'])) {
+                $data['published_at'] = null;
+            }
+
+            if ($request->id) {
+                $career = Career::findOrFail($request->id);
+                $career->update($data);
+            } else {
+                Career::create($data);
+            }
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            \Log::error('Error in saveCareer: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ], 500);
         }
-        if (!empty($data['html_content'])) {
-            $data['html_content_ar'] = $request->input('html_content_ar') ?: $tr->translate($data['html_content']);
-        }
-
-        if (empty($data['deadline'])) {
-            $data['deadline'] = null;
-        }
-
-        if ($request->id) {
-            $career = Career::findOrFail($request->id);
-            $career->update($data);
-        } else {
-            Career::create($data);
-        }
-
-        return response()->json(['success' => true]);
     }
 
     public function deleteCareer($id)

@@ -217,10 +217,11 @@
                                     class="px-3 py-1.5 bg-purple-50 text-purple-600 rounded-lg text-xs font-black border border-purple-100 uppercase dynamic-text"
                                     data-en="{{ $job->category }}"
                                     data-ar="{{ $job->category_ar ?? $job->category }}">{{ $job->category }}</span>
-                                <span class="badge-duration dynamic-text" data-en="{{ $job->duration }}"
-                                    data-ar="{{ $job->duration_ar ?? $job->duration }}">
+                                <span class="badge-duration dynamic-text"
+                                    data-en="{{ $job->duration }}{{ $job->working_hours ? ' (' . $job->working_hours . ')' : '' }}"
+                                    data-ar="{{ $job->duration_ar ?? $job->duration }}{{ $job->working_hours_ar ? ' (' . $job->working_hours_ar . ')' : '' }}">
                                     <i data-lucide="clock" class="w-4 h-4 inline-block mr-1"></i>
-                                    {{ $job->duration }}
+                                    {{ $job->duration }}{{ $job->working_hours ? ' (' . $job->working_hours . ')' : '' }}
                                 </span>
                             </div>
                             <h3 class="text-2xl font-bold text-slate-900 mb-2 dynamic-text" data-en="{{ $job->title }}"
@@ -237,8 +238,11 @@
 
                             <div class="flex items-center gap-2 text-gray-400 text-xs font-bold">
                                 <i data-lucide="calendar" class="w-4 h-4"></i>
-                                <span data-i18n="posted">Posted</span>: <span class="dynamic-date"
-                                    data-date="{{ $job->created_at->toIso8601String() }}">{{ $job->created_at->format('M d, Y') }}</span>
+                                <span data-i18n="posted">Posted</span>:
+                                <span class="dynamic-date"
+                                    data-date="{{ $job->published_at ? \Carbon\Carbon::parse($job->published_at)->toIso8601String() : $job->created_at->toIso8601String() }}">
+                                    {{ $job->published_at ? \Carbon\Carbon::parse($job->published_at)->format('M d, Y') : $job->created_at->format('M d, Y') }}
+                                </span>
                             </div>
                             @if($job->deadline)
                                 <div class="flex items-center gap-2 text-red-500 text-xs font-bold">
@@ -252,9 +256,15 @@
                                 data-ar="{{ $job->description_ar ?? $job->description }}">
                                 {!! nl2br(e($job->description ?? 'No description provided.')) !!}
                             </div>
-                            <a href="{{ route('career.show', $job->id) }}"
-                                class="btn-primary px-8 py-3 rounded-xl text-white font-semibold text-center block text-decoration-none"
-                                data-i18n="applyNow">Apply Now</a>
+                            <div class="flex flex-col gap-3">
+                                <a href="{{ $job->apply_link ?? route('career.show', $job->id) }}" {{ $job->apply_link ? 'target="_blank"' : '' }}
+                                    class="bg-slate-900 text-white px-8 py-3 rounded-xl font-bold text-center hover:bg-lime hover:text-slate-900 transition-all flex items-center justify-center gap-2"
+                                    data-i18n="applyNow">
+                                    Apply Now
+                                    <i data-lucide="{{ $job->apply_link ? 'external-link' : 'arrow-right' }}"
+                                        class="w-4 h-4"></i>
+                                </a>
+                            </div>
                         </div>
                     @endforeach
                 </div>
@@ -294,6 +304,7 @@
                 careersTitle: "Career Opportunities",
                 careersDesc: "Join our team of experts and researchers to build the future of digital solutions.",
                 applyNow: "Apply Now",
+                learnMore: "Learn More & Full Description",
                 noJobs: "No open positions at the moment. Keep checking!",
                 service: "Service",
                 posted: "Posted",
@@ -313,6 +324,7 @@
                 careersTitle: "فرص العمل المتاحة",
                 careersDesc: "انضم إلى فريق الخبراء والباحثين لدينا لبناء مستقبل الحلول الرقمية.",
                 applyNow: "قدم الآن",
+                learnMore: "اعرف المزيد وتفاصيل الوظيفة",
                 noJobs: "لا توجد وظائف شاغرة حالياً. تابعنا للمزيد!",
                 service: "الخدمة",
                 posted: "نُشر في",
