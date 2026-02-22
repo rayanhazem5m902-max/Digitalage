@@ -37,4 +37,5 @@ Route::prefix('admin')->group(function () {
     // Careers
     Route::post('/careers/save', [AdminController::class, 'saveCareer'])->name('admin.careers.save');
     Route::post('/careers/delete/{id}', [AdminController::class, 'deleteCareer'])->name('admin.careers.delete');
+    Route::post('/translate', [AdminController::class, 'translate'])->name('admin.translate');
 });

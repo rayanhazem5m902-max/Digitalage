@@ -687,8 +687,8 @@
                 <div class="flex items-center">
                     <img id="dig" src="Images/Untitled (1).png" alt="digitalagelogo" class="logo">
                     <a href="#" class="flex items-center gap-0 text-3xl font-bold tracking-tight">
-                        <span class="text-lime">Digital</span>
-                        <span class="text-blue">Age</span>
+                        <span class="text-lime" data-i18n="brandDigital">Digital</span>
+                        <span class="text-blue" data-i18n="brandAge">Age</span>
                     </a>
                 </div>
 
@@ -869,13 +869,27 @@
                     @foreach($members as $index => $member)
                         <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
                             <div class="d-flex justify-content-center">
-                                <div class="testimonial-card text-center p-5 shadow-xl rounded-4 bg-white">
-                                    <img src="{{ $member->image }}"
-                                        class="testimonial-avatar mb-3 rounded-circle border border-3 border-orange-500 mx-auto"
-                                        alt="{{ $member->name }}">
-                                    <h6 class="fw-bold mb-2">{{ $member->name }}</h6>
-                                    <p class="text-muted mb-2">{{ $member->role }}</p>
-                                    <p class="lead fst-italic text-gray-600 mb-0">"{{ $member->description }}"</p>
+                                <div
+                                    class="testimonial-card text-center p-5 shadow-xl rounded-4 bg-white border border-gray-100">
+                                    <div class="relative w-32 h-32 mx-auto mb-6">
+                                        <div class="absolute inset-0 bg-lime/20 rounded-2xl animate-pulse"></div>
+                                        <div
+                                            class="relative w-full h-full bg-white rounded-2xl shadow-lg border-2 border-lime flex items-center justify-center overflow-hidden">
+                                            @if($member->image)
+                                                <img src="{{ asset($member->image) }}" class="w-full h-full object-cover">
+                                            @else
+                                                <i data-lucide="user-round" class="w-16 h-16 text-lime"></i>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <h6 class="fw-bold mb-1 text-xl dynamic-text" data-en="{{ $member->name }}"
+                                        data-ar="{{ $member->name_ar ?? $member->name }}">{{ $member->name }}</h6>
+                                    <p class="text-lime fw-bold mb-3 dynamic-text" data-en="{{ $member->role }}"
+                                        data-ar="{{ $member->role_ar ?? $member->role }}">{{ $member->role }}</p>
+                                    <p class="lead fst-italic text-gray-700 mb-0 px-4 dynamic-text"
+                                        data-en='"{{ $member->description }}"'
+                                        data-ar='"{{ $member->description_ar ?? $member->description }}"'>
+                                        "{{ $member->description }}"</p>
                                 </div>
                             </div>
                         </div>
@@ -912,7 +926,7 @@
                 </div>
             </div>
 
-            <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
+            <div id="impactCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
                 <div class="carousel-inner">
 
                     @forelse($impacts as $index => $impact)
@@ -932,8 +946,12 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <h6 class="fw-bold mb-2 text-xl">{{ $impact->name }}</h6>
-                                    <p class="lead fst-italic text-gray-700 mb-0 px-4">{{ $impact->text }}</p>
+                                    <h6 class="fw-bold mb-2 text-xl dynamic-text" data-en="{{ $impact->name }}"
+                                        data-ar="{{ $impact->name_ar ?? $impact->name }}">{{ $impact->name }}</h6>
+                                    <p class="lead fst-italic text-gray-700 mb-0 px-4 dynamic-text"
+                                        data-en="{{ $impact->text }}" data-ar="{{ $impact->text_ar ?? $impact->text }}">
+                                        {{ $impact->text }}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -962,13 +980,13 @@
                 </div>
 
                 <!-- Carousel Controls -->
-                <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel"
+                <button class="carousel-control-prev" type="button" data-bs-target="#impactCarousel"
                     data-bs-slide="prev">
                     <span class="carousel-control-prev-icon bg-dark rounded-circle p-3 shadow-lg"
                         aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel"
+                <button class="carousel-control-next" type="button" data-bs-target="#impactCarousel"
                     data-bs-slide="next">
                     <span class="carousel-control-next-icon bg-dark rounded-circle p-3 shadow-lg"
                         aria-hidden="true"></span>
@@ -1012,8 +1030,14 @@
                                     <i data-lucide="{{ $service->icon ?? 'code' }}" class="w-16 h-16 text-lime"></i>
                                 </div>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-900 mb-3 text-center">{{ $service->name }}</h3>
-                            <p class="text-gray-600 text-center text-sm">{{ $service->description }}</p>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3 text-center dynamic-text"
+                                data-en="{{ $service->name }}" data-ar="{{ $service->name_ar ?? $service->name }}">
+                                {{ $service->name }}
+                            </h3>
+                            <p class="text-gray-600 text-center text-sm dynamic-text" data-en="{{ $service->description }}"
+                                data-ar="{{ $service->description_ar ?? $service->description }}">
+                                {{ $service->description }}
+                            </p>
                         </div>
                     @endforeach
                 </div>
@@ -1021,8 +1045,13 @@
         </div>
     </section>
     <section class="container">
-        <div class="d-flex justify-content-center justify-content-md-start">
-            <div class="news-header" id="Portfolio" data-i18n="portfolioHeader">Our Portfolio</div>
+        <div class="text-center mb-16" id="Portfolio">
+            <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-6" data-i18n="portfolioHeader">
+                Our Portfolio
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto dynamic-text" data-i18n="portfolioSubtitle">
+                These are our projects that we are working on and that have been finished.
+            </p>
         </div>
 
         <div class="mt-4 news-slider">
@@ -1039,8 +1068,12 @@
                     @foreach($projects as $project)
                         <article class="news-card">
                             <img class="news-img" src="{{ $project->image }}" alt="{{ $project->name }}" />
-                            <h3 class="news-title">{{ $project->name }}</h3>
-                            <p class="text-sm text-lime mb-2">{{ $project->service->name }}</p>
+                            <h3 class="news-title dynamic-text" data-en="{{ $project->name }}"
+                                data-ar="{{ $project->name_ar ?? $project->name }}">{{ $project->name }}</h3>
+                            <p class="text-sm text-lime mb-2 dynamic-text" data-en="{{ $project->service->name }}"
+                                data-ar="{{ $project->service->name_ar ?? $project->service->name }}">
+                                {{ $project->service->name }}
+                            </p>
                             <a class="read-more mt-auto" href="{{ route('project.show', $project->id) }}"
                                 data-i18n="learnMoreBtn">Read More</a>
                         </article>
@@ -1227,21 +1260,26 @@
 
                             <!-- Name -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Name</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2"
+                                    data-i18n="formName">Name</label>
                                 <input type="text" name="username" placeholder="Enter Your Name" required
+                                    data-i18n="formNamePlaceholder"
                                     class="w-full px-4 py-3 rounded-xl border border-gray-200">
                             </div>
 
                             <!-- Email -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2"
+                                    data-i18n="formEmail">Email</label>
                                 <input type="email" name="email" placeholder="john@example.com" required
+                                    data-i18n="formEmailPlaceholder"
                                     class="w-full px-4 py-3 rounded-xl border border-gray-200">
                             </div>
 
                             <!-- Phone -->
                             <div class="flex gap-2 items-center">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2"
+                                    data-i18n="formPhone">Phone</label>
 
                                 <select name="country_code" class="w-25 px-3 py-3 rounded-lg border">
                                     <option value="+20">🇪🇬 +20</option>
@@ -1259,31 +1297,36 @@
 
                         <!-- Service Type -->
                         <div class="flex gap-2 items-center">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Type of Service</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="formService">Type of
+                                Service</label>
 
                             <select name="service_type" id="contact-service-select"
                                 class="w-45 px-3 py-3 rounded-lg border">
                                 @foreach($services as $service)
-                                    <option value="{{ $service->slug }}">{{ $service->name }}</option>
+                                    <option value="{{ $service->slug }}" class="dynamic-text" data-en="{{ $service->name }}"
+                                        data-ar="{{ $service->name_ar ?? $service->name }}">{{ $service->name }}</option>
                                 @endforeach
                             </select>
                         </div>
 
                         <!-- Subject -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2"
+                                data-i18n="formSubject">Subject</label>
                             <input type="text" name="subject" placeholder="Project Inquiry"
-                                class="w-full px-4 py-3 rounded-xl border">
+                                data-i18n="formSubjectPlaceholder" class="w-full px-4 py-3 rounded-xl border">
                         </div>
 
                         <!-- Message -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2"
+                                data-i18n="formMessage">Message</label>
                             <textarea name="message" rows="4" placeholder="Tell us about your project..."
+                                data-i18n="formMessagePlaceholder"
                                 class="w-full px-4 py-3 rounded-xl border resize-none"></textarea>
                         </div>
 
-                        <button type="submit"
+                        <button type="submit" data-i18n="formSend"
                             class="btn-primary w-full py-4 rounded-xl text-white font-semibold text-lg">
                             Send Message
                         </button>
@@ -1342,7 +1385,11 @@
                                 </div>
                                 <div>
                                     <h4 class="font-semibold text-gray-900" data-i18n="visitUs">Visit Us</h4>
-                                    <p class="text-gray-600" id="display-address">{{ $contact->address }}</p>
+                                    <p class="text-gray-600 dynamic-text" id="display-address"
+                                        data-en="{{ $contact->address }}"
+                                        data-ar="{{ $contact->address_ar ?? $contact->address }}">
+                                        {{ $contact->address }}
+                                    </p>
                                 </div>
                             </div>
 
@@ -1438,8 +1485,8 @@
                 <div class="md:col-span-1">
                     <a href="#" class="flex items-center gap-0 text-3xl font-bold tracking-tight mb-4">
                         <img src="Images/Untitled (1).png" alt="digitalagelogo" class="logo">
-                        <span class="text-lime">Digital</span>
-                        <span class="text-blue">Age</span>
+                        <span class="text-lime" data-i18n="brandDigital">Digital</span>
+                        <span class="text-blue" data-i18n="brandAge">Age</span>
                     </a>
                     <p class="text-gray-400" data-i18n="footerDesc">Transforming businesses through innovative
                         technology solutions.</p>
@@ -1464,7 +1511,9 @@
                     <ul class="space-y-3" id="footer-services-list">
                         @foreach($services as $service)
                             <li><a href="#{{ $service->slug }}"
-                                    class="text-gray-400 hover:text-lime transition">{{ $service->name }}</a></li>
+                                    class="text-gray-400 hover:text-lime transition dynamic-text"
+                                    data-en="{{ $service->name }}"
+                                    data-ar="{{ $service->name_ar ?? $service->name }}">{{ $service->name }}</a></li>
                         @endforeach
                     </ul>
                 </div>
@@ -1544,7 +1593,7 @@
                                     </div>
 
                                     <div class="text-[end] z-10 w-1/3">
-                                        <h2 data-i18n="introHeading" class="text-xl sm:text-2xl font-black tracking-tight mb-1 bg-clip-text text-transparent bg-gradient-to-r from-[#00f0c8] to-[#bd147c]">
+                                        <h2 data-i18n="introHeading" class="text-sm sm:text-base font-black tracking-tight mb-1 text-[#bd147c]">
                                             ${translations[currentLang].introHeading}
                                         </h2>
                                         <p class="text-sm font-bold text-gray-400 uppercase tracking-widest">Digital Age</p>
@@ -1593,7 +1642,7 @@
                 mobileapp: "mobile application",
                 graphicDesign1: "graphicDesign",
 
-
+                portfolioSubtitle: "These are our projects that we are working on and that have been finished.",
 
                 mobileSolution: "mobile application",
                 phone: "phone",
@@ -1701,6 +1750,19 @@
                 careersDesc: "Join our team of experts and researchers to build the future of digital solutions.",
                 applyNow: "Apply Now",
                 noJobs: "No open positions at the moment. Keep checking!",
+                brandDigital: "Digital",
+                brandAge: "Age",
+                formName: "Name",
+                formNamePlaceholder: "Enter Your Name",
+                formEmail: "Email",
+                formEmailPlaceholder: "john@example.com",
+                formPhone: "Phone",
+                formService: "Type of Service",
+                formSubject: "Subject",
+                formSubjectPlaceholder: "Project Inquiry",
+                formMessage: "Message",
+                formMessagePlaceholder: "Tell us about your project...",
+                formSend: "Send Message",
             },
             ar: {
                 home: "الرئيسية",
@@ -1716,7 +1778,7 @@
                 mobileapp: "تطبيق الهاتف",
                 tproject: "نوع الخدمه",
                 graphicDesign1: "التصميم الجرافيكي",
-
+                portfolioSubtitle: "هذه هي مشاريعنا التي نعمل عليها والتي تم الانتهاء منها.",
                 Wedeliver: "نقدّم حلولًا رقمية متكاملة تساعد الشركات على النمو",
                 Integrity: "النزاهه",
                 Highsecurity: " امان عالي",
@@ -1822,6 +1884,19 @@
                 careersDesc: "انضم إلى فريق الخبراء والباحثين لدينا لبناء مستقبل الحلول الرقمية.",
                 applyNow: "قدم الآن",
                 noJobs: "لا توجد وظائف شاغرة حالياً. تابعنا للمزيد!",
+                brandDigital: "العصر",
+                brandAge: "الرقمي",
+                formName: "الاسم",
+                formNamePlaceholder: "أدخل اسمك",
+                formEmail: "البريد الإلكتروني",
+                formEmailPlaceholder: "البريد الإلكتروني",
+                formPhone: "الهاتف",
+                formService: "نوع الخدمة",
+                formSubject: "الموضوع",
+                formSubjectPlaceholder: "استفسار عن مشروع",
+                formMessage: "الرسالة",
+                formMessagePlaceholder: "أخبرنا عن مشروعك...",
+                formSend: "إرسال الرسالة",
             }
         };
         //button start
@@ -1858,6 +1933,27 @@
                     } else {
                         element.textContent = translations[currentLang][key];
                     }
+                }
+            });
+
+            // Update dynamic components with data-en / data-ar attributes
+            document.querySelectorAll('.dynamic-text').forEach(element => {
+                if (element.hasAttribute('data-' + currentLang)) {
+                    element.innerText = element.getAttribute('data-' + currentLang);
+                }
+            });
+
+            // Dynamic Date Handling
+            document.querySelectorAll('.dynamic-date').forEach(element => {
+                const dateStr = element.getAttribute('data-date');
+                if (dateStr) {
+                    const date = new Date(dateStr);
+                    const formatted = date.toLocaleDateString(currentLang === 'ar' ? 'ar-EG' : 'en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric'
+                    });
+                    element.textContent = formatted;
                 }
             });
 

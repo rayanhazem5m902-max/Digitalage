@@ -154,26 +154,37 @@
                         <div class="space-y-6">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="space-y-2">
-                                    <label class="text-sm font-bold text-gray-700 mr-2">اسم العمل</label>
-                                    <input type="text" id="proj-name" placeholder="مثلاً: تطبيق بنكي ذكي"
+                                    <label class="text-sm font-bold text-gray-700 mr-2">اسم العمل (English)</label>
+                                    <input type="text" id="proj-name" placeholder="Name in English"
                                         class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-[#00f0c8] focus:ring-4 focus:ring-[#00f0c8]/10 outline-none transition-all bg-gray-50/50">
                                 </div>
                                 <div class="space-y-2">
-                                    <label class="text-sm font-bold text-gray-700 mr-2">التصنيف</label>
-                                    <select id="proj-category"
+                                    <label class="text-sm font-bold text-gray-700 mr-2">اسم العمل (العربية)</label>
+                                    <input type="text" id="proj-name-ar" dir="rtl" placeholder="الاسم بالعربية"
                                         class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-[#00f0c8] focus:ring-4 focus:ring-[#00f0c8]/10 outline-none transition-all bg-gray-50/50">
-                                        @foreach($services as $service)
-                                            <option value="{{ $service->id }}">{{ $service->name }}</option>
-                                        @endforeach
-                                    </select>
                                 </div>
-
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-bold text-gray-700 mr-2">التصنيف</label>
+                                <select id="proj-category"
+                                    class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-[#00f0c8] focus:ring-4 focus:ring-[#00f0c8]/10 outline-none transition-all bg-gray-50/50">
+                                    @foreach($services as $service)
+                                        <option value="{{ $service->id }}">{{ $service->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
 
-                            <div class="space-y-2">
-                                <label class="text-sm font-bold text-gray-700 mr-2">وصف التفاصيل</label>
-                                <textarea id="proj-desc" rows="3" placeholder="اكتب وصفاً جذاباً لهذا العمل..."
-                                    class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-[#00f0c8] focus:ring-4 focus:ring-[#00f0c8]/10 outline-none transition-all bg-gray-50/50"></textarea>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="space-y-2">
+                                    <label class="text-sm font-bold text-gray-700 mr-2">وصف التفاصيل (English)</label>
+                                    <textarea id="proj-desc" rows="3" placeholder="Description in English..."
+                                        class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-[#00f0c8] focus:ring-4 focus:ring-[#00f0c8]/10 outline-none transition-all bg-gray-50/50"></textarea>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-sm font-bold text-gray-700 mr-2">الوصف (العربية)</label>
+                                    <textarea id="proj-desc-ar" rows="3" dir="rtl" placeholder="الوصف بالعربية..."
+                                        class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-[#00f0c8] focus:ring-4 focus:ring-[#00f0c8]/10 outline-none transition-all bg-gray-50/50"></textarea>
+                                </div>
                             </div>
 
                             <div class="space-y-2">
@@ -346,21 +357,45 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div class="space-y-6">
-                            <div class="space-y-2">
-                                <label class="text-sm font-bold text-gray-700 mr-2">اسم العضو</label>
-                                <input type="text" id="member-name" placeholder="مثلاً: د. أحمد محمد"
-                                    class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all bg-gray-50/50">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <label class="text-sm font-bold text-gray-700 mr-2">اسم العضو (English)</label>
+                                    <input type="text" id="member-name" placeholder="Name in English"
+                                        class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all bg-gray-50/50">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-sm font-bold text-gray-700 mr-2">الاسم (العربية)</label>
+                                    <input type="text" id="member-name-ar" dir="rtl" placeholder="الاسم بالعربية"
+                                        class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all bg-gray-50/50">
+                                </div>
                             </div>
-                            <div class="space-y-2">
-                                <label class="text-sm font-bold text-gray-700 mr-2">الدور / المسمى الوظيفي</label>
-                                <input type="text" id="member-role" placeholder="مثلاً: مدير المشروع"
-                                    class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all bg-gray-50/50">
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <label class="text-sm font-bold text-gray-700 mr-2">الدور (English)</label>
+                                    <input type="text" id="member-role" placeholder="Role in English"
+                                        class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all bg-gray-50/50">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-sm font-bold text-gray-700 mr-2">الدور (العربية)</label>
+                                    <input type="text" id="member-role-ar" dir="rtl" placeholder="الدور بالعربية"
+                                        class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all bg-gray-50/50">
+                                </div>
                             </div>
-                            <div class="space-y-2">
-                                <label class="text-sm font-bold text-gray-700 mr-2">وصف أو كلمة (اختياري)</label>
-                                <textarea id="member-desc" rows="3" placeholder="اكتب وصفاً مختصراً للعضو..."
-                                    class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all bg-gray-50/50"></textarea>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <label class="text-sm font-bold text-gray-700 mr-2">وصف مختصر (English)</label>
+                                    <textarea id="member-desc" rows="3" placeholder="Bio in English..."
+                                        class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all bg-gray-50/50"></textarea>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-sm font-bold text-gray-700 mr-2">الوصف (العربية)</label>
+                                    <textarea id="member-desc-ar" rows="3" dir="rtl" placeholder="الوصف بالعربية..."
+                                        class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all bg-gray-50/50"></textarea>
+                                </div>
                             </div>
+
                         </div>
 
                         <div class="space-y-6">
@@ -386,70 +421,69 @@
                                 </div>
                             </div>
                         </div>
+
+                        <input type="hidden" id="editing-member-id" value="">
+
+                        <div class="mt-8 flex justify-end gap-3">
+                            <button id="cancel-member-edit" onclick="resetMemberForm()"
+                                class="hidden px-8 py-4 bg-gray-100 text-gray-600 font-bold rounded-2xl hover:bg-gray-200 transition-all">إلغاء</button>
+                            <button onclick="saveMember()"
+                                class="px-12 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-black text-lg rounded-2xl shadow-xl hover:shadow-blue-500/40 hover:-translate-y-1 transition-all flex items-center gap-3">
+                                <span id="save-member-btn-text">حفظ العضو</span>
+                                <i data-lucide="user-check" size="24"></i>
+                            </button>
+                        </div>
                     </div>
 
-                    <input type="hidden" id="editing-member-id" value="">
-
-                    <div class="mt-8 flex justify-end gap-3">
-                        <button id="cancel-member-edit" onclick="resetMemberForm()"
-                            class="hidden px-8 py-4 bg-gray-100 text-gray-600 font-bold rounded-2xl hover:bg-gray-200 transition-all">إلغاء</button>
-                        <button onclick="saveMember()"
-                            class="px-12 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-black text-lg rounded-2xl shadow-xl hover:shadow-blue-500/40 hover:-translate-y-1 transition-all flex items-center gap-3">
-                            <span id="save-member-btn-text">حفظ العضو</span>
-                            <i data-lucide="user-check" size="24"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
-                    <div class="p-8 border-b border-gray-50 flex items-center justify-between">
-                        <h3 class="text-xl font-bold text-gray-800">قائمة أعضاء الفريق</h3>
-                    </div>
-                    <div class="overflow-x-auto overflow-y-auto max-h-[400px]">
-                        <table class="w-full text-right">
-                            <thead class="bg-gray-50 text-gray-500 text-[11px] font-bold uppercase tracking-widest">
-                                <tr>
-                                    <th class="px-8 py-5">العضو</th>
-                                    <th class="px-8 py-5">الدور</th>
-                                    <th class="px-8 py-5">الوصف</th>
-                                    <th class="px-8 py-5">العمليات</th>
-                                </tr>
-                            </thead>
-                            <tbody id="members-list" class="divide-y divide-gray-100">
-                                @foreach($members as $member)
-                                    <tr class="hover:bg-gray-50 transition-colors">
-                                        <td class="px-8 py-6">
-                                            <div class="flex items-center gap-4">
-                                                <img src="{{ asset($member->image) }}"
-                                                    class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm">
-                                                <p class="font-bold text-gray-900">{{ $member->name }}</p>
-                                            </div>
-                                        </td>
-                                        <td class="px-8 py-6">
-                                            <span
-                                                class="px-3 py-1 bg-blue-50 text-blue-600 rounded-lg text-xs font-bold">{{ $member->role }}</span>
-                                        </td>
-                                        <td class="px-8 py-6 text-sm text-gray-600 max-w-xs truncate">
-                                            {{ $member->description }}
-                                        </td>
-                                        <td class="px-8 py-6">
-                                            <div class="flex items-center gap-2">
-                                                <button onclick='editMember({!! json_encode($member) !!})'
-                                                    class="w-9 h-9 flex items-center justify-center rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all">
-                                                    <i data-lucide="edit-3" size="16"></i>
-                                                </button>
-                                                <button onclick="deleteMember({{ $member->id }})"
-                                                    class="w-9 h-9 flex items-center justify-center rounded-lg bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-all">
-                                                    <i data-lucide="trash-2" size="16"></i>
-                                                </button>
-                                            </div>
-                                        </td>
+                    <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="p-8 border-b border-gray-50 flex items-center justify-between">
+                            <h3 class="text-xl font-bold text-gray-800">قائمة أعضاء الفريق</h3>
+                        </div>
+                        <div class="overflow-x-auto overflow-y-auto max-h-[400px]">
+                            <table class="w-full text-right">
+                                <thead class="bg-gray-50 text-gray-500 text-[11px] font-bold uppercase tracking-widest">
+                                    <tr>
+                                        <th class="px-8 py-5">العضو</th>
+                                        <th class="px-8 py-5">الدور</th>
+                                        <th class="px-8 py-5">الوصف</th>
+                                        <th class="px-8 py-5">العمليات</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody id="members-list" class="divide-y divide-gray-100">
+                                    @foreach($members as $member)
+                                        <tr class="hover:bg-gray-50 transition-colors">
+                                            <td class="px-8 py-6">
+                                                <div class="flex items-center gap-4">
+                                                    <img src="{{ asset($member->image) }}"
+                                                        class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm">
+                                                    <p class="font-bold text-gray-900">{{ $member->name }}</p>
+                                                </div>
+                                            </td>
+                                            <td class="px-8 py-6">
+                                                <span
+                                                    class="px-3 py-1 bg-blue-50 text-blue-600 rounded-lg text-xs font-bold">{{ $member->role }}</span>
+                                            </td>
+                                            <td class="px-8 py-6 text-sm text-gray-600 max-w-xs truncate">
+                                                {{ $member->description }}
+                                            </td>
+                                            <td class="px-8 py-6">
+                                                <div class="flex items-center gap-2">
+                                                    <button onclick='editMember({!! json_encode($member) !!})'
+                                                        class="w-9 h-9 flex items-center justify-center rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all">
+                                                        <i data-lucide="edit-3" size="16"></i>
+                                                    </button>
+                                                    <button onclick="deleteMember({{ $member->id }})"
+                                                        class="w-9 h-9 flex items-center justify-center rounded-lg bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-all">
+                                                        <i data-lucide="trash-2" size="16"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
             </section>
 
 
@@ -533,11 +567,34 @@
                                 والعنوان</h4>
 
                             <div class="space-y-4">
-                                <div class="space-y-2">
-                                    <label class="text-sm font-bold text-gray-700 block">رقم الهاتف الأساسي</label>
-                                    <input type="text" id="contact-phone" value="{{ $contact->phone }}"
-                                        placeholder="مثلاً: +256789383140"
-                                        class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="space-y-2">
+                                        <label class="text-sm font-bold text-gray-700 block">رقم مصر (Egypt)</label>
+                                        <input type="text" id="contact-phone-eg" value="{{ $contact->phone_eg }}"
+                                            placeholder="+20..."
+                                            class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="text-sm font-bold text-gray-700 block">رقم السودان (Sudan)</label>
+                                        <input type="text" id="contact-phone-sd" value="{{ $contact->phone_sd }}"
+                                            placeholder="+249..."
+                                            class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="space-y-2">
+                                        <label class="text-sm font-bold text-gray-700 block">رقم بريطانيا (UK)</label>
+                                        <input type="text" id="contact-phone-uk" value="{{ $contact->phone_uk }}"
+                                            placeholder="+44..."
+                                            class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="text-sm font-bold text-gray-700 block">رقم عُمان (Oman)</label>
+                                        <input type="text" id="contact-phone-om" value="{{ $contact->phone_om }}"
+                                            placeholder="+968..."
+                                            class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
+                                    </div>
                                 </div>
 
                                 <div class="space-y-2">
@@ -547,11 +604,22 @@
                                         class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
                                 </div>
 
-                                <div class="space-y-2">
-                                    <label class="text-sm font-bold text-gray-700 block">الموقع / العنوان</label>
-                                    <textarea id="contact-address" rows="3" placeholder="العنوان بالتفصيل..."
-                                        class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">{{ $contact->address }}</textarea>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="space-y-2">
+                                        <label class="text-sm font-bold text-gray-700 block text-right">الموقع / العنوان
+                                            (English)</label>
+                                        <textarea id="contact-address" rows="3" placeholder="Sudan, Khartoum..."
+                                            class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all bg-gray-50/50 text-right">{{ $contact->address }}</textarea>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="text-sm font-bold text-gray-700 block text-right">الموقع / العنوان
+                                            (العربية)</label>
+                                        <textarea id="contact-address-ar" dir="rtl" rows="3"
+                                            placeholder="السودان، الخرطوم..."
+                                            class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all bg-gray-50/50 text-right">{{ $contact->address_ar }}</textarea>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -577,39 +645,50 @@
                         <span id="service-form-title">إضافة خدمة جديدة</span>
                     </h3>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="space-y-6">
+                    <div class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="space-y-2">
-                                <label class="text-sm font-bold text-gray-700 mr-2">اسم الخدمة</label>
-                                <input type="text" id="service-name" placeholder="مثلاً: تطوير تطبيقات الويب"
+                                <label class="text-sm font-bold text-gray-700 mr-2">اسم الخدمة (English)</label>
+                                <input type="text" id="service-name" placeholder="Service Name in English"
                                     class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-lime-500 focus:ring-4 focus:ring-lime-500/10 outline-none transition-all bg-gray-50/50">
                             </div>
                             <div class="space-y-2">
-                                <label class="text-sm font-bold text-gray-700 mr-2">أيقونة الخدمة (Lucide)</label>
-                                <input type="text" id="service-icon" placeholder="مثلاً: monitor, code, globe"
+                                <label class="text-sm font-bold text-gray-700 mr-2">الاسم (العربية)</label>
+                                <input type="text" id="service-name-ar" dir="rtl" placeholder="اسم الخدمة بالعربية"
                                     class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-lime-500 focus:ring-4 focus:ring-lime-500/10 outline-none transition-all bg-gray-50/50">
                             </div>
                         </div>
 
-                        <div class="space-y-6">
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-gray-700 mr-2">أيقونة الخدمة (Lucide)</label>
+                            <input type="text" id="service-icon" placeholder="مثلاً: monitor, code, globe"
+                                class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-lime-500 focus:ring-4 focus:ring-lime-500/10 outline-none transition-all bg-gray-50/50">
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="space-y-2">
-                                <label class="text-sm font-bold text-gray-700 mr-2">وصف الخدمة</label>
-                                <textarea id="service-desc" rows="5" placeholder="اكتب وصفاً مفصلاً للخدمة..."
+                                <label class="text-sm font-bold text-gray-700 mr-2">وصف الخدمة (English)</label>
+                                <textarea id="service-desc" rows="5" placeholder="Description in English..."
+                                    class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-lime-500 focus:ring-4 focus:ring-lime-500/10 outline-none transition-all bg-gray-50/50"></textarea>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-bold text-gray-700 mr-2">الوصف (العربية)</label>
+                                <textarea id="service-desc-ar" rows="5" dir="rtl" placeholder="وصف الخدمة بالعربية..."
                                     class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-lime-500 focus:ring-4 focus:ring-lime-500/10 outline-none transition-all bg-gray-50/50"></textarea>
                             </div>
                         </div>
-                    </div>
 
-                    <input type="hidden" id="editing-service-id" value="">
+                        <input type="hidden" id="editing-service-id" value="">
 
-                    <div class="mt-8 flex justify-end gap-3">
-                        <button id="cancel-service-edit" onclick="resetServiceForm()"
-                            class="hidden px-8 py-4 bg-gray-100 text-gray-600 font-bold rounded-2xl hover:bg-gray-200 transition-all">إلغاء</button>
-                        <button onclick="saveService()"
-                            class="px-12 py-4 bg-gradient-to-r from-lime-500 to-green-600 text-white font-black text-lg rounded-2xl shadow-xl hover:shadow-lime-500/40 hover:-translate-y-1 transition-all flex items-center gap-3">
-                            <span id="save-service-btn-text">حفظ الخدمة</span>
-                            <i data-lucide="check-circle" size="24"></i>
-                        </button>
+                        <div class="mt-8 flex justify-end gap-3">
+                            <button id="cancel-service-edit" onclick="resetServiceForm()"
+                                class="hidden px-8 py-4 bg-gray-100 text-gray-600 font-bold rounded-2xl hover:bg-gray-200 transition-all">إلغاء</button>
+                            <button onclick="saveService()"
+                                class="px-12 py-4 bg-gradient-to-r from-lime-500 to-green-600 text-white font-black text-lg rounded-2xl shadow-xl hover:shadow-lime-500/40 hover:-translate-y-1 transition-all flex items-center gap-3">
+                                <span id="save-service-btn-text">حفظ الخدمة</span>
+                                <i data-lucide="check-circle" size="24"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -672,28 +751,39 @@
                         <span id="impact-form-title">إضافة رأي جديد (Impact)</span>
                     </h3>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="space-y-6">
+                    <div class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="space-y-2">
-                                <label class="text-sm font-bold text-gray-700 mr-2">الاسم</label>
-                                <input type="text" id="impact-name" placeholder="مثلاً: أميرة حسن"
+                                <label class="text-sm font-bold text-gray-700 mr-2">الاسم (English)</label>
+                                <input type="text" id="impact-name" placeholder="Name in English"
                                     class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all bg-gray-50/50">
                             </div>
                             <div class="space-y-2">
-                                <label class="text-sm font-bold text-gray-700 mr-2">الأيقونة (Lucide)</label>
-                                <input type="text" id="impact-icon" value="user-round"
-                                    placeholder="مثلاً: user, star, leaf"
+                                <label class="text-sm font-bold text-gray-700 mr-2">الاسم (العربية)</label>
+                                <input type="text" id="impact-name-ar" dir="rtl" placeholder="الاسم بالعربية"
                                     class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all bg-gray-50/50">
                             </div>
                         </div>
 
-                        <div class="space-y-6">
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-gray-700 mr-2">الأيقونة (Lucide)</label>
+                            <input type="text" id="impact-icon" value="user-round" placeholder="مثلاً: user, star, leaf"
+                                class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all bg-gray-50/50">
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="space-y-2">
-                                <label class="text-sm font-bold text-gray-700 mr-2">التفاصيل / النص</label>
-                                <textarea id="impact-text" rows="5" placeholder="اكتب رأي الجمهور أو العميل هنا..."
+                                <label class="text-sm font-bold text-gray-700 mr-2">النص (English)</label>
+                                <textarea id="impact-text" rows="4" placeholder="Text in English..."
+                                    class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all bg-gray-50/50"></textarea>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-bold text-gray-700 mr-2">النص (العربية)</label>
+                                <textarea id="impact-text-ar" rows="4" dir="rtl" placeholder="النص بالعربية..."
                                     class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all bg-gray-50/50"></textarea>
                             </div>
                         </div>
+
                     </div>
 
                     <input type="hidden" id="editing-impact-id" value="">
@@ -767,10 +857,17 @@
                         </div>
                         <span id="career-form-title">إضافة وظيفة جديدة</span>
                     </h3>
-                    <div class="space-y-2">
-                        <label class="text-sm font-bold text-gray-700 mr-2">مسمى الوظيفة</label>
-                        <input type="text" id="career-title" placeholder="مثلاً: UI/UX Designer"
-                            class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-gray-700 mr-2">مسمى الوظيفة (English)</label>
+                            <input type="text" id="career-title" placeholder="Job Title in English"
+                                class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-gray-700 mr-2">مسمى الوظيفة (العربية)</label>
+                            <input type="text" id="career-title-ar" dir="rtl" placeholder="المسمى الوظيفي بالعربية"
+                                class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
+                        </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="space-y-2">
@@ -784,8 +881,13 @@
                             </select>
                         </div>
                         <div class="space-y-2">
-                            <label class="text-sm font-bold text-gray-700 mr-2">المدة الزمنية (مثلاً: Full-time)</label>
-                            <input type="text" id="career-duration" placeholder="مثلاً: وقت كامل"
+                            <label class="text-sm font-bold text-gray-700 mr-2">المدة (English)</label>
+                            <input type="text" id="career-duration" placeholder="e.g. Full-time"
+                                class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-gray-700 mr-2">المدة (العربية)</label>
+                            <input type="text" id="career-duration-ar" dir="rtl" placeholder="مثلاً: دوام كامل"
                                 class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
                         </div>
                     </div>
@@ -796,11 +898,19 @@
                                 class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50">
                         </div>
                     </div>
-                    <div class="space-y-2">
-                        <label class="text-sm font-bold text-gray-700 mr-2">وصف مختصر</label>
-                        <textarea id="career-desc" rows="3" placeholder="اكتب متطلبات الوظيفة هنا..."
-                            class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50"></textarea>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-gray-700 mr-2">وصف مختصر (English)</label>
+                            <textarea id="career-desc" rows="3" placeholder="Job description in English..."
+                                class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50"></textarea>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-gray-700 mr-2">وصف مختصر (العربية)</label>
+                            <textarea id="career-desc-ar" rows="3" dir="rtl" placeholder="وصف الوظيفة بالعربية..."
+                                class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all bg-gray-50/50"></textarea>
+                        </div>
                     </div>
+
                 </div>
 
                 <!-- HTML Editor for Careers -->
@@ -988,8 +1098,10 @@
             const formData = new FormData();
             formData.append('id', document.getElementById('editing-project-id').value);
             formData.append('name', document.getElementById('proj-name').value);
+            formData.append('name_ar', document.getElementById('proj-name-ar').value);
             formData.append('service_id', document.getElementById('proj-category').value);
             formData.append('description', document.getElementById('proj-desc').value);
+            formData.append('description_ar', document.getElementById('proj-desc-ar').value);
             formData.append('html_content', document.getElementById('proj-html').value);
 
             const imageFile = document.getElementById('proj-image').files[0];
@@ -1037,8 +1149,10 @@
         function editProject(project) {
             document.getElementById('editing-project-id').value = project.id;
             document.getElementById('proj-name').value = project.name;
+            document.getElementById('proj-name-ar').value = project.name_ar || '';
             document.getElementById('proj-category').value = project.service_id;
             document.getElementById('proj-desc').value = project.description;
+            document.getElementById('proj-desc-ar').value = project.description_ar || '';
             document.getElementById('proj-html').value = project.html_content || '';
 
             if (project.image) {
@@ -1060,7 +1174,9 @@
         function resetProjectForm() {
             document.getElementById('editing-project-id').value = '';
             document.getElementById('proj-name').value = '';
+            document.getElementById('proj-name-ar').value = '';
             document.getElementById('proj-desc').value = '';
+            document.getElementById('proj-desc-ar').value = '';
             document.getElementById('proj-html').value = '';
             removeImage();
             document.getElementById('project-form-header').innerText = 'إضافة عمل جديد للبورتفوليو';
@@ -1069,26 +1185,37 @@
             updateFormPreview();
         }
 
+
+
         function resetMemberForm() {
             document.getElementById('editing-member-id').value = '';
             document.getElementById('member-name').value = '';
+            document.getElementById('member-name-ar').value = '';
             document.getElementById('member-role').value = '';
+            document.getElementById('member-role-ar').value = '';
             document.getElementById('member-desc').value = '';
+            document.getElementById('member-desc-ar').value = '';
             removeMemberImage();
             document.getElementById('member-form-title').innerText = 'إضافة عضو فريق جديد';
             document.getElementById('save-member-btn-text').innerText = 'حفظ العضو';
             document.getElementById('cancel-member-edit').classList.add('hidden');
         }
 
+
+
         function resetServiceForm() {
             document.getElementById('editing-service-id').value = '';
             document.getElementById('service-name').value = '';
+            document.getElementById('service-name-ar').value = '';
             document.getElementById('service-icon').value = '';
             document.getElementById('service-desc').value = '';
+            document.getElementById('service-desc-ar').value = '';
             document.getElementById('service-form-title').innerText = 'إضافة خدمة جديدة';
             document.getElementById('save-service-btn-text').innerText = 'حفظ الخدمة';
             document.getElementById('cancel-service-edit').classList.add('hidden');
         }
+
+
 
         // --- Member Logic ---
 
@@ -1096,8 +1223,11 @@
             const formData = new FormData();
             formData.append('id', document.getElementById('editing-member-id').value);
             formData.append('name', document.getElementById('member-name').value);
+            formData.append('name_ar', document.getElementById('member-name-ar').value);
             formData.append('role', document.getElementById('member-role').value);
+            formData.append('role_ar', document.getElementById('member-role-ar').value);
             formData.append('description', document.getElementById('member-desc').value);
+            formData.append('description_ar', document.getElementById('member-desc-ar').value);
 
             const imageFile = document.getElementById('member-image-input').files[0];
             if (imageFile) {
@@ -1144,8 +1274,11 @@
         function editMember(member) {
             document.getElementById('editing-member-id').value = member.id;
             document.getElementById('member-name').value = member.name;
+            document.getElementById('member-name-ar').value = member.name_ar || '';
             document.getElementById('member-role').value = member.role;
+            document.getElementById('member-role-ar').value = member.role_ar || '';
             document.getElementById('member-desc').value = member.description;
+            document.getElementById('member-desc-ar').value = member.description_ar || '';
 
             if (member.image) {
                 document.getElementById('member-temp-img').src = '/' + member.image;
@@ -1167,8 +1300,10 @@
             const data = {
                 id: document.getElementById('editing-service-id').value,
                 name: document.getElementById('service-name').value,
+                name_ar: document.getElementById('service-name-ar').value,
                 icon: document.getElementById('service-icon').value,
-                description: document.getElementById('service-desc').value
+                description: document.getElementById('service-desc').value,
+                description_ar: document.getElementById('service-desc-ar').value,
             };
 
             if (!data.name || !data.icon) {
@@ -1202,6 +1337,33 @@
                 console.error('Error saving service:', error);
                 alert('حدث خطأ أثناء الاتصال بالخادم.');
             }
+        }
+
+        function editService(service) {
+            document.getElementById('editing-service-id').value = service.id;
+            document.getElementById('service-name').value = service.name;
+            document.getElementById('service-name-ar').value = service.name_ar || '';
+            document.getElementById('service-icon').value = service.icon;
+            document.getElementById('service-desc').value = service.description;
+            document.getElementById('service-desc-ar').value = service.description_ar || '';
+
+            document.getElementById('service-form-title').innerText = 'تعديل الخدمة: ' + service.name;
+            document.getElementById('save-service-btn-text').innerText = 'تحديث الخدمة';
+            document.getElementById('cancel-service-edit').classList.remove('hidden');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function resetServiceForm() {
+            document.getElementById('editing-service-id').value = '';
+            document.getElementById('service-name').value = '';
+            document.getElementById('service-name-ar').value = '';
+            document.getElementById('service-icon').value = '';
+            document.getElementById('service-desc').value = '';
+            document.getElementById('service-desc-ar').value = '';
+            document.getElementById('service-form-title').innerText = 'إضافة خدمة جديدة';
+            document.getElementById('save-service-btn-text').innerText = 'حفظ الخدمة';
+            document.getElementById('cancel-service-edit').classList.add('hidden');
         }
 
         async function deleteService(id) {
@@ -1245,9 +1407,13 @@
                 tiktok: document.getElementById('contact-tiktok').value,
                 linkedin: document.getElementById('contact-linkedin').value,
                 youtube: document.getElementById('contact-youtube').value,
-                phone: document.getElementById('contact-phone').value,
+                phone_eg: document.getElementById('contact-phone-eg').value,
+                phone_sd: document.getElementById('contact-phone-sd').value,
+                phone_uk: document.getElementById('contact-phone-uk').value,
+                phone_om: document.getElementById('contact-phone-om').value,
                 email: document.getElementById('contact-email').value,
-                address: document.getElementById('contact-address').value
+                address: document.getElementById('contact-address').value,
+                address_ar: document.getElementById('contact-address-ar').value
             };
 
             try {
@@ -1275,10 +1441,10 @@
             const formData = new FormData();
             formData.append('id', document.getElementById('editing-impact-id').value);
             formData.append('name', document.getElementById('impact-name').value);
+            formData.append('name_ar', document.getElementById('impact-name-ar').value);
             formData.append('icon', document.getElementById('impact-icon').value);
             formData.append('text', document.getElementById('impact-text').value);
-
-
+            formData.append('text_ar', document.getElementById('impact-text-ar').value);
 
             if (!document.getElementById('impact-name').value || !document.getElementById('impact-text').value) {
                 alert('يرجى ملء الاسم والنص');
@@ -1314,6 +1480,7 @@
                 });
                 const result = await response.json();
                 if (result.success) {
+                    alert('تم الحذف بنجاح');
                     location.reload();
                 }
             } catch (error) {
@@ -1324,8 +1491,10 @@
         function editImpact(impact) {
             document.getElementById('editing-impact-id').value = impact.id;
             document.getElementById('impact-name').value = impact.name;
+            document.getElementById('impact-name-ar').value = impact.name_ar || '';
             document.getElementById('impact-icon').value = impact.icon;
             document.getElementById('impact-text').value = impact.text;
+            document.getElementById('impact-text-ar').value = impact.text_ar || '';
 
 
 
@@ -1339,8 +1508,10 @@
         function resetImpactForm() {
             document.getElementById('editing-impact-id').value = '';
             document.getElementById('impact-name').value = '';
+            document.getElementById('impact-name-ar').value = '';
             document.getElementById('impact-icon').value = 'user-round';
             document.getElementById('impact-text').value = '';
+            document.getElementById('impact-text-ar').value = '';
 
             document.getElementById('impact-form-title').innerText = 'إضافة رأي جديد (Impact)';
             document.getElementById('save-impact-btn-text').innerText = 'حفظ التأثير';
@@ -1352,11 +1523,14 @@
             const data = {
                 id: document.getElementById('editing-career-id').value,
                 title: document.getElementById('career-title').value,
+                title_ar: document.getElementById('career-title-ar').value,
                 category: catSelect.value ? catSelect.options[catSelect.selectedIndex].text : '',
                 duration: document.getElementById('career-duration').value,
+                duration_ar: document.getElementById('career-duration-ar').value,
                 deadline: document.getElementById('career-deadline').value,
                 service_id: catSelect.value,
                 description: document.getElementById('career-desc').value,
+                description_ar: document.getElementById('career-desc-ar').value,
                 html_content: document.getElementById('career-html').value
             };
 
@@ -1395,6 +1569,7 @@
                 });
                 const result = await response.json();
                 if (result.success) {
+                    alert('تم الحذف بنجاح');
                     location.reload();
                 }
             } catch (error) {
@@ -1405,10 +1580,13 @@
         function editCareer(career) {
             document.getElementById('editing-career-id').value = career.id;
             document.getElementById('career-title').value = career.title;
+            document.getElementById('career-title-ar').value = career.title_ar || '';
             document.getElementById('career-category').value = career.service_id || '';
             document.getElementById('career-duration').value = career.duration;
+            document.getElementById('career-duration-ar').value = career.duration_ar || '';
             document.getElementById('career-deadline').value = career.deadline || '';
             document.getElementById('career-desc').value = career.description;
+            document.getElementById('career-desc-ar').value = career.description_ar || '';
             document.getElementById('career-html').value = career.html_content || '';
 
             document.getElementById('career-form-title').innerText = 'تعديل الوظيفة: ' + career.title;
@@ -1422,16 +1600,40 @@
         function resetCareerForm() {
             document.getElementById('editing-career-id').value = '';
             document.getElementById('career-title').value = '';
+            document.getElementById('career-title-ar').value = '';
             document.getElementById('career-duration').value = '';
+            document.getElementById('career-duration-ar').value = '';
             document.getElementById('career-deadline').value = '';
             document.getElementById('career-category').value = '';
             document.getElementById('career-desc').value = '';
+            document.getElementById('career-desc-ar').value = '';
             document.getElementById('career-html').value = '';
             document.getElementById('career-form-title').innerText = 'إضافة وظيفة جديدة';
             document.getElementById('save-career-btn-text').innerText = 'حفظ الوظيفة';
             document.getElementById('cancel-career-edit').classList.add('hidden');
             updateCareerPreview();
         }
+
+        async function translateText(text) {
+            if (!text) return '';
+            try {
+                const response = await fetch('{{ route("admin.translate") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    body: JSON.stringify({ text: text })
+                });
+                const result = await response.json();
+                return result.translated || '';
+            } catch (error) {
+                console.error('Translation error:', error);
+                return '';
+            }
+        }
+
+
 
         function updateCareerPreview() {
             const html = document.getElementById('career-html').value;

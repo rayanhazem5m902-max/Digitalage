@@ -214,37 +214,42 @@
                         <div class="career-card" data-aos="fade-up">
                             <div class="flex justify-between items-start mb-6">
                                 <span
-                                    class="px-3 py-1.5 bg-purple-50 text-purple-600 rounded-lg text-xs font-black border border-purple-100 uppercase">{{ $job->category }}</span>
-                                <span class="badge-duration">
+                                    class="px-3 py-1.5 bg-purple-50 text-purple-600 rounded-lg text-xs font-black border border-purple-100 uppercase dynamic-text"
+                                    data-en="{{ $job->category }}"
+                                    data-ar="{{ $job->category_ar ?? $job->category }}">{{ $job->category }}</span>
+                                <span class="badge-duration dynamic-text" data-en="{{ $job->duration }}"
+                                    data-ar="{{ $job->duration_ar ?? $job->duration }}">
                                     <i data-lucide="clock" class="w-4 h-4 inline-block mr-1"></i>
                                     {{ $job->duration }}
                                 </span>
                             </div>
-                            <h3 class="text-2xl font-bold text-slate-900 mb-2">{{ $job->title }}</h3>
+                            <h3 class="text-2xl font-bold text-slate-900 mb-2 dynamic-text" data-en="{{ $job->title }}"
+                                data-ar="{{ $job->title_ar ?? $job->title }}">{{ $job->title }}</h3>
 
                             @if($job->service)
                                 <div class="flex items-center gap-2 text-gray-600 text-sm font-bold mb-4">
                                     <i data-lucide="briefcase" class="w-4 h-4 text-purple-500"></i>
                                     <span class="text-gray-500" data-i18n="service">Service</span>:
-                                    <span class="text-purple-600">{{ $job->service->name  }}</span>
+                                    <span class="text-purple-600 dynamic-text" data-en="{{ $job->service->name }}"
+                                        data-ar="{{ $job->service->name_ar ?? $job->service->name }}">{{ $job->service->name  }}</span>
                                 </div>
                             @endif
 
-                            <div class="flex flex-wrap gap-4 mb-6">
-                                <div class="flex items-center gap-2 text-gray-400 text-xs font-bold">
-                                    <i data-lucide="calendar" class="w-4 h-4"></i>
-                                    <span data-i18n="posted">Posted</span>: {{ $job->created_at->format('M d, Y') }}
-                                </div>
-                                @if($job->deadline)
-                                    <div class="flex items-center gap-2 text-red-500 text-xs font-bold">
-                                        <i data-lucide="calendar-x" class="w-4 h-4"></i>
-                                        <span data-i18n="deadline">Deadline</span>:
-                                        {{ \Carbon\Carbon::parse($job->deadline)->format('M d, Y') }}
-                                    </div>
-                                @endif
+                            <div class="flex items-center gap-2 text-gray-400 text-xs font-bold">
+                                <i data-lucide="calendar" class="w-4 h-4"></i>
+                                <span data-i18n="posted">Posted</span>: <span class="dynamic-date"
+                                    data-date="{{ $job->created_at->toIso8601String() }}">{{ $job->created_at->format('M d, Y') }}</span>
                             </div>
-
-                            <div class="text-gray-600 mb-8 whitespace-pre-line">
+                            @if($job->deadline)
+                                <div class="flex items-center gap-2 text-red-500 text-xs font-bold">
+                                    <i data-lucide="calendar-x" class="w-4 h-4"></i>
+                                    <span data-i18n="deadline">Deadline</span>:
+                                    <span class="dynamic-date"
+                                        data-date="{{ $job->deadline }}">{{ \Carbon\Carbon::parse($job->deadline)->format('M d, Y') }}</span>
+                                </div>
+                            @endif
+                            <div class="text-gray-600 mb-8 whitespace-pre-line dynamic-text" data-en="{{ $job->description }}"
+                                data-ar="{{ $job->description_ar ?? $job->description }}">
                                 {!! nl2br(e($job->description ?? 'No description provided.')) !!}
                             </div>
                             <a href="{{ route('career.show', $job->id) }}"
@@ -341,6 +346,31 @@
                 const key = element.getAttribute('data-i18n');
                 if (translations[currentLang][key]) {
                     element.textContent = translations[currentLang][key];
+                }
+            });
+
+            // Dynamic Text Handling
+            document.querySelectorAll('.dynamic-text').forEach(element => {
+                const enText = element.getAttribute('data-en');
+                const arText = element.getAttribute('data-ar');
+                if (currentLang === 'ar' && arText) {
+                    element.innerText = arText;
+                } else if (enText) {
+                    element.innerText = enText;
+                }
+            });
+
+            // Dynamic Date Handling
+            document.querySelectorAll('.dynamic-date').forEach(element => {
+                const dateStr = element.getAttribute('data-date');
+                if (dateStr) {
+                    const date = new Date(dateStr);
+                    const formatted = date.toLocaleDateString(currentLang === 'ar' ? 'ar-EG' : 'en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric'
+                    });
+                    element.textContent = formatted;
                 }
             });
         }

@@ -55,12 +55,21 @@ class AdminController extends Controller
             'service_id' => 'required|exists:services,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'html_content' => 'nullable|string',
+            'name_ar' => 'nullable|string',
+            'description_ar' => 'nullable|string',
         ]);
-
         if ($request->hasFile('image')) {
             $imageName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('Images/projects'), $imageName);
             $data['image'] = 'Images/projects/' . $imageName;
+        }
+
+        $tr = new \Stichoza\GoogleTranslate\GoogleTranslate('ar');
+        $tr->setSource('en');
+
+        $data['name_ar'] = $request->input('name_ar') ?: $tr->translate($data['name']);
+        if (!empty($data['description'])) {
+            $data['description_ar'] = $request->input('description_ar') ?: $tr->translate($data['description']);
         }
 
         if ($request->id) {
@@ -87,12 +96,24 @@ class AdminController extends Controller
             'role' => 'required|string',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'name_ar' => 'nullable|string',
+            'role_ar' => 'nullable|string',
+            'description_ar' => 'nullable|string',
         ]);
 
         if ($request->hasFile('image')) {
             $imageName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('Images/members'), $imageName);
             $data['image'] = 'Images/members/' . $imageName;
+        }
+
+        $tr = new \Stichoza\GoogleTranslate\GoogleTranslate('ar');
+        $tr->setSource('en');
+
+        $data['name_ar'] = $request->input('name_ar') ?: $tr->translate($data['name']);
+        $data['role_ar'] = $request->input('role_ar') ?: $tr->translate($data['role']);
+        if (!empty($data['description'])) {
+            $data['description_ar'] = $request->input('description_ar') ?: $tr->translate($data['description']);
         }
 
         if ($request->id) {
@@ -118,6 +139,8 @@ class AdminController extends Controller
             'name' => 'required|string',
             'icon' => 'required|string',
             'description' => 'nullable|string',
+            'name_ar' => 'nullable|string',
+            'description_ar' => 'nullable|string',
         ]);
 
         if (empty($request->id)) {
@@ -132,6 +155,14 @@ class AdminController extends Controller
                 $counter++;
             }
             $data['slug'] = $slug;
+        }
+
+        $tr = new \Stichoza\GoogleTranslate\GoogleTranslate('ar');
+        $tr->setSource('en');
+
+        $data['name_ar'] = $request->input('name_ar') ?: $tr->translate($data['name']);
+        if (!empty($data['description'])) {
+            $data['description_ar'] = $request->input('description_ar') ?: $tr->translate($data['description']);
         }
 
         if ($request->id) {
@@ -153,6 +184,12 @@ class AdminController extends Controller
     public function saveContact(Request $request)
     {
         $data = $request->all();
+
+        $tr = new \Stichoza\GoogleTranslate\GoogleTranslate('ar');
+        if (!empty($data['address'])) {
+            $data['address_ar'] = $tr->translate($data['address']);
+        }
+
         $contact = Contact::first() ?? new Contact();
         $contact->fill($data);
         $contact->save();
@@ -167,7 +204,15 @@ class AdminController extends Controller
             'name' => 'required|string',
             'icon' => 'required|string',
             'text' => 'required|string',
+            'name_ar' => 'nullable|string',
+            'text_ar' => 'nullable|string',
         ]);
+
+        $tr = new \Stichoza\GoogleTranslate\GoogleTranslate('ar');
+        $tr->setSource('en');
+
+        $data['name_ar'] = $request->input('name_ar') ?: $tr->translate($data['name']);
+        $data['text_ar'] = $request->input('text_ar') ?: $tr->translate($data['text']);
 
         if ($request->id) {
             $impact = Impact::findOrFail($request->id);
@@ -196,7 +241,30 @@ class AdminController extends Controller
             'service_id' => 'nullable|exists:services,id',
             'description' => 'nullable|string',
             'html_content' => 'nullable|string',
+            'title_ar' => 'nullable|string',
+            'category_ar' => 'nullable|string',
+            'duration_ar' => 'nullable|string',
+            'description_ar' => 'nullable|string',
+            'html_content_ar' => 'nullable|string',
         ]);
+
+        $tr = new \Stichoza\GoogleTranslate\GoogleTranslate('ar');
+        $tr->setSource('en');
+
+        $data['title_ar'] = $request->input('title_ar') ?: $tr->translate($data['title']);
+        $data['category_ar'] = $request->input('category_ar') ?: $tr->translate($data['category']);
+        $data['duration_ar'] = $request->input('duration_ar') ?: $tr->translate($data['duration']);
+
+        if (!empty($data['description'])) {
+            $data['description_ar'] = $request->input('description_ar') ?: $tr->translate($data['description']);
+        }
+        if (!empty($data['html_content'])) {
+            $data['html_content_ar'] = $request->input('html_content_ar') ?: $tr->translate($data['html_content']);
+        }
+
+        if (empty($data['deadline'])) {
+            $data['deadline'] = null;
+        }
 
         if ($request->id) {
             $career = Career::findOrFail($request->id);
@@ -212,6 +280,21 @@ class AdminController extends Controller
     {
         Career::findOrFail($id)->delete();
         return response()->json(['success' => true]);
+    }
+
+    public function translate(Request $request)
+    {
+        $request->validate([
+            'text' => 'required|string',
+        ]);
+
+        try {
+            $tr = new \Stichoza\GoogleTranslate\GoogleTranslate('ar');
+            $translated = $tr->translate($request->text);
+            return response()->json(['translated' => $translated]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }
 
