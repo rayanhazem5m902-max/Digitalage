@@ -67,9 +67,13 @@ class AdminController extends Controller
         $tr = new \Stichoza\GoogleTranslate\GoogleTranslate('ar');
         $tr->setSource('en');
 
-        $data['name_ar'] = $request->input('name_ar') ?: $tr->translate($data['name']);
-        if (!empty($data['description'])) {
-            $data['description_ar'] = $request->input('description_ar') ?: $tr->translate($data['description']);
+        try {
+            $data['name_ar'] = $request->input('name_ar') ?: $tr->translate($data['name']);
+            if (!empty($data['description'])) {
+                $data['description_ar'] = $request->input('description_ar') ?: $tr->translate($data['description']);
+            }
+        } catch (\Exception $e) {
+            \Log::warning('Translation failed in saveProject: ' . $e->getMessage());
         }
 
         if ($request->id) {
@@ -110,10 +114,14 @@ class AdminController extends Controller
         $tr = new \Stichoza\GoogleTranslate\GoogleTranslate('ar');
         $tr->setSource('en');
 
-        $data['name_ar'] = $request->input('name_ar') ?: $tr->translate($data['name']);
-        $data['role_ar'] = $request->input('role_ar') ?: $tr->translate($data['role']);
-        if (!empty($data['description'])) {
-            $data['description_ar'] = $request->input('description_ar') ?: $tr->translate($data['description']);
+        try {
+            $data['name_ar'] = $request->input('name_ar') ?: $tr->translate($data['name']);
+            $data['role_ar'] = $request->input('role_ar') ?: $tr->translate($data['role']);
+            if (!empty($data['description'])) {
+                $data['description_ar'] = $request->input('description_ar') ?: $tr->translate($data['description']);
+            }
+        } catch (\Exception $e) {
+            \Log::warning('Translation failed in saveMember: ' . $e->getMessage());
         }
 
         if ($request->id) {
@@ -134,45 +142,57 @@ class AdminController extends Controller
 
     public function saveService(Request $request)
     {
-        $data = $request->validate([
-            'id' => 'nullable|integer',
-            'name' => 'required|string',
-            'icon' => 'required|string',
-            'description' => 'nullable|string',
-            'name_ar' => 'nullable|string',
-            'description_ar' => 'nullable|string',
-        ]);
+        try {
+            $data = $request->validate([
+                'id' => 'nullable|integer',
+                'name' => 'required|string',
+                'icon' => 'required|string',
+                'description' => 'nullable|string',
+                'name_ar' => 'nullable|string',
+                'description_ar' => 'nullable|string',
+            ]);
 
-        if (empty($request->id)) {
-            $slug = \Illuminate\Support\Str::slug($data['name']);
-            if (empty($slug)) {
-                $slug = 'service-' . time() . '-' . rand(100, 999);
+            if (empty($request->id)) {
+                $slug = \Illuminate\Support\Str::slug($data['name']);
+                if (empty($slug)) {
+                    $slug = 'service-' . time() . '-' . rand(100, 999);
+                }
+                $originalSlug = $slug;
+                $counter = 1;
+                while (\App\Models\Service::where('slug', $slug)->exists()) {
+                    $slug = $originalSlug . '-' . $counter;
+                    $counter++;
+                }
+                $data['slug'] = $slug;
             }
-            $originalSlug = $slug;
-            $counter = 1;
-            while (\App\Models\Service::where('slug', $slug)->exists()) {
-                $slug = $originalSlug . '-' . $counter;
-                $counter++;
+
+            $tr = new \Stichoza\GoogleTranslate\GoogleTranslate('ar');
+            $tr->setSource('en');
+
+            try {
+                $data['name_ar'] = $request->input('name_ar') ?: $tr->translate($data['name']);
+                if (!empty($data['description'])) {
+                    $data['description_ar'] = $request->input('description_ar') ?: $tr->translate($data['description']);
+                }
+            } catch (\Exception $e) {
+                \Log::warning('Translation failed in saveService: ' . $e->getMessage());
             }
-            $data['slug'] = $slug;
+
+            if ($request->id) {
+                $service = \App\Models\Service::findOrFail($request->id);
+                $service->update($data);
+            } else {
+                \App\Models\Service::create($data);
+            }
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            \Log::error('Error in saveService: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-        $tr = new \Stichoza\GoogleTranslate\GoogleTranslate('ar');
-        $tr->setSource('en');
-
-        $data['name_ar'] = $request->input('name_ar') ?: $tr->translate($data['name']);
-        if (!empty($data['description'])) {
-            $data['description_ar'] = $request->input('description_ar') ?: $tr->translate($data['description']);
-        }
-
-        if ($request->id) {
-            $service = \App\Models\Service::findOrFail($request->id);
-            $service->update($data);
-        } else {
-            \App\Models\Service::create($data);
-        }
-
-        return response()->json(['success' => true]);
     }
 
     public function deleteService($id)

@@ -686,7 +686,7 @@
                 <!-- Logo -->
                 <div class="flex items-center gap-2">
                     <img id="dig" src="Images/Untitled (1).png" alt="digitalagelogo" class="logo mb-0">
-                    <a href="#" class="flex items-center gap-2 text-3xl font-bold tracking-tight">
+                    <a href="#" class="flex items-center gap-2 text-3xl font-bold tracking-tight" dir="ltr">
                         <span class="text-lime" data-i18n="brandDigital">Digital</span>
                         <span class="text-blue" data-i18n="brandAge">Age</span>
                     </a>
@@ -871,10 +871,10 @@
                             <div class="d-flex justify-content-center">
                                 <div
                                     class="testimonial-card text-center p-5 shadow-xl rounded-4 bg-white border border-gray-100">
-                                    <div class="relative w-32 h-32 mx-auto mb-6">
-                                        <div class="absolute inset-0 bg-lime/20 rounded-2xl animate-pulse"></div>
+                                    <div class="relative w-28 h-28 mx-auto mb-6">
+                                        <div class="absolute inset-0 bg-lime/20 rounded-3xl animate-pulse"></div>
                                         <div
-                                            class="relative w-full h-full bg-white rounded-2xl shadow-lg border-2 border-lime flex items-center justify-center overflow-hidden">
+                                            class="relative w-full h-full bg-white rounded-3xl shadow-lg border-2 border-lime flex items-center justify-center overflow-hidden">
                                             @if($member->image)
                                                 <img src="{{ asset($member->image) }}" class="w-full h-full object-cover">
                                             @else
@@ -934,15 +934,21 @@
                             <div class="d-flex justify-content-center">
                                 <div
                                     class="testimonial-card text-center p-5 shadow-xl rounded-4 bg-white border border-gray-100">
-                                    <div class="relative w-32 h-32 mx-auto mb-6">
-                                        <div class="absolute inset-0 bg-lime/20 rounded-2xl animate-pulse"></div>
+                                    <div class="relative w-28 h-28 mx-auto mb-6">
+                                        <div class="absolute inset-0 bg-lime/20 rounded-3xl animate-pulse"></div>
                                         <div
-                                            class="relative w-full h-full bg-white rounded-2xl shadow-lg border-2 border-lime flex items-center justify-center overflow-hidden">
+                                            class="relative w-full h-full bg-white rounded-3xl shadow-lg border-2 border-lime flex items-center justify-center overflow-hidden">
                                             @if($impact->image)
                                                 <img src="{{ asset($impact->image) }}" class="w-full h-full object-cover">
                                             @else
-                                                <i data-lucide="{{ $impact->icon ?? 'user-round' }}"
-                                                    class="w-16 h-16 text-lime"></i>
+                                                @if(isset($impact->icon) && str_starts_with($impact->icon, '<'))
+                                                    <div class="w-16 h-16 text-lime">
+                                                        {!! $impact->icon !!}
+                                                    </div>
+                                                @else
+                                                    <i data-lucide="{{ $impact->icon ?? 'user-round' }}"
+                                                        class="w-16 h-16 text-lime"></i>
+                                                @endif
                                             @endif
                                         </div>
                                     </div>
@@ -1026,8 +1032,13 @@
                             <div class="icon-container mb-6">
                                 <div
                                     class="w-28 h-28 mx-auto bg-gradient-to-br from-lime/20 to-lime/5 rounded-3xl flex items-center justify-center">
-                                    <!-- Default icon if not dynamic enough yet -->
-                                    <i data-lucide="{{ $service->icon ?? 'code' }}" class="w-16 h-16 text-lime"></i>
+                                    @if(isset($service->icon) && str_starts_with($service->icon, '<'))
+                                        <div class="w-16 h-16 text-lime">
+                                            {!! $service->icon !!}
+                                        </div>
+                                    @else
+                                        <i data-lucide="{{ $service->icon ?? 'code' }}" class="w-16 h-16 text-lime"></i>
+                                    @endif
                                 </div>
                             </div>
                             <h3 class="text-xl font-bold text-gray-900 mb-3 text-center dynamic-text"
@@ -1301,13 +1312,18 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class="flex items-center justify-end mt-auto">
-                                <a href="{{ $job->apply_link ?? route('career.show', $job->id) }}" {{ $job->apply_link ? 'target="_blank"' : '' }}
-                                    class="inline-flex items-center gap-2 text-purple-600 font-bold hover:gap-3 transition-all">
-                                    <span data-i18n="applyNow">Apply Now</span>
-                                    <i data-lucide="{{ $job->apply_link ? 'external-link' : 'arrow-right' }}"
-                                        class="w-4 h-4"></i>
-                                </a>
+                            <div class="flex items-center justify-between mt-auto">
+                                @if($job->deadline && \Carbon\Carbon::parse($job->deadline)->isPast())
+                                    <span class="px-3 py-1 bg-red-100 text-red-600 rounded-lg text-sm font-bold"
+                                        data-i18n="jobClosed">Closed</span>
+                                @else
+                                    <a href="{{ $job->apply_link ?? route('career.show', $job->id) }}" {{ $job->apply_link ? 'target="_blank"' : '' }}
+                                        class="inline-flex items-center gap-2 text-purple-600 font-bold hover:gap-3 transition-all">
+                                        <span data-i18n="applyNow">Apply Now</span>
+                                        <i data-lucide="{{ $job->apply_link ? 'external-link' : 'arrow-right' }}"
+                                            class="w-4 h-4"></i>
+                                    </a>
+                                @endif
                             </div>
                         </div>
                     @endforeach
@@ -1368,8 +1384,8 @@
                                     data-i18n="formPhone">Phone</label>
                                 <div class="flex gap-2 items-center">
                                     <select name="country_code"
-                                        class="w-52 px-3 py-3 rounded-lg border bg-white focus:ring-2 focus:ring-lime/20 outline-none transition-all">
-                                        <option value="+966">🇸🇦 Kingdom of Saudi Arabia (+966)</option>
+                                        class="w-32 px-3 py-3 rounded-lg border bg-white focus:ring-2 focus:ring-lime/20 outline-none transition-all text-sm">
+                                        <option value="+966">🇸🇦 KSA (+966)</option>
                                         <option value="+20">🇪🇬 Egypt (+20)</option>
                                         <option value="+971">🇦🇪 UAE (+971)</option>
                                         <option value="+965">🇰🇼 Kuwait (+965)</option>
@@ -1572,7 +1588,7 @@
                 <div class="md:col-span-1">
                     <a href="#" class="flex items-center gap-2 text-3xl font-bold tracking-tight mb-4">
                         <img src="Images/Untitled (1).png" alt="digitalagelogo" class="logo mb-0">
-                        <div class="flex items-center gap-3">
+                        <div class="flex items-center gap-3" dir="ltr">
                             <span class="text-lime" data-i18n="brandDigital">Digital</span>
                             <span class="text-blue" data-i18n="brandAge">Age</span>
                         </div>
@@ -1767,9 +1783,9 @@
                 startProjectBtn: "Start Your Project",
                 viewPortfolio: "View Intro",
                 viewPortfolioBtn: "View Intro",
-                projectsCompleted: "Projects Completed",
+                projectsCompleted: "Project Complete",
                 projectsPreview: "Latest Projects & Works",
-                happyClients: "Happy Clients",
+                happyClients: "Happiness",
                 teamMembers: "Team Members",
                 yearsExperience: "Years Experience",
                 ourServices: "✦ Our Services",
@@ -1871,24 +1887,24 @@
                 about: "من نحن",
                 portfolio: "أعمالنا",
                 contact: "اتصل بنا",
-                phone: "تلفون",
-                webDev1: "تطبيقات الويب",
-                digitalM: "تسويق الاكنروني",
+                phone: "الهاتف",
+                webDev1: "تطبيـق ويـب",
+                digitalM: "التسويق الرقمي",
                 SystemsP: "برمجة الأنظمة",
                 softwareDev1: "تطوير البرمجيات",
                 mobileapp: "تطبيق الهاتف",
-                tproject: "نوع الخدمه",
-                graphicDesign1: "التصميم الجرافيكي",
+                tproject: "نوع الخدمة",
+                graphicDesign1: "تصميم جرافيكي",
                 portfolioSubtitle: "هذه هي مشاريعنا التي نعمل عليها والتي تم الانتهاء منها.",
-                Wedeliver: "نقدّم حلولًا رقمية متكاملة تساعد الشركات على النمو",
-                Integrity: "النزاهه",
-                Highsecurity: " امان عالي",
+                Wedeliver: "نحن نقدم حلولاً رقمية متكاملة.",
+                Integrity: "النزاهة",
+                Highsecurity: "أمان عالي",
                 Integrated: "حلول رقمية متكاملة.",
                 Passion: "الشغف",
                 OurVision: "رؤيتنا",
-                Tobealeader: "أن نكون روادًا في بناء الحلول الرقمية الذكية.",
+                Tobealeader: "أن نكون رواداً في بناء حلول رقمية ذكية.",
                 OurMission: "رسالتنا",
-                forreaching: " للوصول للهدف",
+                forreaching: "للوصول إلى الهدف",
 
                 OurServices: "خدماتنا",
                 OurMission: "رسالتنا",
@@ -1901,7 +1917,7 @@
                 innovatingFuture: "✦ نصنع المستقبل",
                 transformDigital: "حول رؤيتك الرقمية الي حقيقة ملموسة",
 
-                heroSubtitle: "نصنع حلولاً برمجية متطورة تدفع نمو الأعمال. من تطبيقات الويب إلى التسويق الرقمي، نحن قوة نجاحك في العصر الرقمي.",
+                heroSubtitle: "نصنع حلولاً برمجية متطورة تدفع نمو الأعمال. من تطبيقات الويب إلى التسويق الرقمي، نحن قوة نجاحك في Digital Age.",
                 startProject: "ابدأ مشروعك",
                 startProjectBtn: "ابدأ مشروعك",
                 viewPortfolio: "معاينة المقدمة",
@@ -1912,7 +1928,7 @@
                 teamMembers: "فريق العمل",
                 yearsExperience: "سنوات الخبرة",
                 ourServices: "✦ خدماتنا",
-                servicesTitle: "ديجيتال آيدج للأعمال الكبيرة والصغيرة",
+                servicesTitle: "Digital Age للأعمال الكبيرة والصغيرة",
                 servicesSubtitle: "من التصميم إلى الإطلاق، نقدم حلول تقنية متكاملة مصممة خصيصاً لاحتياجات عملك.",
                 softwareDev: "تطوير البرمجيات",
                 softwareDevDesc: "حلول برمجية مخصصة مبنية على أطر عمل حديثة وأفضل الممارسات.",
@@ -1927,7 +1943,7 @@
                 mobileSolutions: " تطبيق الهاتف",
                 aboutUs: "✦ من نحن",
                 aboutTitle: "رائدة التحول الرقمي",
-                aboutDesc: "  عصر الرقمي هي مزود حلول تقنية متميز مكرس لمساعدة الشركات على الازدهار في المشهد الرقمي. مع أكثر من 7 عاماً من الخبرة، يقدم فريقنا من المطورين والمصممين والمسوقين المبتكرين حلولاً مبتكرة تحقق نتائج ملموسة.",
+                aboutDesc: "Digital Age هي مزود حلول تقنية متميز مكرس لمساعدة الشركات على الازدهار في المشهد الرقمي. مع أكثر من 7 عاماً من الخبرة، يقدم فريقنا من المطورين والمصممين والمسوقين المبتكرين حلولاً مبتكرة تحقق نتائج ملموسة.",
                 innovation: "الابتكار",
                 innovationDesc: "حلول متطورة",
                 teamwork: "العمل الجماعي",
@@ -1963,20 +1979,20 @@
                 privacy: "سياسة الخصوصية",
                 impact: "تأثيرنا",
                 "membersSection.title": "فريق العمل",
-                "membersSection.desc": '"تفتخر ديجيتال آيدج بفريق عمل متكامل، يدير كافة الأدوار والمسؤوليات بكفاءة عالية لتقديم نتائج متميزة"',
+                "membersSection.desc": '"تفتخر Digital Age بفريق عمل متكامل، يدير كافة الأدوار والمسؤوليات بكفاءة عالية لتقديم نتائج متميزة"',
                 "testimonials.title": "أصوات من جمهورنا",
                 "testimonials.desc": '"أصوات جمهورنا تعمل كجسر حيوي، يربط مبتكري البرامج برؤى أصيلة تعيد تعريف تأثيرهم."',
                 "testimonial1.name": "أميرة حسن",
-                "testimonial1.text": '"لقد غيرت ديجيتال آيدج قريتنا. البئر الجديد يعني أن أطفالنا لم يعودوا بحاجة للمشي أميالاً للحصول على الماء. نحن ممتنون دائماً."',
+                "testimonial1.text": '"لقد غيرت Digital Age قريتنا. البئر الجديد يعني أن أطفالنا لم يعودوا بحاجة للمشي أميالاً للحصول على الماء. نحن ممتنون دائماً."',
                 "testimonial2.name": "ديفيد ميلر",
-                "testimonial2.text": '"لقد تبرعت للعديد من المنظمات غير الحكومية، لكن الشفافية والتحديثات المنتظمة من ديجيتال آيدج تجعلني واثقاً من أن أموالي تساعد حقاً."',
+                "testimonial2.text": '"لقد تبرعت للعديد من المنظمات غير الحكومية، لكن الشفافية والتحديثات المنتظمة من Digital Age تجعلني واثقاً من أن أموالي تساعد حقاً."',
                 "testimonial3.name": "د. فاطمة علي",
-                "testimonial3.text": '"العمل مع ديجيتال آيدج كان شرفاً لنا. الفريق على أرض الواقع مكرس ويهتم حقاً بالأشخاص الذين يخدمونهم."',
+                "testimonial3.text": '"العمل مع Digital Age كان شرفاً لنا. الفريق على أرض الواقع مكرس ويهتم حقاً بالأشخاص الذين يخدمونهم."',
                 No1: "📱+20 12 75018291",
                 No2: "📱+256 789 383140",
                 terms: "شروط الخدمة",
                 portfolioHeader: "أفضل مشاريعنا",
-                introHeading: "ديجيتال أيج للمشاريع الصغيرة والكبيرة، والأعمال الكبيرة والصغيرة، والشركات والمؤسسات",
+                introHeading: "Digital Age للمشاريع الصغيرة والكبيرة، والأعمال الكبيرة والصغيرة، والشركات والمؤسسات",
                 introSubtitle: "حلول تقنية رائدة للمجموعات والشركات والمؤسسات.",
                 back: "رجوع",
                 preparingIntro: "جاري تحضير التجربة الرقمية",
@@ -1988,8 +2004,8 @@
                 posted: "نُشر في",
                 deadline: "الموعد النهائي",
                 noJobs: "لا توجد وظائف شاغرة حالياً. تابعنا للمزيد!",
-                brandDigital: "العصر",
-                brandAge: "الرقمي",
+                brandDigital: "Digital",
+                brandAge: "Age",
                 viewAll: "عرض كل الوظائف",
                 formName: "الاسم",
                 formNamePlaceholder: "أدخل اسمك",
@@ -2002,6 +2018,7 @@
                 formMessage: "الرسالة",
                 formMessagePlaceholder: "أخبرنا عن مشروعك...",
                 formSend: "إرسال الرسالة",
+                jobClosed: "ملغي",
             }
         };
         //button start
@@ -2232,6 +2249,7 @@
             if (!e.target.closest(".relative")) {
                 document.getElementById("waMenu").classList.add("hidden");
             }
+
         });
 
     </script>

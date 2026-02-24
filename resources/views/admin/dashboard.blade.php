@@ -47,25 +47,55 @@
                 transform: translateY(0);
             }
         }
+
+        /* Sidebar Responsive */
+        @media (max-width: 1024px) {
+            .sidebar-closed {
+                transform: translateX(100%);
+            }
+
+            .sidebar-open {
+                transform: translateX(0);
+            }
+
+            .main-content-shifted {
+                margin-right: 0 !important;
+            }
+        }
+
+        #mobile-overlay.active {
+            display: block;
+        }
     </style>
 </head>
 
 <body class="bg-[#f1f5f9] min-h-screen">
 
+    <!-- Mobile Overlay -->
+    <div id="mobile-overlay" onclick="toggleSidebar()"
+        class="fixed inset-0 bg-black/50 z-30 hidden backdrop-blur-sm transition-all"></div>
+
     <!-- Sidebar -->
-    <aside class="fixed top-0 right-0 w-64 h-full bg-white border-l border-gray-200 flex flex-col z-20 shadow-xl">
-        <div class="p-6 flex items-center gap-3 border-b border-gray-100">
-            <div
-                class="w-10 h-10 bg-gradient-to-br from-[#00f0c8] to-[#bd147c] rounded-lg flex items-center justify-center text-white font-bold shadow-lg">
-                DA</div>
-            <span
-                class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-800 to-gray-600">المدير</span>
+    <aside id="sidebar"
+        class="fixed top-0 right-0 w-64 h-full bg-white border-l border-gray-200 flex flex-col z-40 shadow-xl transition-transform duration-300 sidebar-closed lg:translate-x-0">
+        <div class="p-6 flex items-center justify-between border-b border-gray-100">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-10 h-10 bg-gradient-to-br from-[#00f0c8] to-[#bd147c] rounded-lg flex items-center justify-center text-white font-bold shadow-lg">
+                    DA</div>
+                <span
+                    class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-800 to-gray-600">المدير</span>
+            </div>
+            <!-- Close button for mobile -->
+            <button onclick="toggleSidebar()" class="lg:hidden p-2 text-gray-500 hover:bg-gray-100 rounded-lg">
+                <i data-lucide="x"></i>
+            </button>
         </div>
 
         <nav class="flex-1 p-4 space-y-2 mt-4 overflow-y-auto">
             <button onclick="switchTab('projects')" id="btn-projects"
                 class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 transition-all sidebar-active">
-                <i data-lucide="layout-grid"></i>
+                <i data-lucide="grid"></i>
                 <span class="font-semibold">إدارة البورتفوليو</span>
             </button>
             <button onclick="switchTab('members')" id="btn-members"
@@ -118,13 +148,21 @@
     </aside>
 
     <!-- Main Content -->
-    <main class="mr-64 min-h-screen flex flex-col bg-[#f1f5f9]">
+    <main class="mr-0 lg:mr-64 min-h-screen flex flex-col bg-[#f1f5f9] transition-all duration-300">
 
         <!-- Header -->
-        <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8 shadow-sm z-10">
-            <h2 id="page-title" class="text-xl font-bold text-gray-800">إدارة البورتفوليو</h2>
+        <header
+            class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 lg:px-8 shadow-sm z-10">
+            <div class="flex items-center gap-3">
+                <!-- Mobile Toggle Button -->
+                <button onclick="toggleSidebar()"
+                    class="lg:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                    <i data-lucide="menu"></i>
+                </button>
+                <h2 id="page-title" class="text-lg lg:text-xl font-bold text-gray-800">إدارة البورتفوليو</h2>
+            </div>
             <div class="flex items-center gap-4">
-                <div class="text-left">
+                <div class="hidden sm:block text-left">
                     <p class="text-sm font-bold text-gray-800">أدمن ديجيتال</p>
                     <p class="text-xs text-gray-500">متصل الآن</p>
                 </div>
@@ -149,20 +187,18 @@
                         <span id="project-form-header">إضافة عمل جديد للبورتفوليو</span>
                     </h3>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                        <!-- Left Column: Details -->
-                        <div class="space-y-6">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="space-y-2">
-                                    <label class="text-sm font-bold text-gray-700 mr-2">اسم العمل (English)</label>
-                                    <input type="text" id="proj-name" placeholder="Name in English"
-                                        class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-[#00f0c8] focus:ring-4 focus:ring-[#00f0c8]/10 outline-none transition-all bg-gray-50/50">
-                                </div>
-                                <div class="space-y-2">
-                                    <label class="text-sm font-bold text-gray-700 mr-2">اسم العمل (العربية)</label>
-                                    <input type="text" id="proj-name-ar" dir="rtl" placeholder="الاسم بالعربية"
-                                        class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-[#00f0c8] focus:ring-4 focus:ring-[#00f0c8]/10 outline-none transition-all bg-gray-50/50">
-                                </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-1 gap-10">
+                        <!-- Top: Details Name & Category -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-sm font-bold text-gray-700 mr-2">اسم العمل (English)</label>
+                                <input type="text" id="proj-name" placeholder="Name in English"
+                                    class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-[#00f0c8] focus:ring-4 focus:ring-[#00f0c8]/10 outline-none transition-all bg-gray-50/50">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-bold text-gray-700 mr-2">اسم العمل (العربية)</label>
+                                <input type="text" id="proj-name-ar" dir="rtl" placeholder="الاسم بالعربية"
+                                    class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-[#00f0c8] focus:ring-4 focus:ring-[#00f0c8]/10 outline-none transition-all bg-gray-50/50">
                             </div>
                             <div class="space-y-2">
                                 <label class="text-sm font-bold text-gray-700 mr-2">التصنيف</label>
@@ -173,30 +209,35 @@
                                     @endforeach
                                 </select>
                             </div>
+                        </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="space-y-2">
-                                    <label class="text-sm font-bold text-gray-700 mr-2">وصف التفاصيل (English)</label>
-                                    <textarea id="proj-desc" rows="3" placeholder="Description in English..."
-                                        class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-[#00f0c8] focus:ring-4 focus:ring-[#00f0c8]/10 outline-none transition-all bg-gray-50/50"></textarea>
-                                </div>
-                                <div class="space-y-2">
-                                    <label class="text-sm font-bold text-gray-700 mr-2">الوصف (العربية)</label>
-                                    <textarea id="proj-desc-ar" rows="3" dir="rtl" placeholder="الوصف بالعربية..."
-                                        class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-[#00f0c8] focus:ring-4 focus:ring-[#00f0c8]/10 outline-none transition-all bg-gray-50/50"></textarea>
+                        <!-- Mid: Description & Image -->
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                            <div class="lg:col-span-2 space-y-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div class="space-y-2">
+                                        <label class="text-sm font-bold text-gray-700 mr-2">وصف التفاصيل
+                                            (English)</label>
+                                        <textarea id="proj-desc" rows="4" placeholder="Description in English..."
+                                            class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-[#00f0c8] focus:ring-4 focus:ring-[#00f0c8]/10 outline-none transition-all bg-gray-50/50"></textarea>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="text-sm font-bold text-gray-700 mr-2">الوصف (العربية)</label>
+                                        <textarea id="proj-desc-ar" rows="4" dir="rtl" placeholder="الوصف بالعربية..."
+                                            class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-[#00f0c8] focus:ring-4 focus:ring-[#00f0c8]/10 outline-none transition-all bg-gray-50/50"></textarea>
+                                    </div>
                                 </div>
                             </div>
-
                             <div class="space-y-2">
                                 <label class="text-sm font-bold text-gray-700 mr-2">صورة العمل</label>
-                                <div class="relative group h-32">
+                                <div class="relative group h-40">
                                     <input type="file" id="proj-image"
                                         class="absolute inset-0 opacity-0 cursor-pointer z-10"
                                         onchange="handleImage(event)">
                                     <div id="image-placeholder"
-                                        class="w-full h-32 border-2 border-dashed border-gray-200 rounded-2xl flex flex-col items-center justify-center gap-2 text-gray-400 group-hover:border-[#00f0c8] group-hover:text-[#00f0c8] transition-all bg-gray-50/50">
+                                        class="w-full h-full border-2 border-dashed border-gray-200 rounded-2xl flex flex-col items-center justify-center gap-2 text-gray-400 group-hover:border-[#00f0c8] group-hover:text-[#00f0c8] transition-all bg-gray-50/50">
                                         <i data-lucide="image-plus" size="32"></i>
-                                        <span class="text-sm font-semibold">اسحب الصورة أو اضغط هنا</span>
+                                        <span class="text-xs font-semibold">اسحب الصورة أو اضغط هنا</span>
                                     </div>
                                     <div id="image-preview-container"
                                         class="hidden absolute inset-0 bg-white rounded-2xl overflow-hidden border border-[#00f0c8] shadow-inner z-20">
@@ -210,14 +251,14 @@
                             </div>
                         </div>
 
-                        <!-- Right Column: HTML Editor with Live Display Area -->
-                        <div class="flex flex-col space-y-2 h-full">
+                        <!-- Bottom: HTML Editor (Live Editor Full Width) -->
+                        <div class="flex flex-col space-y-2">
                             <label class="text-sm font-bold text-gray-700 mr-2 flex items-center gap-2">
                                 <i data-lucide="monitor-play" size="18" class="text-[#bd147c]"></i>
                                 معاينة الصفحة والبرمجة (Live Editor)
                             </label>
                             <div
-                                class="flex-1 min-h-[450px] bg-[#1e293b] rounded-3xl overflow-hidden shadow-2xl border border-gray-700 flex flex-col">
+                                class="w-full min-h-[600px] bg-[#1e293b] rounded-3xl overflow-hidden shadow-2xl border border-gray-700 flex flex-col">
                                 <div
                                     class="bg-[#0f172a] px-6 py-3 flex items-center justify-between border-b border-gray-700">
                                     <div class="flex gap-1.5">
@@ -233,10 +274,10 @@
                                     </div>
                                 </div>
 
-                                <div class="flex-1 flex flex-col xl:flex-row overflow-hidden h-full">
+                                <div class="flex-1 flex flex-col lg:flex-row overflow-hidden h-full">
                                     <!-- Code Editor -->
                                     <div
-                                        class="flex-1 relative border-b xl:border-b-0 xl:border-l border-gray-700 h-1/2 xl:h-full">
+                                        class="flex-1 relative border-b lg:border-b-0 lg:border-l border-gray-700 h-1/2 lg:h-full">
                                         <div
                                             class="absolute top-2 left-4 text-[9px] text-gray-500 font-bold uppercase z-10">
                                             Editor</div>
@@ -246,7 +287,7 @@
                                             oninput="updateFormPreview()"></textarea>
                                     </div>
                                     <!-- Live Display Area -->
-                                    <div class="flex-1 bg-white h-1/2 xl:h-full relative overflow-hidden">
+                                    <div class="flex-1 bg-white h-1/2 lg:h-full relative overflow-hidden">
                                         <div
                                             class="absolute top-2 left-4 text-[9px] text-gray-400 font-bold uppercase z-10">
                                             Display Area</div>
@@ -264,8 +305,8 @@
                             class="hidden px-8 py-4 bg-gray-100 text-gray-600 font-bold rounded-2xl hover:bg-gray-200 transition-all">إلغاء</button>
                         <button onclick="saveProject()"
                             class="px-12 py-4 bg-gradient-to-r from-[#00f0c8] to-[#2f9181] text-[#0f172a] font-black text-lg rounded-2xl shadow-xl hover:shadow-[#00f0c8]/40 hover:-translate-y-1 transition-all active:scale-95 flex items-center gap-3">
-                            <span id="save-project-btn-text">حفظ العمل في البورتفوليو</span>
                             <i data-lucide="check-circle" size="24"></i>
+                            <span id="save-project-btn-text">حفظ العمل في البورتفوليو</span>
                         </button>
                     </div>
                 </div>
@@ -287,9 +328,10 @@
                         <table class="w-full text-right">
                             <thead class="bg-gray-50 text-gray-500 text-[11px] font-bold uppercase tracking-widest">
                                 <tr>
-                                    <th class="px-8 py-5">العمل</th>
-                                    <th class="px-8 py-5">التفاصيل</th>
+                                    <th class="px-8 py-5">اسم العمل</th>
                                     <th class="px-8 py-5">التصنيف</th>
+                                    <th class="px-8 py-5">الوصف</th>
+                                    <th class="px-8 py-5">الصورة</th>
                                     <th class="px-8 py-5">العمليات</th>
                                 </tr>
                             </thead>
@@ -297,26 +339,9 @@
                                 @foreach($projects as $project)
                                     <tr class="hover:bg-gray-50 transition-colors">
                                         <td class="px-8 py-6">
-                                            <div class="flex items-center gap-4">
-                                                <div
-                                                    class="relative w-14 h-14 rounded-xl overflow-hidden border-2 border-gray-100 shadow-sm flex-shrink-0">
-                                                    <img src="{{ asset($project->image) }}"
-                                                        class="w-full h-full object-cover">
-                                                </div>
-                                                <div>
-                                                    <p class="font-bold text-gray-900">{{ $project->name }}</p>
-                                                    <p
-                                                        class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">
-                                                        Project ID: #{{ $project->id }}</p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="px-8 py-6">
-                                            <div class="flex flex-col gap-1 max-w-xs">
-                                                <p class="text-sm text-gray-600 leading-relaxed line-clamp-2">
-                                                    {{ $project->description }}
-                                                </p>
-                                            </div>
+                                            <p class="font-bold text-gray-900">{{ $project->name }}</p>
+                                            <p class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">
+                                                #{{ $project->id }}</p>
                                         </td>
                                         <td class="px-8 py-6">
                                             <span
@@ -325,12 +350,24 @@
                                             </span>
                                         </td>
                                         <td class="px-8 py-6">
+                                            <p class="text-sm text-gray-600 leading-relaxed line-clamp-2 max-w-xs">
+                                                {{ $project->description }}
+                                            </p>
+                                        </td>
+                                        <td class="px-8 py-6">
+                                            <div
+                                                class="relative w-32 h-24 rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
+                                                <img src="{{ asset($project->image) }}" class="w-full h-full object-cover">
+                                            </div>
+                                        </td>
+                                        <td class="px-8 py-6">
                                             <div class="flex items-center gap-3">
                                                 <button onclick='editProject({!! json_encode($project) !!})'
+                                                    title="تعديل ومعاينة"
                                                     class="w-10 h-10 flex items-center justify-center rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all shadow-sm">
                                                     <i data-lucide="edit-3" size="18"></i>
                                                 </button>
-                                                <button onclick="deleteProject({{ $project->id }})"
+                                                <button onclick="deleteProject({{ $project->id }})" title="حذف"
                                                     class="w-10 h-10 flex items-center justify-center rounded-xl bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-all shadow-sm">
                                                     <i data-lucide="trash-2" size="18"></i>
                                                 </button>
@@ -454,8 +491,15 @@
                                         <tr class="hover:bg-gray-50 transition-colors">
                                             <td class="px-8 py-6">
                                                 <div class="flex items-center gap-4">
-                                                    <img src="{{ asset($member->image) }}"
-                                                        class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm">
+                                                    <div
+                                                        class="w-28 h-28 rounded-3xl overflow-hidden border-2 border-white shadow-md bg-white flex items-center justify-center text-lime-600">
+                                                        @if($member->image)
+                                                            <img src="{{ asset($member->image) }}"
+                                                                class="w-full h-full object-cover">
+                                                        @else
+                                                            <i data-lucide="user-round" size="64"></i>
+                                                        @endif
+                                                    </div>
                                                     <p class="font-bold text-gray-900">{{ $member->name }}</p>
                                                 </div>
                                             </td>
@@ -582,20 +626,7 @@
                                     </div>
                                 </div>
 
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div class="space-y-2">
-                                        <label class="text-sm font-bold text-gray-700 block">رقم بريطانيا (UK)</label>
-                                        <input type="text" id="contact-phone-uk" value="{{ $contact->phone_uk }}"
-                                            placeholder="+44..."
-                                            class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
-                                    </div>
-                                    <div class="space-y-2">
-                                        <label class="text-sm font-bold text-gray-700 block">رقم عُمان (Oman)</label>
-                                        <input type="text" id="contact-phone-om" value="{{ $contact->phone_om }}"
-                                            placeholder="+968..."
-                                            class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none bg-gray-50/50">
-                                    </div>
-                                </div>
+
 
                                 <div class="space-y-2">
                                     <label class="text-sm font-bold text-gray-700 block">البريد الإلكتروني</label>
@@ -614,12 +645,44 @@
                                     <div class="space-y-2">
                                         <label class="text-sm font-bold text-gray-700 block text-right">الموقع / العنوان
                                             (العربية)</label>
-                                        <textarea id="contact-address-ar" dir="rtl" rows="3"
-                                            placeholder="السودان، الخرطوم..."
+                                        <textarea id="contact-address-ar" dir="rtl" placeholder="السودان، الخرطوم..."
                                             class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all bg-gray-50/50 text-right">{{ $contact->address_ar }}</textarea>
                                     </div>
                                 </div>
 
+                                <div class="pt-6 border-t border-gray-100 mt-6 text-right">
+                                    <h4
+                                        class="text-lg font-extrabold text-[#bd147c] mb-6 flex items-center justify-end gap-2">
+                                        الإحصائيات (الصفحة الرئيسية)
+                                        <i data-lucide="bar-chart-3" size="20"></i>
+                                    </h4>
+                                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                        <div class="space-y-2">
+                                            <label class="text-sm font-bold text-gray-700 block">مشروع مكتمل</label>
+                                            <input type="text" id="contact-stat-projects"
+                                                value="{{ $contact->statProjects }}" placeholder="150+"
+                                                class="w-full px-5 py-3 rounded-xl border border-gray-200 outline-none bg-gray-50/50 text-right">
+                                        </div>
+                                        <div class="space-y-2">
+                                            <label class="text-sm font-bold text-gray-700 block">عميل سعيد</label>
+                                            <input type="text" id="contact-stat-clients"
+                                                value="{{ $contact->statClients }}" placeholder="99%"
+                                                class="w-full px-5 py-3 rounded-xl border border-gray-200 outline-none bg-gray-50/50 text-right">
+                                        </div>
+                                        <div class="space-y-2">
+                                            <label class="text-sm font-bold text-gray-700 block">فريق العمل</label>
+                                            <input type="text" id="contact-stat-team" value="{{ $contact->statTeam }}"
+                                                placeholder="25+"
+                                                class="w-full px-5 py-3 rounded-xl border border-gray-200 outline-none bg-gray-50/50 text-right">
+                                        </div>
+                                        <div class="space-y-2">
+                                            <label class="text-sm font-bold text-gray-700 block">سنوات الخبرة</label>
+                                            <input type="text" id="contact-stat-years" value="{{ $contact->statYears }}"
+                                                placeholder="7+"
+                                                class="w-full px-5 py-3 rounded-xl border border-gray-200 outline-none bg-gray-50/50 text-right">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -660,8 +723,19 @@
                         </div>
 
                         <div class="space-y-2">
-                            <label class="text-sm font-bold text-gray-700 mr-2">أيقونة الخدمة (Lucide)</label>
-                            <input type="text" id="service-icon" placeholder="مثلاً: monitor, code, globe"
+                            <label class="text-sm font-bold text-gray-700 mr-2 flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <span>أيقونة الخدمة (Lucide أو HTML/SVG)</span>
+                                    <span
+                                        class="text-[10px] bg-lime-100 text-lime-700 px-2 py-0.5 rounded-full border border-lime-200">المقاس
+                                        الموصى به: w-28 h-28</span>
+                                </div>
+                                <a href="https://lucide.dev/icons" target="_blank"
+                                    class="text-lime-600 hover:underline text-xs flex items-center gap-1">
+                                    تصفح المكتبة <i data-lucide="external-link" size="12"></i>
+                                </a>
+                            </label>
+                            <input type="text" id="service-icon" placeholder="مثلاً: monitor أو كود SVG"
                                 class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-lime-500 focus:ring-4 focus:ring-lime-500/10 outline-none transition-all bg-gray-50/50">
                         </div>
 
@@ -700,7 +774,8 @@
                         <table class="w-full text-right">
                             <thead class="bg-gray-50 text-gray-500 text-[11px] font-bold uppercase tracking-widest">
                                 <tr>
-                                    <th class="px-8 py-5">الأيقونة والخدمة</th>
+                                    <th class="px-8 py-5">الأيقونة</th>
+                                    <th class="px-8 py-5">الخدمة</th>
                                     <th class="px-8 py-5">الوصف</th>
                                     <th class="px-8 py-5">العمليات</th>
                                 </tr>
@@ -709,13 +784,19 @@
                                 @foreach($services as $service)
                                     <tr class="hover:bg-gray-50 transition-colors">
                                         <td class="px-8 py-6">
-                                            <div class="flex items-center gap-4">
-                                                <div
-                                                    class="w-10 h-10 bg-lime-50 rounded-lg flex items-center justify-center text-lime-600">
-                                                    <i data-lucide="{{ $service->icon }}" size="20"></i>
-                                                </div>
-                                                <p class="font-bold text-gray-900">{{ $service->name }}</p>
+                                            <div
+                                                class="w-28 h-28 bg-lime-50 rounded-3xl flex items-center justify-center text-lime-600 border border-lime-100 shadow-sm">
+                                                @if(isset($service->icon) && str_starts_with($service->icon, '<'))
+                                                    <div class="w-16 h-16 flex items-center justify-center">
+                                                        {!! $service->icon !!}
+                                                    </div>
+                                                @else
+                                                    <i data-lucide="{{ $service->icon }}" size="64"></i>
+                                                @endif
                                             </div>
+                                        </td>
+                                        <td class="px-8 py-6">
+                                            <p class="font-bold text-gray-900">{{ $service->name }}</p>
                                         </td>
                                         <td class="px-8 py-6 text-sm text-gray-600 max-w-md truncate">
                                             {{ $service->description }}
@@ -766,8 +847,19 @@
                         </div>
 
                         <div class="space-y-2">
-                            <label class="text-sm font-bold text-gray-700 mr-2">الأيقونة (Lucide)</label>
-                            <input type="text" id="impact-icon" value="user-round" placeholder="مثلاً: user, star, leaf"
+                            <label class="text-sm font-bold text-gray-700 mr-2 flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <span>الأيقونة (Lucide أو HTML/SVG)</span>
+                                    <span
+                                        class="text-[10px] bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full border border-orange-200">المقاس
+                                        الموصى به: w-28 h-28</span>
+                                </div>
+                                <a href="https://lucide.dev/icons" target="_blank"
+                                    class="text-orange-600 hover:underline text-xs flex items-center gap-1">
+                                    تصفح المكتبة <i data-lucide="external-link" size="12"></i>
+                                </a>
+                            </label>
+                            <input type="text" id="impact-icon" value="user-round" placeholder="مثلاً: user أو كود SVG"
                                 class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all bg-gray-50/50">
                         </div>
 
@@ -818,8 +910,14 @@
                                         <td class="px-8 py-6">
                                             <div class="flex items-center gap-4">
                                                 <div
-                                                    class="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center text-orange-500 shadow-sm border border-orange-100">
-                                                    <i data-lucide="{{ $impact->icon }}" size="20"></i>
+                                                    class="w-28 h-28 bg-orange-50 rounded-3xl flex items-center justify-center text-orange-500 shadow-sm border border-orange-100">
+                                                    @if(isset($impact->icon) && str_starts_with($impact->icon, '<'))
+                                                        <div class="w-16 h-16 flex items-center justify-center">
+                                                            {!! $impact->icon !!}
+                                                        </div>
+                                                    @else
+                                                        <i data-lucide="{{ $impact->icon }}" size="64"></i>
+                                                    @endif
                                                 </div>
                                                 <p class="font-bold text-gray-900">{{ $impact->name }}</p>
                                             </div>
@@ -965,11 +1063,18 @@
                                 @foreach($careers as $career)
                                     <tr class="hover:bg-gray-50 transition-colors">
                                         <td class="px-8 py-6">
-                                            <div>
-                                                <p class="font-bold text-gray-900">{{ $career->title }}</p>
-                                                <p class="text-[10px] text-purple-500 font-bold uppercase tracking-wider">
-                                                    {{ $career->duration }}
-                                                </p>
+                                            <div class="flex items-center gap-4">
+                                                <div
+                                                    class="w-28 h-28 bg-purple-50 rounded-3xl flex items-center justify-center text-purple-600 shadow-sm border border-purple-100 flex-shrink-0">
+                                                    <i data-lucide="briefcase" size="64"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="font-bold text-gray-900">{{ $career->title }}</p>
+                                                    <p
+                                                        class="text-[10px] text-purple-500 font-bold uppercase tracking-wider">
+                                                        {{ $career->duration }}
+                                                    </p>
+                                                </div>
                                             </div>
                                         </td>
                                         <td class="px-8 py-6">
@@ -1020,8 +1125,37 @@
         // Setup AJAX headers
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
+        // Sidebar Toggle for Mobile
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobile-overlay');
+
+            if (sidebar.classList.contains('sidebar-closed')) {
+                sidebar.classList.remove('sidebar-closed');
+                sidebar.classList.add('sidebar-open');
+                overlay.classList.remove('hidden');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent background scroll
+            } else {
+                sidebar.classList.add('sidebar-closed');
+                sidebar.classList.remove('sidebar-open');
+                overlay.classList.add('hidden');
+                overlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
         // Navigation Logic
         function switchTab(tab) {
+            // Close sidebar on mobile after selecting a tab
+            if (window.innerWidth < 1024) {
+                const sidebar = document.getElementById('sidebar');
+                if (sidebar.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            }
+
+            sessionStorage.setItem('active_admin_tab', tab);
             document.querySelectorAll('.tab-content').forEach(c => {
                 c.classList.add('hidden');
                 c.classList.remove('active');
@@ -1041,7 +1175,16 @@
                 'careers': 'إدارة الوظائف والمهن'
             };
             document.getElementById('page-title').innerText = titles[tab];
+            lucide.createIcons();
         }
+
+        // Restore tab on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTab = sessionStorage.getItem('active_admin_tab');
+            if (savedTab && document.getElementById(savedTab + '-tab')) {
+                switchTab(savedTab);
+            }
+        });
 
         // --- Image Handling ---
 
@@ -1323,9 +1466,8 @@
                 });
 
                 if (!response.ok) {
-                    const errorInfo = await response.json();
-                    console.error('Server error:', errorInfo);
-                    alert('حدث خطأ في الخادم أثناء حفظ الخدمة. يرجى التأكد من البيانات.');
+                    const error = await response.json();
+                    alert('خطأ من الخادم: ' + (error.error || 'فشل في حفظ الخدمة.'));
                     return;
                 }
 
@@ -1385,18 +1527,7 @@
             }
         }
 
-        function editService(service) {
-            document.getElementById('editing-service-id').value = service.id;
-            document.getElementById('service-name').value = service.name;
-            document.getElementById('service-icon').value = service.icon;
-            document.getElementById('service-desc').value = service.description;
 
-            document.getElementById('service-form-title').innerText = 'تعديل الخدمة: ' + service.name;
-            document.getElementById('save-service-btn-text').innerText = 'تحديث الخدمة';
-            document.getElementById('cancel-service-edit').classList.remove('hidden');
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
 
         // --- Contact Logic ---
         async function saveContacts() {
@@ -1410,11 +1541,13 @@
                 youtube: document.getElementById('contact-youtube').value,
                 phone_eg: document.getElementById('contact-phone-eg').value,
                 phone_sd: document.getElementById('contact-phone-sd').value,
-                phone_uk: document.getElementById('contact-phone-uk').value,
-                phone_om: document.getElementById('contact-phone-om').value,
                 email: document.getElementById('contact-email').value,
                 address: document.getElementById('contact-address').value,
-                address_ar: document.getElementById('contact-address-ar').value
+                address_ar: document.getElementById('contact-address-ar').value,
+                statProjects: document.getElementById('contact-stat-projects').value,
+                statClients: document.getElementById('contact-stat-clients').value,
+                statTeam: document.getElementById('contact-stat-team').value,
+                statYears: document.getElementById('contact-stat-years').value
             };
 
             try {
@@ -1648,7 +1781,9 @@
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': csrfToken
                     },
-                    body: JSON.stringify({ text: text })
+                    body: JSON.stringify({
+                        text: text
+                    })
                 });
                 const result = await response.json();
                 return result.translated || '';
@@ -1661,7 +1796,8 @@
 
 
         // Initial previews
-        updateFormPreview();
+        updateFormPrevie
+        w();
     </script>
 
 </body>
